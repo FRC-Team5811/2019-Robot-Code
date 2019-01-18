@@ -6,7 +6,7 @@ import frc.robot.Robot;
 public class ArcadeDrive extends Command {
 
   public ArcadeDrive() {
-    setInterruptible(false);
+    setInterruptible(true);
     requires(Robot.dt);
   }
 
