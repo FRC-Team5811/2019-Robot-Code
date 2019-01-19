@@ -2,7 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ReadUltra;
 
 public class OI {
   private static final int LEFT_Y_AXIS = 1;
@@ -43,7 +44,9 @@ public class OI {
   private static final DPadButton MANIP_LEFT = new DPadButton(JOY_2, 270);
 
   public OI(){
-      
+      DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
+      DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
+      A_DRIVE.whileHeld(new ReadUltra());
   }
 
   public double getDriveLeftY() {

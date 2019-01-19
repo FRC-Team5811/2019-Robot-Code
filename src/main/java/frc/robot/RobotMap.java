@@ -1,9 +1,14 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Victor;
 
 public class RobotMap {
@@ -32,4 +37,9 @@ public class RobotMap {
 	public static DoubleSolenoid solenoid1 = new DoubleSolenoid(0, 1);
   public static DoubleSolenoid solenoid2 = new DoubleSolenoid(2, 3);
   public static DoubleSolenoid solenoid3 = new DoubleSolenoid(4, 5);
+
+  public static AnalogInput d1 = new AnalogInput(0);
+  public static DigitalOutput dO = new DigitalOutput(0);
+  public static DigitalInput dI = new DigitalInput(1);
+  public static Ultrasonic u1 = new Ultrasonic(dO, dI);
 }

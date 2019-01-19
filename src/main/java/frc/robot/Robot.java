@@ -6,10 +6,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Rollers;
 //memes
 public class Robot extends TimedRobot {
   public static OI oi;
   public static Drivetrain dt;
+  public static Rollers rollers;
 
   Command prototype_final_auto;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
@@ -17,8 +19,9 @@ public class Robot extends TimedRobot {
  
   @Override
   public void robotInit() {
-    oi = new OI();
+    rollers = new Rollers();
     dt = new Drivetrain();
+    oi = new OI();
   }
 
   @Override
