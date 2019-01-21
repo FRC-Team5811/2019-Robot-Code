@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.drivetesy;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Rollers;
 //memes
@@ -22,6 +23,7 @@ public class Robot extends TimedRobot {
     rollers = new Rollers();
     dt = new Drivetrain();
     oi = new OI();
+    
   }
 
   @Override
@@ -40,6 +42,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     prototype_final_auto = prototype_chooser.getSelected();
+  
 
     // schedule the autonomous command (example)
     if (prototype_final_auto != null) {
@@ -60,6 +63,8 @@ public class Robot extends TimedRobot {
     if (prototype_final_auto != null) {
       prototype_final_auto.cancel();
     }
+    // prototype_final_auto = new drivetesy();
+    // prototype_final_auto.start();
     RobotMap.COMPRESSOR.clearAllPCMStickyFaults();
     RobotMap.COMPRESSOR.setClosedLoopControl(true);
     RobotMap.PDP.clearStickyFaults();
