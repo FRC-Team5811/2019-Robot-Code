@@ -13,6 +13,9 @@ import frc.robot.Robot;
 public class CargoShoot extends Command {
   
   private String zone;
+  private double distance;
+  private double zone2;
+  private double zone3;
   public CargoShoot(String passedZone) {
     zone = passedZone;
     requires(Robot.rollers);
@@ -28,7 +31,10 @@ public class CargoShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    distance = getUltrasonic();
+
     if (zone.equals("Zone3")) {
+      if distance 
       // if getUltrasonic() //yields zone3 
       //   Robot.roller3.set(1); //assumes -1 is CCW
       //   Robot.roller124.set(-1); //assumes 1 is CW
