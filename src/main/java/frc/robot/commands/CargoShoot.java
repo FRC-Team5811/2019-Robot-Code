@@ -32,7 +32,6 @@ public class CargoShoot extends Command {
   @Override
   protected void execute() {
     // distance = getUltrasonic();
-
     // if (zone.equals("Zone3")) {
     //   if distance 
 
