@@ -10,27 +10,40 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Drivetest extends Command {
-  public Drivetest() {
+public class CargoShoot extends Command {
+  
+  private String zone;
+  public CargoShoot(String passedZone) {
+    zone = passedZone;
+    requires(Robot.rollers);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.dt);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.dt.driveFrontLeft.set (.5);
-    Robot.dt.driveBackLeft.set (.5);
-    Robot.dt.driveFrontRight.set (-.5);
-    Robot.dt.driveBackRight.set (-.5);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (zone.equals("Zone3")) {
+      // if getUltrasonic() //yields zone3 
+      //   Robot.roller3.set(1); //assumes -1 is CCW
+      //   Robot.roller124.set(-1); //assumes 1 is CW
+        
+      // if getUltrasonic() //yields zone2 or less
+      //   Robot.roller124.set(1);
+      //   Robot.roller3.set(1);
+    // } else if (zone.equals("Zone2")) {
+    //   if (getUltrasonic()) {
+    //     Robot.roller3(-1);
+    //     Robot.roller124(1);
+    //   }
+    // }
   }
-  
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -40,10 +53,6 @@ public class Drivetest extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.dt.driveFrontLeft.set (0);
-    Robot.dt.driveBackLeft.set (0);
-    Robot.dt.driveFrontRight.set (-0);
-    Robot.dt.driveBackRight.set (-0);
   }
 
   // Called when another command which requires one or more of the same

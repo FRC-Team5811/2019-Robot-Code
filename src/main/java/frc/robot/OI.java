@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.CargoShoot;
 import frc.robot.commands.ReadUltra;
 
 public class OI {
@@ -46,7 +47,7 @@ public class OI {
   public OI(){
       DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
       DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
-      A_DRIVE.whileHeld(new ReadUltra());
+      MANIP_UP.whileHeld(new CargoShoot("Zone3"));
   }
 
   public double getDriveLeftY() {
