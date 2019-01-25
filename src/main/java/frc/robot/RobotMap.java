@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.Compressor;
@@ -21,7 +23,9 @@ public class RobotMap {
   public static final int MOTOR_5 = 5;
   public static final int MOTOR_6 = 6;
 
-  public static final int COMPRESSOR_CAN_ID = 0; 
+  public static final int COMPRESSOR_CAN_ID = 0;
+  public static final int SPX_1_ID = 1; 
+  public static final int SPX_2_ID = 2;
 
   public static PowerDistributionPanel PDP = new PowerDistributionPanel();
   public static Compressor COMPRESSOR = new Compressor(COMPRESSOR_CAN_ID);
@@ -42,4 +46,7 @@ public class RobotMap {
   public static DigitalOutput dO = new DigitalOutput(0);
   public static DigitalInput dI = new DigitalInput(1);
   public static Ultrasonic u1 = new Ultrasonic(dO, dI);
+
+  public static VictorSPX spx1 = new VictorSPX(SPX_1_ID);
+  public static VictorSPX spx2 = new VictorSPX(SPX_2_ID);
 }

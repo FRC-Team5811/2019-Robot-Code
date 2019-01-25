@@ -1,6 +1,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Victor;
@@ -12,6 +14,7 @@ public class Drivetrain extends Subsystem {
   public static Victor driveFrontLeft, driveBackLeft, driveFrontRight, driveBackRight;
   public static Compressor cp;
   public static PowerDistributionPanel pdp;
+  public static VictorSPX spx1;
 
   public Drivetrain(){
 
@@ -21,6 +24,8 @@ public class Drivetrain extends Subsystem {
     driveBackRight = RobotMap.motor3;
 
     cp = RobotMap.COMPRESSOR;
+
+    spx1 = RobotMap.spx1;
 
     pdp = RobotMap.PDP;
   }

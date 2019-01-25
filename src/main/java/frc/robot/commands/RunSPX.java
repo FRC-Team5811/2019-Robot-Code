@@ -7,20 +7,16 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoShoot extends Command {
-  
-  private String zone;
-  private double distance;
-  private double zone2;
-  private double zone3;
-  public CargoShoot(String passedZone) {
-    zone = passedZone;
-    requires(Robot.rollers);
+public class RunSPX extends Command {
+  public RunSPX() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.dt);
   }
 
   // Called just before this Command runs the first time
@@ -31,22 +27,7 @@ public class CargoShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //distance = getUltrasonic();
-
-    //if (zone.equals("Zone3")) {
-      // if getUltrasonic() //yields zone3 
-      //   Robot.roller3.set(1); //assumes -1 is CCW
-      //   Robot.roller124.set(-1); //assumes 1 is CW
-        
-      // if getUltrasonic() //yields zone2 or less
-      //   Robot.roller124.set(1);
-      //   Robot.roller3.set(1);
-    // } else if (zone.equals("Zone2")) {
-    //   if (getUltrasonic()) {
-    //     Robot.roller3(-1);
-    //     Robot.roller124(1);
-    //   }
-    // }
+    Robot.dt.spx1.set(ControlMode.PercentOutput, 0.4);
   }
 
   // Make this return true when this Command no longer needs to run execute()

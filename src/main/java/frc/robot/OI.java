@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.ReadUltra;
+import frc.robot.commands.RunSPX;
 
 public class OI {
   private static final int LEFT_Y_AXIS = 1;
@@ -48,6 +49,7 @@ public class OI {
       DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
       DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
       MANIP_UP.whileHeld(new CargoShoot("Zone3"));
+      Y_DRIVE.whileHeld(new RunSPX());
   }
 
   public double getDriveLeftY() {
