@@ -38,7 +38,7 @@ public class RobotMap {
   public static DoubleSolenoid solenoid2 = new DoubleSolenoid(2, 3);
   public static DoubleSolenoid solenoid3 = new DoubleSolenoid(4, 5);
 
-  public static DigitalOutput dO = new DigitalOutput(0);
-  public static DigitalInput dI = new DigitalInput(1);
-  public static Ultrasonic u1 = new Ultrasonic(dO, dI);
+  // public static DigitalOutput dO = new DigitalOutput(0);
+  // public static DigitalInput dI = new DigitalInput(1);
+  public static Ultrasonic u1 = new Ultrasonic(0, 1);
 }
