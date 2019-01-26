@@ -14,17 +14,19 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class Rollers extends Subsystem {
-  Spark rollerIntake;
-  Spark rollers124;
-  Spark roller3;
+  public Spark rollerIntake;
+  public Spark rollers124;
+  public Spark roller3;
+  Ultrasonic distanceSensor;
   public Rollers(){
     rollerIntake = RobotMap.motor4;
     rollers124 = RobotMap.motor5;
     roller3 = RobotMap.motor6;
+    distanceSensor = RobotMap.u1;
   }
   
-  public void readUltra(){
-    
+  public double getDistance(){
+    return distanceSensor.getRangeInches();
   }
 
   @Override

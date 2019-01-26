@@ -12,12 +12,15 @@ import frc.robot.Robot;
 
 public class CargoShoot extends Command {
   
-  private String zone;
+  private String targetZone;
   private double distance;
-  private double zone2;
-  private double zone3;
+  private String currentZone; 
+  private static final double zone1Height = 15;
+  private static final double zone2Height = 30;
+  private static final double zone3Height = 45;
+
   public CargoShoot(String passedZone) {
-    zone = passedZone;
+    targetZone = passedZone;
     requires(Robot.rollers);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -31,7 +34,16 @@ public class CargoShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // distance = getUltrasonic();
+    distance = Robot.rollers.getDistance();
+    if (targetZone.equals("Zone3")) {
+      if(distance < zone2Height){
+        Robot.rollers.rollers124.set(1);
+      } else if (distance > zone2Height && distance < zone3Height){
+        Robot.rollers.rollers124.set(-1);
+        Robot.rollers.roller3.set(1);
+      }
+    } 
+
     // if (zone.equals("Zone3")) {
     //   if distance 
 
