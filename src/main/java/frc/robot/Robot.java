@@ -21,6 +21,7 @@ public class Robot extends TimedRobot {
     rollers = new Rollers();
     dt = new Drivetrain();
     oi = new OI();
+    RobotMap.u1.setAutomaticMode(true);
   }
 
  /**
@@ -72,6 +73,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    System.out.println(rollers.getDistance());
   }
 
   @Override
