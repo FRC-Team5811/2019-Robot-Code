@@ -13,8 +13,7 @@ import frc.robot.Robot;
 public class CargoShoot extends Command {
   
   private String targetZone;
-  private double distance;
-  private String currentZone; 
+  private double distance; 
   private static final double zone1Height = 15;
   private static final double zone2Height = 30;
   private static final double zone3Height = 45;
@@ -37,30 +36,23 @@ public class CargoShoot extends Command {
     distance = Robot.rollers.getDistance();
     if (targetZone.equals("Zone3")) {
       if(distance < zone2Height){
-        Robot.rollers.rollers124.set(1);
+        Robot.rollers.rollers124.set(1); //roll up to level 3
       } else if (distance > zone2Height && distance < zone3Height){
-        Robot.rollers.rollers124.set(-1);
+        Robot.rollers.rollers124.set(-1); //shoot level 3
         Robot.rollers.roller3.set(1);
       }
-    } 
-
-    // if (zone.equals("Zone3")) {
-    //   if distance 
-
-      //comment
-      // if getUltrasonic() //yields zone3 
-      //   Robot.roller3.set(1); //assumes -1 is CCW
-      //   Robot.roller124.set(-1); //assumes 1 is CW
-        
-      // if getUltrasonic() //yields zone2 or less
-      //   Robot.roller124.set(1);
-      //   Robot.roller3.set(1);
-    // } else if (zone.equals("Zone2")) {
-    //   if (getUltrasonic()) {
-    //     Robot.roller3(-1);
-    //     Robot.roller124(1);
-    //   }
-    // }
+    }
+    if (targetZone.equals("Zone2")){
+      if (distance < zone1Height){
+        Robot.rollers.rollers124.set(1); //roll up to level 2
+      } else if (distance > zone2Height){
+        Robot.rollers.roller3.set(-1);
+        Robot.rollers.rollers124.set(-1);
+      } else if (distance > zone1Height && distance < zone2Height){
+        Robot.rollers.roller3.set(-1); //shoot level 2
+        Robot.rollers.rollers124.set(1);
+      }
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
