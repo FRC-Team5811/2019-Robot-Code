@@ -10,15 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoShoot extends Command {
-  
+public class CargoIntake extends Command {
   private String targetZone;
   private double distance; 
   private static final double zone1Height = 15;
   private static final double zone2Height = 30;
   private static final double zone3Height = 45;
 
-  public CargoShoot(String passedZone) {
+  public CargoIntake(String passedZone) {
     targetZone = passedZone;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -33,22 +32,35 @@ public class CargoShoot extends Command {
   @Override
   protected void execute() {
     distance = Robot.getRollersSubsystem().getDistance();
-    if (targetZone.equals("Zone3")) {
-      if(distance < zone2Height){
-        Robot.getRollersSubsystem().moveBallFromZone1to3();
-      } else if (distance > zone2Height && distance < zone3Height){
-        Robot.getRollersSubsystem().outakeBallFromZone3();
+    if(targetZone.equals("LoadingStation")) {
+      if(distance > zone3Height) {
+        Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
+      } else if(distance <= zone3Height) {
+        Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
-    if (targetZone.equals("Zone2")){
-      if (distance < zone1Height){
-        Robot.getRollersSubsystem().moveBallFromZone1to2();
-      } else if (distance > zone2Height){
-        Robot.getRollersSubsystem().moveBallFromZone3to2();
-      } else if (distance > zone1Height && distance < zone2Height){
-        Robot.getRollersSubsystem().outakeBallFromZone2();
+    if(targetZone.equals("GroundIntakeTo3")){
+      //deploy arm... (do we create subsytem??)
+      if(distance > zone3Height){
+        Robot.getRollersSubsystem().startIntakeBallFromGround();
+      } else if(distance <= zone1Height){
+      Robot.getRollersSubsystem().moveBallFromZone1to3();
+      } else if(distance == zone3Height){
+        Robot.getRollersSubsystem().holdBallInPlace();
       }
-    } 
+      //retract arm
+    }
+    if(targetZone.equals("GroundIntaketo2")){
+      //deploy arm...
+      if(distance > zone3Height){
+        Robot.getRollersSubsystem().startIntakeBallFromGround();
+      } else if(distance <= zone1Height){
+      Robot.getRollersSubsystem().moveBallFromZone1to2();
+      } else if(distance == zone2Height){
+        Robot.getRollersSubsystem().holdBallInPlace();
+      }
+      //retract arm
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -67,4 +79,4 @@ public class CargoShoot extends Command {
   @Override
   protected void interrupted() {
   }
-} 
+}

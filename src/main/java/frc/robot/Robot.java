@@ -10,11 +10,10 @@ import frc.robot.subsystems.Rollers;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static Drivetrain dt;
-  public static Rollers rollers;
+  private static Rollers rollers;
 
   Command prototype_final_auto;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
-
  
   @Override
   public void robotInit() {
@@ -79,5 +78,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+  }
+
+  public static Rollers getRollersSubsystem(){
+    return rollers;
   }
 }
