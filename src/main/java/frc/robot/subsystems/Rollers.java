@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,10 +15,15 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class Rollers extends Subsystem {
+
+  DoubleSolenoid intakeRoller = RobotMap.intakeRoller;
+
   private Spark rollerIntake;
   private Spark rollers124;
   private Spark roller3;
+
   Ultrasonic distanceSensor;
+
   public Rollers(){
     rollerIntake = RobotMap.motor4;
     rollers124 = RobotMap.motor5;
@@ -33,6 +39,18 @@ public class Rollers extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+  /**
+   * Sets the solenoid to push the piston out and thus lower the intake arm
+   */
+  public void lowerRollerArm(){
+    intakeRoller.set(DoubleSolenoid.Value.kForward);
+  }
+/**
+ * Sets the solenoid to pull the piston in and thus raise the intake arm
+ */
+  public void raiseRollerArm(){
+    intakeRoller.set(DoubleSolenoid.Value.kReverse);
   }
 
   /**

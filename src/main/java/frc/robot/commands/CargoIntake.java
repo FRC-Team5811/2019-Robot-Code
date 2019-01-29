@@ -40,26 +40,26 @@ public class CargoIntake extends Command {
       }
     }
     if(targetZone.equals("GroundIntakeTo3")){
-      //deploy arm... (do we create subsytem??)
+      Robot.getRollersSubsystem().lowerRollerArm();
       if(distance > zone3Height){
         Robot.getRollersSubsystem().startIntakeBallFromGround();
       } else if(distance <= zone1Height){
       Robot.getRollersSubsystem().moveBallFromZone1to3();
+      Robot.getRollersSubsystem().raiseRollerArm();
       } else if(distance == zone3Height){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
-      //retract arm
     }
     if(targetZone.equals("GroundIntaketo2")){
-      //deploy arm...
+      Robot.getRollersSubsystem().lowerRollerArm();
       if(distance > zone3Height){
         Robot.getRollersSubsystem().startIntakeBallFromGround();
       } else if(distance <= zone1Height){
       Robot.getRollersSubsystem().moveBallFromZone1to2();
+      Robot.getRollersSubsystem().raiseRollerArm(); 
       } else if(distance == zone2Height){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
-      //retract arm
     }
   }
 
