@@ -10,16 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoShoot extends Command {
-  
-  private String targetZone;
-  private double distance; 
-  private static final double zone1Height = 15;
-  private static final double zone2Height = 30;
-  private static final double zone3Height = 45;
-
-  public CargoShoot(String passedZone) {
-    targetZone = passedZone;
+public class ResetRobot extends Command {
+  public ResetRobot() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -32,27 +24,12 @@ public class CargoShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    distance = Robot.getRollersSubsystem().getDistance();
-    if (targetZone.equals("Zone3")) {
-      if(distance < zone2Height){
-        Robot.getRollersSubsystem().moveBallFromZone1to3();
-      } else if (distance > zone2Height && distance < zone3Height){
-        Robot.getRollersSubsystem().outakeBallFromZone3();
-      } else if (distance > zone3Height){
-        Robot.getRollersSubsystem().holdBallInPlace();
-      }
-    }
-    if (targetZone.equals("Zone2")){
-      if (distance < zone1Height){
-        Robot.getRollersSubsystem().moveBallFromZone1to2();
-      } else if (distance > zone2Height){
-        Robot.getRollersSubsystem().moveBallFromZone3to2();
-      } else if (distance > zone1Height && distance < zone2Height){
-        Robot.getRollersSubsystem().outakeBallFromZone2();
-      } else if (distance > zone3Height){
-        Robot.getRollersSubsystem().holdBallInPlace();
-      }
-    } 
+    Robot.getRollersSubsystem().moveBallFromZone1to3();
+    Robot.getRollersSubsystem().outakeBallFromZone3();
+    Robot.getRollersSubsystem().holdBallInPlace();
+    Robot.getHatchSubsystem().outakeHatch();
+    Robot.getHatchSubsystem().intakeHatchArms();
+    Robot.getHatchSubsystem().moveHatchToOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -71,4 +48,4 @@ public class CargoShoot extends Command {
   @Override
   protected void interrupted() {
   }
-} 
+}

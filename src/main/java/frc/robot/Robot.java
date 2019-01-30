@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Rollers;
 
 public class Robot extends TimedRobot {
   public static OI oi;
   public static Drivetrain dt;
   private static Rollers rollers;
+  private static Hatch hatch;
 
   Command prototype_final_auto;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
@@ -82,5 +84,9 @@ public class Robot extends TimedRobot {
 
   public static Rollers getRollersSubsystem(){
     return rollers;
+  }
+
+  public static Hatch getHatchSubsystem(){
+    return hatch;
   }
 }

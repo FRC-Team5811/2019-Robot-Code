@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
+import frc.robot.commands.HatchShoot;
+import frc.robot.commands.ResetRobot;
 
 public class OI {
   private static final int LEFT_Y_AXIS = 1;
@@ -51,10 +53,13 @@ public class OI {
       X_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
       B_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
       DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
-
+      
+      A_MANIP.toggleWhenPressed(new HatchShoot());
+      X_MANIP.whenPressed(new ResetRobot());
       MANIP_UP.whileHeld(new CargoShoot("Zone3"));
       MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
       MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
+
   }
 
   public double getDriveLeftY() {
