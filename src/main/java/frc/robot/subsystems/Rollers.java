@@ -1,6 +1,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -16,21 +19,52 @@ import frc.robot.RobotMap;
  */
 public class Rollers extends Subsystem {
 
+  private static final double Zone1HeightBottom = 0;
+  private static final double Zone1HeightTop = 18.242;
+  private static final double Zone2HeightBottom = 18.242;
+  private static final double Zone2HeightTop = 28.117;
+  private static final double Zone3HeightBottom = 28.117;
+  private static final double Zone3HeightTop = 37.992;
+
   DoubleSolenoid intakeRoller = RobotMap.intakeRoller;
 
-  private Spark rollerIntake;
-  private Spark rollers124;
-  private Spark roller3;
+  private TalonSRX rollerIntake;
+  private TalonSRX rollers124;
+  private TalonSRX roller3;
 
   Ultrasonic distanceSensor;
 
   public Rollers(){
-    rollerIntake = RobotMap.motor4;
-    rollers124 = RobotMap.motor5;
-    roller3 = RobotMap.motor6;
+    rollerIntake = RobotMap.motor5;
+    rollers124 = RobotMap.motor6;
+    roller3 = RobotMap.motor7;
     distanceSensor = RobotMap.u1;
   }
   
+  public double getZone1HB(){
+    return Zone1HeightBottom;
+  }
+
+  public double getZone1HT(){
+    return Zone1HeightTop;
+  }
+
+  public double getZone2HB(){
+    return Zone2HeightBottom;
+  }
+
+  public double getZone2HT(){
+    return Zone2HeightTop;
+  }
+
+  public double getZone3HB(){
+    return Zone3HeightBottom;
+  }
+
+  public double getZone3HT(){
+    return Zone3HeightTop;
+  }
+
   public double getDistance(){
     return distanceSensor.getRangeInches();
   }
@@ -59,7 +93,7 @@ public class Rollers extends Subsystem {
    * @param speed power to give motor.  Range -1 to 1.
    */
   public void setRollerIntake(float speed) {
-    rollerIntake.set(speed);
+    rollerIntake.set(ControlMode.PercentOutput, speed);
   }
 
   /**
@@ -67,14 +101,14 @@ public class Rollers extends Subsystem {
    * @param speed power to give motor. Range -1 to 1
    */
   public void setRollers124(float speed){
-    rollers124.set(speed);
+    rollers124.set(ControlMode.PercentOutput, speed);
   }
   /**
   * Sets the motor speed of the Roller 3
   * @param speed power to give motor. Range -1 to 1
   */
   public void setRoller3(float speed){
-    roller3.set(speed);
+    roller3.set(ControlMode.PercentOutput, speed);
   }
   /**
    *  Sets roller motors in configuration to intake ball from ground

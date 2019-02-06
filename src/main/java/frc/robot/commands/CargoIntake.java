@@ -13,9 +13,6 @@ import frc.robot.Robot;
 public class CargoIntake extends Command {
   private String targetZone;
   private double distance; 
-  private static final double zone1Height = 15;
-  private static final double zone2Height = 30;
-  private static final double zone3Height = 45;
 
   public CargoIntake(String passedZone) {
     targetZone = passedZone;
@@ -33,31 +30,31 @@ public class CargoIntake extends Command {
   protected void execute() {
     distance = Robot.getRollersSubsystem().getDistance();
     if(targetZone.equals("LoadingStation")) {
-      if(distance > zone3Height) {
+      if(distance >  Robot.getRollersSubsystem().getZone3HB()) {
         Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
-      } else if(distance <= zone3Height) {
+      } else if(distance < Robot.getRollersSubsystem().getZone3HT()) {
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
     if(targetZone.equals("GroundIntakeTo3")){
       Robot.getRollersSubsystem().lowerRollerArm();
-      if(distance > zone3Height){
+      if(distance > Robot.getRollersSubsystem().getZone3HT()){
         Robot.getRollersSubsystem().startIntakeBallFromGround();
-      } else if(distance <= zone1Height){
+      } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
       Robot.getRollersSubsystem().moveBallFromZone1to3();
       Robot.getRollersSubsystem().raiseRollerArm();
-      } else if(distance == zone3Height){
+      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && distance > Robot.getRollersSubsystem().getZone3HB()){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
     if(targetZone.equals("GroundIntaketo2")){
       Robot.getRollersSubsystem().lowerRollerArm();
-      if(distance > zone3Height){
+      if(distance > Robot.getRollersSubsystem().getZone3HT()){
         Robot.getRollersSubsystem().startIntakeBallFromGround();
-      } else if(distance <= zone1Height){
+      } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
       Robot.getRollersSubsystem().moveBallFromZone1to2();
       Robot.getRollersSubsystem().raiseRollerArm(); 
-      } else if(distance == zone2Height){
+      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && distance > Robot.getRollersSubsystem().getZone3HB()){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }

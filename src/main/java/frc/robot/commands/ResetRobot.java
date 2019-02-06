@@ -29,7 +29,7 @@ public class ResetRobot extends Command {
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.getHatchSubsystem().outakeHatch();
     Robot.getHatchSubsystem().intakeHatchArms();
-    Robot.getHatchSubsystem().moveHatchToOut();
+    Robot.getHatchSubsystem().moveHatchToIn();
   }
 
   // Make this return true when this Command no longer needs to run execute()
