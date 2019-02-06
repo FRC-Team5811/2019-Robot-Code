@@ -5,22 +5,24 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Rollers;
 
 public class Robot extends TimedRobot {
   public static OI oi;
   public static Drivetrain dt;
-  public static Rollers rollers;
+  private static Rollers rollers;
+  private static Hatch hatch;
 
   Command prototype_final_auto;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
-
  
   @Override
   public void robotInit() {
     rollers = new Rollers();
     dt = new Drivetrain();
     oi = new OI();
+    RobotMap.u1.setAutomaticMode(true);
   }
 
  /**
@@ -72,9 +74,19 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    System.out.println(rollers.getDistance());
   }
 
   @Override
   public void testPeriodic() {
+  }
+
+  public static Rollers getRollersSubsystem(){
+    return rollers;
+  }
+
+  public static Hatch getHatchSubsystem(){
+    return hatch;
   }
 }

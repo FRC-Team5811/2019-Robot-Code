@@ -10,12 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoShoot extends Command {
-  
+public class CargoIntake extends Command {
   private String targetZone;
   private double distance; 
 
-  public CargoShoot(String passedZone) {
+  public CargoIntake(String passedZone) {
     targetZone = passedZone;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -30,27 +29,35 @@ public class CargoShoot extends Command {
   @Override
   protected void execute() {
     distance = Robot.getRollersSubsystem().getDistance();
-    if (targetZone.equals("Zone3")) {
-      if(distance < Robot.getRollersSubsystem().getZone2HT()){
-        Robot.getRollersSubsystem().moveBallFromZone1to3();
-      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT()){
-        Robot.getRollersSubsystem().outakeBallFromZone3();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HT()){
+    if(targetZone.equals("LoadingStation")) {
+      if(distance >  Robot.getRollersSubsystem().getZone3HB()) {
+        Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
+      } else if(distance < Robot.getRollersSubsystem().getZone3HT()) {
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
-    if (targetZone.equals("Zone2")){
-      if (distance < Robot.getRollersSubsystem().getZone2HB()){
-        Robot.getRollersSubsystem().moveBallFromZone1to2();
-      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT()){
-        Robot.getRollersSubsystem().moveBallFromZone3to2();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HB() && distance < Robot.getRollersSubsystem().getZone2HT()){
-        Robot.getRollersSubsystem().outakeBallFromZone2();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HT()){
+    if(targetZone.equals("GroundIntakeTo3")){
+      Robot.getRollersSubsystem().lowerRollerArm();
+      if(distance > Robot.getRollersSubsystem().getZone3HT()){
+        Robot.getRollersSubsystem().startIntakeBallFromGround();
+      } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
+      Robot.getRollersSubsystem().moveBallFromZone1to3();
+      Robot.getRollersSubsystem().raiseRollerArm();
+      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && distance > Robot.getRollersSubsystem().getZone3HB()){
         Robot.getRollersSubsystem().holdBallInPlace();
-        
       }
-    } 
+    }
+    if(targetZone.equals("GroundIntaketo2")){
+      Robot.getRollersSubsystem().lowerRollerArm();
+      if(distance > Robot.getRollersSubsystem().getZone3HT()){
+        Robot.getRollersSubsystem().startIntakeBallFromGround();
+      } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
+      Robot.getRollersSubsystem().moveBallFromZone1to2();
+      Robot.getRollersSubsystem().raiseRollerArm(); 
+      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && distance > Robot.getRollersSubsystem().getZone3HB()){
+        Robot.getRollersSubsystem().holdBallInPlace();
+      }
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -69,4 +76,4 @@ public class CargoShoot extends Command {
   @Override
   protected void interrupted() {
   }
-} 
+}
