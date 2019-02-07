@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.RobotMap;
@@ -28,17 +29,21 @@ public class Rollers extends Subsystem {
 
   DoubleSolenoid intakeRoller = RobotMap.intakeRoller;
 
-  private TalonSRX rollerIntake;
-  private TalonSRX rollers124;
-  private TalonSRX roller3;
+  private Victor rollerIntake;
+  private Victor rollers124;
+  private Victor roller3;
 
   Ultrasonic distanceSensor;
+  DigitalInput laserTripWire1;
+  DigitalInput laserTripWire2;
 
   public Rollers(){
     rollerIntake = RobotMap.motor5;
     rollers124 = RobotMap.motor6;
     roller3 = RobotMap.motor7;
     distanceSensor = RobotMap.u1;
+    laserTripWire1 = RobotMap.laser1;
+    laserTripWire2 = RobotMap.laser2;
   }
   
   public double getZone1HB(){
@@ -69,6 +74,15 @@ public class Rollers extends Subsystem {
     return distanceSensor.getRangeInches();
   }
 
+  public boolean getLaserTripWire1() {
+    return laserTripWire1.get();
+  }
+
+  public boolean getLaserTripWire2() {
+    return laserTripWire2.get();
+  }
+
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -93,7 +107,7 @@ public class Rollers extends Subsystem {
    * @param speed power to give motor.  Range -1 to 1.
    */
   public void setRollerIntake(float speed) {
-    rollerIntake.set(ControlMode.PercentOutput, speed);
+    rollerIntake.set(speed);
   }
 
   /**
@@ -101,14 +115,14 @@ public class Rollers extends Subsystem {
    * @param speed power to give motor. Range -1 to 1
    */
   public void setRollers124(float speed){
-    rollers124.set(ControlMode.PercentOutput, speed);
+    rollers124.set(speed);
   }
   /**
   * Sets the motor speed of the Roller 3
   * @param speed power to give motor. Range -1 to 1
   */
   public void setRoller3(float speed){
-    roller3.set(ControlMode.PercentOutput, speed);
+    roller3.set(speed);
   }
   /**
    *  Sets roller motors in configuration to intake ball from ground

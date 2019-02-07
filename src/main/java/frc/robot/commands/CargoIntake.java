@@ -13,6 +13,8 @@ import frc.robot.Robot;
 public class CargoIntake extends Command {
   private String targetZone;
   private double distance; 
+  private boolean trippedWire;  //in zone 2
+  private boolean trippedWire2; //in zone 3
 
   public CargoIntake(String passedZone) {
     targetZone = passedZone;
@@ -29,32 +31,34 @@ public class CargoIntake extends Command {
   @Override
   protected void execute() {
     distance = Robot.getRollersSubsystem().getDistance();
+    trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
+    trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     if(targetZone.equals("LoadingStation")) {
-      if(distance >  Robot.getRollersSubsystem().getZone3HB()) {
+      if(distance >  Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false) {
         Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
-      } else if(distance < Robot.getRollersSubsystem().getZone3HT()) {
+      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false) {
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
     if(targetZone.equals("GroundIntakeTo3")){
       Robot.getRollersSubsystem().lowerRollerArm();
-      if(distance > Robot.getRollersSubsystem().getZone3HT()){
+      if(distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false) {
         Robot.getRollersSubsystem().startIntakeBallFromGround();
-      } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
+      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == false) {
       Robot.getRollersSubsystem().moveBallFromZone1to3();
       Robot.getRollersSubsystem().raiseRollerArm();
-      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && distance > Robot.getRollersSubsystem().getZone3HB()){
+      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && distance > Robot.getRollersSubsystem().getZone3HB() && trippedWire2 == true){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
     if(targetZone.equals("GroundIntaketo2")){
       Robot.getRollersSubsystem().lowerRollerArm();
-      if(distance > Robot.getRollersSubsystem().getZone3HT()){
+      if(distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false){
         Robot.getRollersSubsystem().startIntakeBallFromGround();
       } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
       Robot.getRollersSubsystem().moveBallFromZone1to2();
       Robot.getRollersSubsystem().raiseRollerArm(); 
-      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && distance > Robot.getRollersSubsystem().getZone3HB()){
+      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && distance > Robot.getRollersSubsystem().getZone2HB() && trippedWire == true){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
