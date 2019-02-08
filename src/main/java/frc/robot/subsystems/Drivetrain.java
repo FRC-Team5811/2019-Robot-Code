@@ -7,12 +7,14 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends Subsystem {
   
-  public static TalonSRX driveFrontLeft, driveBackLeft, driveFrontRight, driveBackRight;
+  public static TalonSRX driveFrontLeft, driveFrontRight;
+  public static Victor driveBackRight, driveBackLeft;
   public static Compressor cp;
   public static PowerDistributionPanel pdp;
   public static AHRS navX = RobotMap.navx;
@@ -39,9 +41,9 @@ public class Drivetrain extends Subsystem {
     }
     
 		driveFrontLeft.set(ControlMode.PercentOutput, -throttle + turn);
-		driveBackLeft.set(ControlMode.PercentOutput, -throttle + turn);
+		driveBackLeft.set(-throttle + turn);
 		driveFrontRight.set(ControlMode.PercentOutput, throttle + turn);
-    driveBackRight.set(ControlMode.PercentOutput, throttle + turn);
+    driveBackRight.set(throttle + turn);
     
   }
 

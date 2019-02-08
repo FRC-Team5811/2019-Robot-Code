@@ -14,6 +14,8 @@ public class CargoShoot extends Command {
   
   private String targetZone;
   private double distance; 
+  private boolean trippedWire;  //in zone 2
+  private boolean trippedWire2; //in zone 3
 
   public CargoShoot(String passedZone) {
     targetZone = passedZone;
@@ -30,23 +32,25 @@ public class CargoShoot extends Command {
   @Override
   protected void execute() {
     distance = Robot.getRollersSubsystem().getDistance();
+    trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
+    trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     if (targetZone.equals("Zone3")) {
       if(distance < Robot.getRollersSubsystem().getZone2HT()){
         Robot.getRollersSubsystem().moveBallFromZone1to3();
-      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT()){
+      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){ 
         Robot.getRollersSubsystem().outakeBallFromZone3();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HT()){
+      } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
         Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
     if (targetZone.equals("Zone2")){
       if (distance < Robot.getRollersSubsystem().getZone2HB()){
         Robot.getRollersSubsystem().moveBallFromZone1to2();
-      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT()){
+      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){
         Robot.getRollersSubsystem().moveBallFromZone3to2();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HB() && distance < Robot.getRollersSubsystem().getZone2HT()){
+      } else if (distance > Robot.getRollersSubsystem().getZone3HB() && distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == true){
         Robot.getRollersSubsystem().outakeBallFromZone2();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HT()){
+      } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
         Robot.getRollersSubsystem().holdBallInPlace();
         
       }
