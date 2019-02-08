@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -13,18 +14,18 @@ import frc.robot.RobotMap;
 
 public class Drivetrain extends Subsystem {
   
-  public static TalonSRX driveFrontLeft, driveFrontRight;
-  public static Victor driveBackRight, driveBackLeft;
+  public static TalonSRX driveFrontRight, driveFrontLeft;
+  public static VictorSPX driveBackRight, driveBackLeft;
   public static Compressor cp;
   public static PowerDistributionPanel pdp;
   public static AHRS navX = RobotMap.navx;
 
   public Drivetrain(){
 
-    driveFrontLeft = RobotMap.motor1;
-    driveBackLeft = RobotMap.motor2;
-    driveFrontRight = RobotMap.motor3;
-    driveBackRight = RobotMap.motor4;
+    driveFrontRight = RobotMap.rightF;
+    driveBackRight = RobotMap.rightB;
+    driveFrontLeft = RobotMap.leftF;
+    driveBackLeft = RobotMap.leftB;
 
     cp = RobotMap.COMPRESSOR;
 
@@ -41,9 +42,9 @@ public class Drivetrain extends Subsystem {
     }
     
 		driveFrontLeft.set(ControlMode.PercentOutput, -throttle + turn);
-		driveBackLeft.set(-throttle + turn);
-		driveFrontRight.set(ControlMode.PercentOutput, throttle + turn);
-    driveBackRight.set(throttle + turn);
+		driveBackRight.set(ControlMode.PercentOutput, -throttle + turn);
+		driveFrontLeft.set(ControlMode.PercentOutput, throttle + turn);
+    driveBackRight.set(ControlMode.PercentOutput, -throttle + turn);
     
   }
 

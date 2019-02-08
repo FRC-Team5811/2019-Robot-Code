@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
@@ -29,18 +30,18 @@ public class Rollers extends Subsystem {
 
   DoubleSolenoid intakeRoller = RobotMap.intakeRoller;
 
-  private Victor rollerIntake;
-  private Victor rollers124;
-  private Victor roller3;
+  private VictorSPX rollerIntake;
+  private VictorSPX rollers124;
+  private VictorSPX roller3;
 
   Ultrasonic distanceSensor;
   DigitalInput laserTripWire1;
   DigitalInput laserTripWire2;
 
   public Rollers(){
-    rollerIntake = RobotMap.motor5;
-    rollers124 = RobotMap.motor6;
-    roller3 = RobotMap.motor7;
+    rollerIntake = RobotMap.cargo1;
+    rollers124 = RobotMap.cargo2;
+    roller3 = RobotMap.cargo3;
     distanceSensor = RobotMap.u1;
     laserTripWire1 = RobotMap.laser1;
     laserTripWire2 = RobotMap.laser2;
@@ -107,7 +108,7 @@ public class Rollers extends Subsystem {
    * @param speed power to give motor.  Range -1 to 1.
    */
   public void setRollerIntake(float speed) {
-    rollerIntake.set(speed);
+    rollerIntake.set(ControlMode.PercentOutput, speed);
   }
 
   /**
@@ -115,14 +116,14 @@ public class Rollers extends Subsystem {
    * @param speed power to give motor. Range -1 to 1
    */
   public void setRollers124(float speed){
-    rollers124.set(speed);
+    rollers124.set(ControlMode.PercentOutput, speed);
   }
   /**
   * Sets the motor speed of the Roller 3
   * @param speed power to give motor. Range -1 to 1
   */
   public void setRoller3(float speed){
-    roller3.set(speed);
+    roller3.set(ControlMode.PercentOutput, speed);
   }
   /**
    *  Sets roller motors in configuration to intake ball from ground

@@ -1,7 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
 
@@ -14,22 +14,21 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.Victor;
 
 public class RobotMap {
 
-  public static final int COMPRESSOR_CAN_ID = 0; 
+  public static final int COMPRESSOR_CAN_ID = 1; 
 
-  public static PowerDistributionPanel PDP = new PowerDistributionPanel();
-  public static Compressor COMPRESSOR = new Compressor(COMPRESSOR_CAN_ID);
+  public static PowerDistributionPanel PDP = new PowerDistributionPanel(2);
+  public static Compressor COMPRESSOR = new Compressor();
 
-  public static TalonSRX motor1 = new TalonSRX(1); 
-  public static Victor motor2 = new Victor(2);
-  public static TalonSRX motor3 = new TalonSRX(3);
-  public static Victor motor4 = new Victor(4);
-  public static Victor motor5 = new Victor(5);
-  public static Victor motor6 = new Victor(6);
-  public static Victor motor7 = new Victor(7);
+  public static TalonSRX rightF = new TalonSRX(3); //right forward
+  public static VictorSPX rightB = new VictorSPX(5); //right back
+  public static TalonSRX leftF = new TalonSRX(4); //left forward
+  public static VictorSPX leftB = new VictorSPX(7); //left back
+  public static VictorSPX cargo1 = new VictorSPX(9); //cargo 1
+  public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
+  public static VictorSPX cargo3 = new VictorSPX(6); //cargo 3
 
 	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);
   public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);
@@ -39,8 +38,8 @@ public class RobotMap {
 
 
   public static Ultrasonic u1 = new Ultrasonic(0, 1);
-  public static DigitalInput laser1 = new DigitalInput(0);
-  public static DigitalInput laser2 = new DigitalInput(1);
+  public static DigitalInput laser1 = new DigitalInput(2);
+  public static DigitalInput laser2 = new DigitalInput(3);
 
   public static I2C arduino = new I2C(I2C.Port.kMXP, 58);
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);
