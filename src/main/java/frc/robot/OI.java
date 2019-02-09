@@ -10,6 +10,7 @@ import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.HatchShoot;
 import frc.robot.commands.ResetRobot;
+import frc.robot.commands.Switch;
 
 public class OI {
   private static final int LEFT_Y_AXIS = 1;
@@ -53,19 +54,20 @@ public class OI {
      if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
         DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
-        Y_DRIVE.whileHeld(new CargoIntake("GroundIntaketo3"));
+       // Y_DRIVE.whileHeld(new CargoIntake("GroundIntaketo3"));
         X_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
         B_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
         DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
+        Y_DRIVE.toggleWhenPressed(new Switch());
         A_DRIVE.toggleWhenPressed(new ArcadeSpeedMod());
       }
-      //if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+      if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         A_MANIP.toggleWhenPressed(new HatchShoot());
         X_MANIP.whenPressed(new ResetRobot());
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
-     // }
+      }
 
   }
 

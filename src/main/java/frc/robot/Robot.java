@@ -1,5 +1,11 @@
 package frc.robot;
 
+import edu.wpi.cscore.CameraServerJNI;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,6 +24,9 @@ public class Robot extends TimedRobot {
   public static Drivetrain dt;
   private static Rollers rollers;
   private static Hatch hatch;
+  public static UsbCamera cam1, cam2;
+  public static VideoSink server;
+  public static MjpegServer mjpegServer1;
 
   Command autonomousCommand;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
@@ -29,6 +38,10 @@ public class Robot extends TimedRobot {
     dt = new Drivetrain();
     oi = new OI();
     RobotMap.u1.setAutomaticMode(true);  //DON"T DELETE
+
+    UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+    UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    server = CameraServer.getInstance().getServer();
 
     // autoChooser = new SendableChooser();
     // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
