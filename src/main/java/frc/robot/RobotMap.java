@@ -9,15 +9,12 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class RobotMap {
-
-  public static final int COMPRESSOR_CAN_ID = 1; 
 
   public static PowerDistributionPanel PDP = new PowerDistributionPanel(2);
   public static Compressor COMPRESSOR = new Compressor();
@@ -37,9 +34,10 @@ public class RobotMap {
   //public static DoubleSolenoid backClimber = new DoubleSolenoid(8, 9);
 
 
-  public static Ultrasonic u1 = new Ultrasonic(0, 1);
-  public static DigitalInput laser1 = new DigitalInput(2);
-  public static DigitalInput laser2 = new DigitalInput(3);
+  public static Ultrasonic u1 = new Ultrasonic(6, 7);
+  public static AnalogInput laser1 = new AnalogInput(3);
+  public static AnalogInput laser2 = new AnalogInput(2);
+  
 
   public static I2C arduino = new I2C(I2C.Port.kMXP, 58);
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);

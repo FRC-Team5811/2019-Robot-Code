@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
     rollers = new Rollers();
     dt = new Drivetrain();
     oi = new OI();
-    RobotMap.u1.setAutomaticMode(true);
+    RobotMap.u1.setAutomaticMode(true);  //DON"T DELETE
   }
 
  /**
@@ -64,8 +64,6 @@ public class Robot extends TimedRobot {
     if (prototype_final_auto != null) {
       prototype_final_auto.cancel();
     }
-    // prototype_final_auto = new drivetesy();
-    // prototype_final_auto.start();
     RobotMap.COMPRESSOR.clearAllPCMStickyFaults();
     RobotMap.COMPRESSOR.setClosedLoopControl(true);
     RobotMap.PDP.clearStickyFaults();
@@ -74,8 +72,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
-    System.out.println(rollers.getDistance());
   }
 
   @Override

@@ -35,8 +35,8 @@ public class Rollers extends Subsystem {
   private VictorSPX roller3;
 
   Ultrasonic distanceSensor;
-  DigitalInput laserTripWire1;
-  DigitalInput laserTripWire2;
+  AnalogInput laserTripWire1;
+  AnalogInput laserTripWire2;
 
   public Rollers(){
     rollerIntake = RobotMap.cargo1;
@@ -76,11 +76,19 @@ public class Rollers extends Subsystem {
   }
 
   public boolean getLaserTripWire1() {
-    return laserTripWire1.get();
+    if(laserTripWire1.getVoltage() < 1){
+      return false;
+    } else {
+      return true;
+    }
   }
 
   public boolean getLaserTripWire2() {
-    return laserTripWire2.get();
+    if(laserTripWire2.getVoltage() < 1){
+      return false;
+    } else {
+      return true;
+    }
   }
 
 

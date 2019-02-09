@@ -36,16 +36,12 @@ public class Drivetrain extends Subsystem {
     //simulates car-like driving
 		if (throttle >= .02) {
 			turn = -turn;
-		}
-		if (throttle <= .02) {
-			turn = turn;
     }
     
-		driveFrontLeft.set(ControlMode.PercentOutput, -throttle + turn);
-		driveBackRight.set(ControlMode.PercentOutput, -throttle + turn);
-		driveFrontLeft.set(ControlMode.PercentOutput, throttle + turn);
-    driveBackRight.set(ControlMode.PercentOutput, -throttle + turn);
-    
+    driveFrontLeft.set(ControlMode.PercentOutput, throttle + turn);
+    driveBackLeft.follow(driveFrontLeft);
+    driveFrontRight.set(ControlMode.PercentOutput, -throttle + turn);
+    driveBackRight.follow(driveFrontRight);
   }
 
   public float grabValues() {
@@ -59,6 +55,13 @@ public class Drivetrain extends Subsystem {
 
   public void reset() {
 		navX.reset();
+  }
+  
+  public void motorReset() {
+    driveFrontRight.set(ControlMode.PercentOutput, 0);
+    driveBackRight.follow(driveFrontRight);
+    driveFrontLeft.set(ControlMode.PercentOutput, 0);
+    driveBackLeft.follow(driveFrontLeft);
 	}
 
 }
