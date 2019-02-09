@@ -59,13 +59,13 @@ public class OI {
         DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
         A_DRIVE.toggleWhenPressed(new ArcadeSpeedMod());
       }
-      if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+      //if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         A_MANIP.toggleWhenPressed(new HatchShoot());
         X_MANIP.whenPressed(new ResetRobot());
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
-      }
+     // }
 
   }
 

@@ -57,7 +57,7 @@ public class Drivetrain extends Subsystem {
     }
     double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn));
     double rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
-
+    System.out.println(throttle + "\t" + turn);
     driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed*.92);
     driveBackLeft.follow(driveFrontLeft);
     driveFrontRight.set(ControlMode.PercentOutput, rightSpeed);
