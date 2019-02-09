@@ -57,7 +57,7 @@ public class Drivetrain extends Subsystem {
     double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn));
     double rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
     if(rightSpeed > 0.99){rightSpeed = 0.99;}
-    if(rightSpeed < -0.99){rightSpeed = -0.\99;}
+    if(rightSpeed < -0.99){rightSpeed = -0.99;}
     if(leftSpeed > 0.99){leftSpeed = 0.99;}
     if(leftSpeed < -0.99){leftSpeed = -0.99;}
     System.out.println(leftSpeed + "\t" + rightSpeed);
