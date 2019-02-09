@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends Subsystem {
@@ -51,17 +52,13 @@ public class Drivetrain extends Subsystem {
   
   public void arcadeDrive(double turn, double throttle) {
     //simulates car-like driving
-		if (throttle >= .02) {
+		if (throttle <= -.02) {
 			turn = -turn;
     }
     double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn));
     double rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
-    if(rightSpeed > 0.99){rightSpeed = 0.99;}
-    if(rightSpeed < -0.99){rightSpeed = -0.99;}
-    if(leftSpeed > 0.99){leftSpeed = 0.99;}
-    if(leftSpeed < -0.99){leftSpeed = -0.99;}
-    System.out.println(leftSpeed + "\t" + rightSpeed);
-    driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed);
+
+    driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed*.92);
     driveBackLeft.follow(driveFrontLeft);
     driveFrontRight.set(ControlMode.PercentOutput, rightSpeed);
     driveBackRight.follow(driveFrontRight);

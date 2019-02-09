@@ -4,7 +4,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
-
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.Compressor;
@@ -40,7 +42,12 @@ public class RobotMap {
   public static AnalogInput laser2 = new AnalogInput(2);
   
   public static Encoder driveEncL = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-	public static Encoder driveEncR = new Encoder(2, 3, true, Encoder.EncodingType.k4X);
+  public static Encoder driveEncR = new Encoder(2, 3, true, Encoder.EncodingType.k4X);
+  
+  public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+  public static UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture();
+  public static Class<MjpegServer> server = MjpegServer.class;
+
 
   public static I2C arduino = new I2C(I2C.Port.kMXP, 58);
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);
