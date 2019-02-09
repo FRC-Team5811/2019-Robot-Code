@@ -20,8 +20,8 @@ public class Robot extends TimedRobot {
   private static Hatch hatch;
 
   Command autonomousCommand;
-  //SendableChooser<Command> prototype_chooser = new SendableChooser<>();
-  SendableChooser autoChooser;
+  SendableChooser<Command> prototype_chooser = new SendableChooser<>();
+  //SendableChooser autoChooser;
 
   @Override
   public void robotInit() {
@@ -30,10 +30,10 @@ public class Robot extends TimedRobot {
     oi = new OI();
     RobotMap.u1.setAutomaticMode(true);  //DON"T DELETE
 
-    autoChooser = new SendableChooser();
-    autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
-    autoChooser.addObject("TOm Auto", new ResetRobot());
-    SmartDashboard.putData("Auto Mode", autoChooser);
+    // autoChooser = new SendableChooser();
+    // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
+    // autoChooser.addObject("TOm Auto", new ResetRobot());
+    // SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
  /**

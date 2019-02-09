@@ -1,5 +1,7 @@
 package frc.robot;
 
+import javax.xml.transform.stream.StreamSource;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -43,11 +45,6 @@ public class RobotMap {
   
   public static Encoder driveEncL = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   public static Encoder driveEncR = new Encoder(2, 3, true, Encoder.EncodingType.k4X);
-  
-  public static UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-  public static UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture();
-  public static Class<MjpegServer> server = MjpegServer.class;
-
 
   public static I2C arduino = new I2C(I2C.Port.kMXP, 58);
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);
