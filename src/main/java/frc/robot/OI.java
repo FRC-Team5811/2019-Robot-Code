@@ -50,7 +50,7 @@ public class OI {
   private static final DPadButton MANIP_LEFT = new DPadButton(JOY_2, 270);
 
   public OI(){
-      if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+     if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
         DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
         Y_DRIVE.whileHeld(new CargoIntake("GroundIntaketo3"));
