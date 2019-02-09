@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.ProfileDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Rollers;
@@ -14,7 +15,7 @@ public class Robot extends TimedRobot {
   private static Rollers rollers;
   private static Hatch hatch;
 
-  Command prototype_final_auto;
+  Command autonomousCommand;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
  
   @Override
@@ -43,12 +44,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    prototype_final_auto = prototype_chooser.getSelected();
-
-    // schedule the autonomous command (example)
-    if (prototype_final_auto != null) {
-      prototype_final_auto.start();
-    }
+    autonomousCommand = new ProfileDrive();
+		autonomousCommand.start();
   }
 
   /**
@@ -61,8 +58,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if (prototype_final_auto != null) {
-      prototype_final_auto.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
     RobotMap.COMPRESSOR.clearAllPCMStickyFaults();
     RobotMap.COMPRESSOR.setClosedLoopControl(true);

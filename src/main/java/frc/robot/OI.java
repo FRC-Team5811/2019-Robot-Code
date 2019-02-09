@@ -1,6 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.CargoIntake;
@@ -47,18 +49,21 @@ public class OI {
   private static final DPadButton MANIP_LEFT = new DPadButton(JOY_2, 270);
 
   public OI(){
-      DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
-      DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
-      Y_DRIVE.whileHeld(new CargoIntake("GroundIntaketo3"));
-      X_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
-      B_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
-      DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
-      
-      A_MANIP.toggleWhenPressed(new HatchShoot());
-      X_MANIP.whenPressed(new ResetRobot());
-      MANIP_UP.whileHeld(new CargoShoot("Zone3"));
-      MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
-      MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
+      if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+        DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
+        DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
+        Y_DRIVE.whileHeld(new CargoIntake("GroundIntaketo3"));
+        X_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
+        B_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
+        DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
+      }
+      if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+        A_MANIP.toggleWhenPressed(new HatchShoot());
+        X_MANIP.whenPressed(new ResetRobot());
+        MANIP_UP.whileHeld(new CargoShoot("Zone3"));
+        MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
+        MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
+      }
 
   }
 

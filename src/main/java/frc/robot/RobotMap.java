@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -38,6 +39,8 @@ public class RobotMap {
   public static AnalogInput laser1 = new AnalogInput(3);
   public static AnalogInput laser2 = new AnalogInput(2);
   
+  public static Encoder driveEncL = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+	public static Encoder driveEncR = new Encoder(2, 3, true, Encoder.EncodingType.k4X);
 
   public static I2C arduino = new I2C(I2C.Port.kMXP, 58);
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);
