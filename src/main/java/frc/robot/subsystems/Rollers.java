@@ -40,7 +40,7 @@ public class Rollers extends Subsystem {
 
   public Rollers(){
     rollerIntake = RobotMap.cargo1;
-    rollers124 = RobotMap.cargo2;
+    //rollers124 = RobotMap.cargo2;
     roller3 = RobotMap.cargo3;
     distanceSensor = RobotMap.u1;
     laserTripWire1 = RobotMap.laser1;

@@ -6,11 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ResetRobot extends Command {
-  public ResetRobot() {
+public class ArcadeSpeedMod extends Command {
+  public ArcadeSpeedMod() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,9 +24,7 @@ public class ResetRobot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getRollersSubsystem().raiseRollerArm();
-    Robot.getRollersSubsystem().holdBallInPlace();
-    Robot.getHatchSubsystem().moveHatchToIn();
+    Robot.dt.changeSpeed(0.3, 0.3);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,11 +36,13 @@ public class ResetRobot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.dt.changeSpeed(1, 1);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

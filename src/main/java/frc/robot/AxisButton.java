@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 
 public class AxisButton extends Button {
 
-    private static final double DEAD_ZONE = 0.1;
+    private static final double DEAD_ZONE = 0.02;
 
 	private Joystick joystick;
 	private int axis;

@@ -4,10 +4,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.CargoShoot;
 import frc.robot.commands.ProfileDrive;
+import frc.robot.commands.ResetRobot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Rollers;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
   public static OI oi;
@@ -16,14 +20,20 @@ public class Robot extends TimedRobot {
   private static Hatch hatch;
 
   Command autonomousCommand;
-  SendableChooser<Command> prototype_chooser = new SendableChooser<>();
- 
+  //SendableChooser<Command> prototype_chooser = new SendableChooser<>();
+  SendableChooser autoChooser;
+
   @Override
   public void robotInit() {
     rollers = new Rollers();
     dt = new Drivetrain();
     oi = new OI();
     RobotMap.u1.setAutomaticMode(true);  //DON"T DELETE
+
+    autoChooser = new SendableChooser();
+    autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
+    autoChooser.addObject("TOm Auto", new ResetRobot());
+    SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
  /**

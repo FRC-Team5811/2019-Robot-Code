@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArcadeSpeedMod;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.HatchShoot;
@@ -56,6 +57,7 @@ public class OI {
         X_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
         B_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
         DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
+        A_DRIVE.toggleWhenPressed(new ArcadeSpeedMod());
       }
       if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         A_MANIP.toggleWhenPressed(new HatchShoot());
@@ -68,7 +70,7 @@ public class OI {
   }
 
   public double getDriveLeftY() {
-    return JOY_1.getRawAxis(LEFT_Y_AXIS);
+    return JOY_1.getRawAxis(LEFT_Y_AXIS); 
 	}
 
 	public double getDriveRightY() {
@@ -80,7 +82,7 @@ public class OI {
 	}
 
 	public double getDriveRightX() {
-		return JOY_1.getRawAxis(RIGHT_X_AXIS);
+    return JOY_1.getRawAxis(RIGHT_X_AXIS);
 	}
 
 	public double getManipLeftY() {

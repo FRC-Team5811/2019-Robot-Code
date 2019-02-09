@@ -24,6 +24,9 @@ public class Drivetrain extends Subsystem {
 
   private static Encoder encL, encR;
 
+  private static double arcadeSpeedMod = 1;
+  private static double arcadeTurnMod = 1;
+
   public static double batteryVoltage;
 
   public Drivetrain(){
@@ -51,10 +54,16 @@ public class Drivetrain extends Subsystem {
 		if (throttle >= .02) {
 			turn = -turn;
     }
-    
-    driveFrontLeft.set(ControlMode.PercentOutput, throttle + turn);
+    double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn));
+    double rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
+    if(rightSpeed > 0.99){rightSpeed = 0.99;}
+    if(rightSpeed < -0.99){rightSpeed = -0.\99;}
+    if(leftSpeed > 0.99){leftSpeed = 0.99;}
+    if(leftSpeed < -0.99){leftSpeed = -0.99;}
+    System.out.println(leftSpeed + "\t" + rightSpeed);
+    driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed);
     driveBackLeft.follow(driveFrontLeft);
-    driveFrontRight.set(ControlMode.PercentOutput, -throttle + turn);
+    driveFrontRight.set(ControlMode.PercentOutput, rightSpeed);
     driveBackRight.follow(driveFrontRight);
   }
 
@@ -70,7 +79,7 @@ public class Drivetrain extends Subsystem {
     return encR.get();
   }
 
-  public void reseEncoders() {
+  public void resetEncoders() {
 		encR.reset();
 		encL.reset();
 	}
@@ -81,7 +90,12 @@ public class Drivetrain extends Subsystem {
 	
 	public double reportTimeStamp() {
 		return Timer.getFPGATimestamp();
-	}
+  }
+  
+  public void changeSpeed(double throttle, double turn){
+    arcadeSpeedMod = throttle;
+    arcadeTurnMod = turn;
+  }
 	
 	//Send an amount of voltage to the motors based on the PDP voltage reading. Doesn't account for voltage sag...
 	public void voltageDrive(double leftVoltage, double rightVoltage) { 
