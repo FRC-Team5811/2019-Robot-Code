@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,6 +30,9 @@ public class Switch extends Command {
   @Override
   protected void execute() {
     Robot.server.setSource(Robot.cam1);
+    Robot.cam1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    Robot.cam2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

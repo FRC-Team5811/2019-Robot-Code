@@ -4,6 +4,7 @@ import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
+import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -39,9 +40,11 @@ public class Robot extends TimedRobot {
     oi = new OI();
     RobotMap.u1.setAutomaticMode(true);  //DON"T DELETE
 
-    UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(0);
-    UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    
+    cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+    cam2 = CameraServer.getInstance().startAutomaticCapture(1);
     server = CameraServer.getInstance().getServer();
+    
 
     // autoChooser = new SendableChooser();
     // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
@@ -104,5 +107,9 @@ public class Robot extends TimedRobot {
 
   public static Hatch getHatchSubsystem(){
     return hatch;
+  }
+
+  public static Drivetrain getDtSubsystem(){
+    return dt;
   }
 }

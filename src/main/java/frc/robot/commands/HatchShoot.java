@@ -11,20 +11,34 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class HatchShoot extends Command {
+
+  double EncValueCurrent = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
+  double EncValueStored = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
+  private static final int EXTRA_DISTANCE = 23598; //CHANGE THIS WITH ACTUAL ROBOT
+
   public HatchShoot() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.dt);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getHatchSubsystem().outakeHatch();
+    EncValueStored = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
+
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getHatchSubsystem().outakeHatch();
+    EncValueCurrent = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
+    if(EncValueStored + EXTRA_DISTANCE >= EncValueCurrent ){
+      end();
+    }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -43,5 +57,6 @@ public class HatchShoot extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
