@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
     server = CameraServer.getInstance().getServer();
-    
 
     // autoChooser = new SendableChooser();
     // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
@@ -94,6 +93,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + 
+    "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));
     Scheduler.getInstance().run();
   }
 

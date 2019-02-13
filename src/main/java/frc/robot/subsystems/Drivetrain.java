@@ -28,6 +28,8 @@ public class Drivetrain extends Subsystem {
   private static double arcadeSpeedMod = 1;
   private static double arcadeTurnMod = 1;
 
+  private static final double PULSES_PER_METER = 4277.55018;
+
   public static double batteryVoltage;
 
   public Drivetrain(){
@@ -74,6 +76,14 @@ public class Drivetrain extends Subsystem {
 
   public double getRightEnc(){
     return encR.get();
+  }
+
+  public double getLeftEncMeters(){
+    return encL.get()/PULSES_PER_METER;
+  }
+
+  public double getRightEncMeters(){
+    return encR.get()/PULSES_PER_METER;
   }
 
   public void resetEncoders() {

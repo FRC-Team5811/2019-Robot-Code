@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.MotionProfiling.DCMotorTransmission;
 import frc.robot.MotionProfiling.DifferentialDrivePeter;
 
@@ -60,13 +61,15 @@ public class ProfileDrive extends Command {
     int i = 0;
 	boolean done = false;
 	double prevL = 0;
-	double prevR = 0;
+	double prevR = 0; //0.4787787m circum
+	
     protected void execute() {
     	if(i<index) {
-    		Robot.dt.voltageDrive(voltagesLeft.get(i), voltagesRight.get(i));
-			System.out.println(DD.composeTransformFromArcs(Robot.dt.getLeftEnc() - prevL, Robot.dt.getRightEnc() - prevR).toText());
-			prevL = Robot.dt.getLeftEnc();
-			prevR = Robot.dt.getRightEnc();
+			Robot.dt.voltageDrive(voltagesLeft.get(i), voltagesRight.get(i));
+			System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));
+			//System.out.println(DD.composeTransformFromArcs(Robot.dt.getLeftEncMeters() - prevL, Robot.dt.getRightEncMeters() - prevR).toText());
+			prevL = Robot.dt.getLeftEncMeters();
+			prevR = Robot.dt.getRightEncMeters();
     		i++;
     	}else {
     		Robot.dt.motorReset();
