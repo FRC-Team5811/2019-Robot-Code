@@ -35,27 +35,29 @@ public class CargoShoot extends Command {
     trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
     trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     if (targetZone.equals("Zone3")) {
-      if(distance < Robot.getRollersSubsystem().getZone2HT()){
-        Robot.getRollersSubsystem().moveBallFromZone1to3();
-      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){ 
-        Robot.getRollersSubsystem().outakeBallFromZone3();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
-        Robot.getRollersSubsystem().holdBallInPlace();
-      }
+      Robot.getRollersSubsystem().outakeBallFromZone3();
+      // if(distance < Robot.getRollersSubsystem().getZone2HT()){
+      //   Robot.getRollersSubsystem().moveBallFromZone1to3();
+      // } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){ 
+      //   Robot.getRollersSubsystem().outakeBallFromZone3();
+      // } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
+      //   Robot.getRollersSubsystem().holdBallInPlace();
+      // }
     }
     if (targetZone.equals("Zone2")){
-      if (distance < Robot.getRollersSubsystem().getZone2HB()){
-        Robot.getRollersSubsystem().moveBallFromZone1to2();
-      } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){
-        Robot.getRollersSubsystem().moveBallFromZone3to2();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HB() && distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == true){
-        Robot.getRollersSubsystem().outakeBallFromZone2();
-      } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
-        Robot.getRollersSubsystem().holdBallInPlace();
+      Robot.getRollersSubsystem().outakeBallFromZone2();
+      // if (distance < Robot.getRollersSubsystem().getZone2HB()){
+      //   Robot.getRollersSubsystem().moveBallFromZone1to2();
+      // } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){
+      //   Robot.getRollersSubsystem().moveBallFromZone3to2();
+      // } else if (distance > Robot.getRollersSubsystem().getZone3HB() && distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == true){
+      //   Robot.getRollersSubsystem().outakeBallFromZone2();
+      // } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
+      //   Robot.getRollersSubsystem().holdBallInPlace();
         
       }
     } 
-  }
+ // }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -66,11 +68,13 @@ public class CargoShoot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.getRollersSubsystem().holdBallInPlace();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 } 

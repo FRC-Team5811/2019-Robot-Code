@@ -38,9 +38,11 @@ public class Rollers extends Subsystem {
   AnalogInput laserTripWire1;
   AnalogInput laserTripWire2;
 
+  private static final float speedMod = 0.5f;
+
   public Rollers(){
     rollerIntake = RobotMap.cargo1;
-    //rollers124 = RobotMap.cargo2;
+    rollers124 = RobotMap.cargo2;
     roller3 = RobotMap.cargo3;
     distanceSensor = RobotMap.u1;
     laserTripWire1 = RobotMap.laser1;
@@ -123,11 +125,11 @@ public class Rollers extends Subsystem {
    * Sets the motor speed of the Rollers 124
    * @param speed power to give motor. Range -1 to 1
    */
-  /*
+  
   public void setRollers124(float speed){
     rollers124.set(ControlMode.PercentOutput, speed);
   }
-  */
+  
   /**
   * Sets the motor speed of the Roller 3
   * @param speed power to give motor. Range -1 to 1
@@ -139,57 +141,57 @@ public class Rollers extends Subsystem {
    *  Sets roller motors in configuration to intake ball from ground
    */
   public  void startIntakeBallFromGround(){
-    setRollerIntake(1);
-    //setRollers124(1);
+    setRollerIntake(1*speedMod);
+    setRollers124(-1*speedMod);
   }
   /**
    *  Sets roller motors in configuration to intake ball from loading station
    */
   public  void startIntakeBallFromLoadingStation(){
-    setRoller3(-1);
-   // setRollers124(1);
+    setRoller3(1*speedMod);
+    setRollers124(-1*speedMod);
   }
   /**
    *  Sets roller motors in configuration to move ball from zone 1 to 2
    */
   public  void moveBallFromZone1to2(){
-    setRoller3(1);
-   // setRollers124(1);
+    setRoller3(-1*speedMod);
+    setRollers124(-1*speedMod);
   }
   /**
    * Sets roller motors in configuration to move ball from zone 1 to 3
    */
   public  void moveBallFromZone1to3(){
-    setRoller3(1);
-   // setRollers124(1);
+    setRoller3(-1*speedMod);
+    setRollers124(-1*speedMod);
   }
   /**
    * Sets roller motors to turn off in order hold ball in place
    */
   public  void holdBallInPlace(){
     setRoller3(0);
-    //setRollers124(0);
+    setRollers124(0);
     setRollerIntake(0);
   }
   /**
    * Set roller motors in configuration to outake ball from Zone 2
    */
   public  void outakeBallFromZone2(){
-    //setRollers124(1);
-    setRoller3(-1);
+    setRollers124(-1*speedMod);
+    setRoller3(1*speedMod);
   }
     /**
    * Set roller motors in configuration to outake ball from Zone 3
    */
   public  void outakeBallFromZone3(){
-   // setRollers124(-1);
-    setRoller3(1);
+    setRollers124(1*speedMod);
+    setRoller3(-1*speedMod);
   }
   /**
    * set roller motors in configuration to move ball from zone 3 to zone 2
    */
   public  void moveBallFromZone3to2() {
-   // setRollers124(-1);
-    setRoller3(-1);
+    setRollers124(1*speedMod);
+    setRoller3(1*speedMod);
   }
 }

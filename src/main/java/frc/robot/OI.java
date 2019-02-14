@@ -9,6 +9,7 @@ import frc.robot.commands.ArcadeSpeedMod;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.HatchShoot;
+import frc.robot.commands.MoveCargo;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.Switch;
 
@@ -61,13 +62,16 @@ public class OI {
         Y_DRIVE.toggleWhenPressed(new Switch());
         A_DRIVE.toggleWhenPressed(new ArcadeSpeedMod());
       }
-      if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+     // if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         A_MANIP.toggleWhenPressed(new HatchShoot());
         X_MANIP.whenPressed(new ResetRobot());
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
-      }
+        MANIP_Y_RIGHT.whileHeld(new MoveCargo());
+        
+        
+     // }
 
   }
 

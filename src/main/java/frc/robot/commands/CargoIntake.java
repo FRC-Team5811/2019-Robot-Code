@@ -34,35 +34,37 @@ public class CargoIntake extends Command {
     trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
     trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     if(targetZone.equals("LoadingStation")) {
-      if(distance >  Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false) {
-        Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
-      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false) {
-        Robot.getRollersSubsystem().holdBallInPlace();
-      }
+      Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
+      // if(distance >  Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false) {
+      //   Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
+      // } else if(distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false) {
+      //   Robot.getRollersSubsystem().holdBallInPlace();
+      // }
     }
     if(targetZone.equals("GroundIntakeTo3")){
-      Robot.getRollersSubsystem().lowerRollerArm();
-      if(distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false) {
-        Robot.getRollersSubsystem().startIntakeBallFromGround();
-      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == false) {
-      Robot.getRollersSubsystem().moveBallFromZone1to3();
-      Robot.getRollersSubsystem().raiseRollerArm();
-      } else if(distance < Robot.getRollersSubsystem().getZone3HT() && distance > Robot.getRollersSubsystem().getZone3HB() && trippedWire2 == true){
-        Robot.getRollersSubsystem().holdBallInPlace();
-      }
+      // Robot.getRollersSubsystem().lowerRollerArm();
+      // if(distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false) {
+      //   Robot.getRollersSubsystem().startIntakeBallFromGround();
+      // } else if(distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == false) {
+      // Robot.getRollersSubsystem().moveBallFromZone1to3();
+      // Robot.getRollersSubsystem().raiseRollerArm();
+      // } else if(distance < Robot.getRollersSubsystem().getZone3HT() && distance > Robot.getRollersSubsystem().getZone3HB() && trippedWire2 == true){
+      //   Robot.getRollersSubsystem().holdBallInPlace();
+      // }
     }
     if(targetZone.equals("GroundIntaketo2")){
-      Robot.getRollersSubsystem().lowerRollerArm();
-      if(distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false){
-        Robot.getRollersSubsystem().startIntakeBallFromGround();
-      } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
-      Robot.getRollersSubsystem().moveBallFromZone1to2();
-      Robot.getRollersSubsystem().raiseRollerArm(); 
-      } else if(distance < Robot.getRollersSubsystem().getZone2HT() && distance > Robot.getRollersSubsystem().getZone2HB() && trippedWire == true){
-        Robot.getRollersSubsystem().holdBallInPlace();
+      Robot.getRollersSubsystem().startIntakeBallFromGround();
+      // Robot.getRollersSubsystem().lowerRollerArm();
+      // if(distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire == false && trippedWire2 == false){
+      //   Robot.getRollersSubsystem().startIntakeBallFromGround();
+      // } else if(distance < Robot.getRollersSubsystem().getZone1HT()){
+      // Robot.getRollersSubsystem().moveBallFromZone1to2();
+      // Robot.getRollersSubsystem().raiseRollerArm(); 
+      // } else if(distance < Robot.getRollersSubsystem().getZone2HT() && distance > Robot.getRollersSubsystem().getZone2HB() && trippedWire == true){
+      //   Robot.getRollersSubsystem().holdBallInPlace();
       }
     }
-  }
+ // }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -73,11 +75,13 @@ public class CargoIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.getRollersSubsystem().holdBallInPlace();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

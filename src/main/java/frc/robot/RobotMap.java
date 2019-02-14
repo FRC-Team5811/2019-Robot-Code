@@ -29,7 +29,7 @@ public class RobotMap {
   public static TalonSRX leftF = new TalonSRX(4); //left forward
   public static VictorSPX leftB = new VictorSPX(7); //left back
   public static VictorSPX cargo1 = new VictorSPX(9); //cargo 1
-  //public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
+  public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
   public static VictorSPX cargo3 = new VictorSPX(6); //cargo 3
 
 	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);
