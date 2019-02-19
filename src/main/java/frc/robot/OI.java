@@ -8,8 +8,10 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeSpeedMod;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
+import frc.robot.commands.HatchExtend;
 import frc.robot.commands.HatchShoot;
 import frc.robot.commands.MoveCargo;
+import frc.robot.commands.MoveIntakeArm;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.Switch;
 
@@ -36,6 +38,7 @@ public class OI {
   private static final DPadButton DRIVE_RIGHT = new DPadButton(JOY_1, 90);
   private static final DPadButton DRIVE_DOWN = new DPadButton(JOY_1, 180);
   private static final DPadButton DRIVE_LEFT = new DPadButton(JOY_1, 270);
+  private static final JoystickButton DRIVE_R_BUMP = new JoystickButton(JOY_1, 5);
 
   private static final Joystick JOY_2 = new Joystick(1);
   private static final JoystickButton A_MANIP = new JoystickButton(JOY_2, BUTTON_A);
@@ -50,26 +53,31 @@ public class OI {
   private static final DPadButton MANIP_RIGHT = new DPadButton(JOY_2, 90);
   private static final DPadButton MANIP_DOWN = new DPadButton(JOY_2, 180);
   private static final DPadButton MANIP_LEFT = new DPadButton(JOY_2, 270);
+  private static final JoystickButton MANIP_L_BUMP = new JoystickButton(JOY_2, 5);
 
   public OI(){
-     if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+     //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
         DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
-       // Y_DRIVE.whileHeld(new CargoIntake("GroundIntaketo3"));
-        X_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
-        B_DRIVE.whileHeld(new CargoIntake("GroundIntaketo2"));
-        DRIVE_UP.whileHeld(new CargoIntake("LoadingStation"));
+       
         Y_DRIVE.toggleWhenPressed(new Switch());
-        A_DRIVE.toggleWhenPressed(new ArcadeSpeedMod());
-      }
+        DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
+        
+
+     // }
      // if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
-        A_MANIP.toggleWhenPressed(new HatchShoot());
-        X_MANIP.whenPressed(new ResetRobot());
+        Y_MANIP.toggleWhenPressed(new HatchShoot());
+      //Y_MANIP.whenPressed(new ResetRobot());
+        X_MANIP.toggleWhenPressed(new MoveIntakeArm());
+        A_MANIP.whenPressed(new HatchExtend("OutOfPerimeter"));
+        B_MANIP.whenPressed(new HatchExtend("InsidePerimeter"));
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
         MANIP_Y_RIGHT.whileHeld(new MoveCargo());
         
+        MANIP_DOWN.whileHeld(new CargoIntake("GroundIntaketo2"));
+        MANIP_L_BUMP.whileHeld(new CargoIntake("LoadingStation"));
         
      // }
 

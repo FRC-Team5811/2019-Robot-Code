@@ -41,12 +41,12 @@ public class Hatch extends Subsystem {
    *  Sets solenoids to make the pistons extend the hatch system at the start of the match
    */
   public void moveHatchToOut(){
-    hatchExtension.set(DoubleSolenoid.Value.kForward);
+    hatchExtension.set(DoubleSolenoid.Value.kReverse);
   }
   /**
    *  Sets solenoids to make the pistons move the hatch system back into the storing location inside the frame perimeter
    */
   public void moveHatchToIn(){
-    hatchExtension.set(DoubleSolenoid.Value.kReverse);
+    hatchExtension.set(DoubleSolenoid.Value.kForward);
   }
 }

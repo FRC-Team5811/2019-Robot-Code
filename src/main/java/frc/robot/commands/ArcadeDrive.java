@@ -7,19 +7,23 @@ public class ArcadeDrive extends Command {
 
   public ArcadeDrive() {
     setInterruptible(false);
-    requires(Robot.dt);
+    requires(Robot.getDtSubsystem());
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {//
-
+  protected void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.dt.arcadeDrive(Robot.oi.getDriveRightX(), -Robot.oi.getDriveLeftY());
+    Robot.getDtSubsystem().arcadeDrive(Robot.oi.getDriveRightX(), -Robot.oi.getDriveLeftY());
+    if(Robot.getDtSubsystem().arcadeSpeedMod == 1){
+      Robot.getLEDSubsystem().driving();
+    } else {
+      Robot.getLEDSubsystem().slow_mode();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +35,7 @@ public class ArcadeDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.dt.motorReset();
+    Robot.getDtSubsystem().motorReset();
   }
 
   // Called when another command which requires one or more of the same

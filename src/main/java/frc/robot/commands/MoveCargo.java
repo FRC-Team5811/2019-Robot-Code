@@ -26,11 +26,15 @@ public class MoveCargo extends Command {
   @Override
   protected void execute() {
     axisValue = Robot.oi.getManipRightY();
-    System.out.println(axisValue);
-    if (axisValue < .05){
-      Robot.getRollersSubsystem().moveBallFromZone1to3();
-    } else if (axisValue > -.05){
+    if (axisValue > .05){
+      //Robot.getRollersSubsystem().setRollers124(axisValue);
+      //Robot.getRollersSubsystem().setRoller3(axisValue);
       Robot.getRollersSubsystem().moveBallFromZone3to2();
+      Robot.getRollersSubsystem().startIntakeBallFromGround();
+    } else if (axisValue < -.05){
+      //Robot.getRollersSubsystem().setRollers124(axisValue);
+      //Robot.getRollersSubsystem().setRoller3(axisValue);
+      Robot.getRollersSubsystem().moveBallFromZone1to3();
     } else {
       Robot.getRollersSubsystem().holdBallInPlace();
     }

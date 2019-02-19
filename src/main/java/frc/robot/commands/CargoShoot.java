@@ -14,8 +14,9 @@ public class CargoShoot extends Command {
   
   private String targetZone;
   private double distance; 
-  private boolean trippedWire;  //in zone 2
-  private boolean trippedWire2; //in zone 3
+  private boolean trippedWire;  //in zone 1
+  private boolean trippedWire2; //in zone 2
+  private boolean trippedWire3; //in zone 3
 
   public CargoShoot(String passedZone) {
     targetZone = passedZone;
@@ -26,6 +27,7 @@ public class CargoShoot extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getLEDSubsystem().shooting();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -34,30 +36,36 @@ public class CargoShoot extends Command {
     distance = Robot.getRollersSubsystem().getDistance();
     trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
     trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
+    trippedWire3 = Robot.getRollersSubsystem().getLaserTripWire3();
     if (targetZone.equals("Zone3")) {
       Robot.getRollersSubsystem().outakeBallFromZone3();
-      // if(distance < Robot.getRollersSubsystem().getZone2HT()){
+     // Robot.getRollersSubsystem().outakeBallFromZone3();
+      // if (trippedWire2 == true){
       //   Robot.getRollersSubsystem().moveBallFromZone1to3();
-      // } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){ 
+      // } else if (trippedWire2 == false) {
+      //   Robot.getRollersSubsystem().holdBallInPlace();
+      // }
+      // if(trippedWire == true || trippedWire2 == true && trippedWire3 == false){
+      //   Robot.getRollersSubsystem().moveBallFromZone1to3();
+      // } else if (trippedWire3 == true && trippedWire2 == false && trippedWire == false){ 
       //   Robot.getRollersSubsystem().outakeBallFromZone3();
-      // } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
+      // } else if (trippedWire3 == false && trippedWire2 == false && trippedWire == false){
       //   Robot.getRollersSubsystem().holdBallInPlace();
       // }
     }
     if (targetZone.equals("Zone2")){
       Robot.getRollersSubsystem().outakeBallFromZone2();
-      // if (distance < Robot.getRollersSubsystem().getZone2HB()){
+      // if (trippedWire3 == false && trippedWire2 == false && trippedWire == true){
       //   Robot.getRollersSubsystem().moveBallFromZone1to2();
-      // } else if (distance > Robot.getRollersSubsystem().getZone2HT() && distance < Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == true){
+      // } else if (trippedWire3 == true && trippedWire2 == false && trippedWire == false){
       //   Robot.getRollersSubsystem().moveBallFromZone3to2();
-      // } else if (distance > Robot.getRollersSubsystem().getZone3HB() && distance < Robot.getRollersSubsystem().getZone2HT() && trippedWire == true){
+      // } else if (trippedWire3 == false && trippedWire2 == true && trippedWire == false){
       //   Robot.getRollersSubsystem().outakeBallFromZone2();
-      // } else if (distance > Robot.getRollersSubsystem().getZone3HT() && trippedWire2 == false && trippedWire == false){
-      //   Robot.getRollersSubsystem().holdBallInPlace();
-        
-      }
+      // } else if (trippedWire3 == false && trippedWire2 == false && trippedWire == false){
+      //   Robot.getRollersSubsystem().holdBallInPlace(); 
+     // }
     } 
- // }
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

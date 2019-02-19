@@ -12,33 +12,39 @@ import frc.robot.Robot;
 
 public class HatchShoot extends Command {
 
-  double EncValueCurrent = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
-  double EncValueStored = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
-  private static final int EXTRA_DISTANCE = 23598; //CHANGE THIS WITH ACTUAL ROBOT
+  double EncValueCurrent = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
+  double EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
+  private static final int EXTRA_DISTANCE = 1; //CHANGE THIS WITH ACTUAL ROBOT
+  int counter = 0;
 
   public HatchShoot() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.dt);
+      // eg. requires(chassis);
+      requires(Robot.getHatchSubsystem());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.getHatchSubsystem().outakeHatch();
-    EncValueStored = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
-
-
+    Robot.getLEDSubsystem().shooting();
+    counter = 0;
+    EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    EncValueCurrent = Robot.getDtSubsystem().getLeftEnc() + Robot.getDtSubsystem().getRightEnc();
-    if(EncValueStored + EXTRA_DISTANCE >= EncValueCurrent ){
+    EncValueCurrent = (Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters());
+    if(EncValueStored + EXTRA_DISTANCE <= EncValueCurrent ){
       end();
     }
-    
+    counter ++;
+    if (counter > 50){
+      counter = 0;
+      Robot.getHatchSubsystem().intakeHatchArms();
+      end();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -50,7 +56,7 @@ public class HatchShoot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.getHatchSubsystem().intakeHatchArms();
+    System.out.println("REEEEEEEEEEEEEEEEEEEE");
   }
 
   // Called when another command which requires one or more of the same

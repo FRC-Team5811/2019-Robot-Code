@@ -38,10 +38,12 @@ public class RobotMap {
   //public static DoubleSolenoid frontClimber = new DoubleSolenoid(6, 7);
   //public static DoubleSolenoid backClimber = new DoubleSolenoid(8, 9);
 
+  //scp beter1.BOND lvuser@roborio-5811-frc.local:
 
-  public static Ultrasonic u1 = new Ultrasonic(6, 7);
-  public static AnalogInput laser1 = new AnalogInput(3);
+  public static Ultrasonic u1 = new Ultrasonic(8, 9);
+  public static AnalogInput laser1 = new AnalogInput(4);
   public static AnalogInput laser2 = new AnalogInput(2);
+  public static AnalogInput laser3 = new AnalogInput(3); //idk about this number
   
   public static Encoder driveEncL = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   public static Encoder driveEncR = new Encoder(2, 3, true, Encoder.EncodingType.k4X);

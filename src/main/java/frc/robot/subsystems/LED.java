@@ -6,9 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
-package org.usfirst.frc.team5811.robot.subsystems;
-import org.usfirst.frc.team5811.robot.Robot;
-import org.usfirst.frc.team5811.robot.RobotMap;
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.I2C;
 
 public class LED extends Subsystem {
@@ -19,8 +17,8 @@ public class LED extends Subsystem {
   protected void initDefaultCommand() {
   }
 
-  public void color() {
-    toSend[0] = 3;
+  public void slow_mode() { //red
+    toSend[0] = 1;
 		//System.out.println("Sending RED");
 		if (LEDArduino.writeBulk(toSend)) {
 			//System.out.println("didnt send");
@@ -29,8 +27,8 @@ public class LED extends Subsystem {
     }
     }
     
-  public void off() {
-    toSend[0] = 10;
+  public void driving() { //blue
+    toSend[0] = 2;
     //System.out.println("Sending OFF");
     if (LEDArduino.writeBulk(toSend)) {
       //System.out.println("didnt send");
@@ -39,8 +37,8 @@ public class LED extends Subsystem {
     }
     }
   
-  public void patternTest() {
-    toSend[0] = 6;
+  public void shooting() {
+    toSend[0] = 4; //rainbow
     if (LEDArduino.writeBulk(toSend)) {
       //System.out.println("Didn't send");
     } else {
@@ -48,16 +46,7 @@ public class LED extends Subsystem {
     }
     }
   
-  public void colorInward() {
-    toSend[0] = 4;
-    if (LEDArduino.writeBulk(toSend)) {
-      //System.out.println("Didn't send");
-    } else {
-      //System.out.println("Sent");
-    }
-    }
-  
- public void flash() {
+ public void we_got_it() { //yellow flash
     toSend[0] = 5;
     if (LEDArduino.writeBulk(toSend)) {
       //System.out.println("Didn't send");
@@ -65,7 +54,7 @@ public class LED extends Subsystem {
       //System.out.println("Sent");
     }
     }
-  public void shooting() {
+  public void disabled() {
     toSend[0] = 6;
     if (LEDArduino.writeBulk(toSend)) {
       //System.out.println("Didn't send");
@@ -73,37 +62,37 @@ public class LED extends Subsystem {
      //System.out.println("Sent");
     }
     }
-  public void autoColor() {
-    toSend[0] = 7;
-    if (LEDArduino.writeBulk(toSend)) {
-      //System.out.println("Didn't send");
-    } else {
-      //System.out.println("Sent");
-    }
-    }
-    public void blue() {
-    toSend[0] = 8;
-    if (LEDArduino.writeBulk(toSend)) {
-      //System.out.println("Didn't send");
-    } else {
-      //System.out.println("Sent");
-    }
-    }
-  public void orange() {
-    toSend[0] = 9;
-    if (LEDArduino.writeBulk(toSend)) {
-      //System.out.println("Didn't send");
-    } else {
-      //System.out.println("Sent");
-    }
-    }
-  public void light_blue() {
-    toSend[0] = 11;
-    if (LEDArduino.writeBulk(toSend)) {
-     //System.out.println("Didn't   send");
-    } else {
-      //System.out.println("Sent");
-    }
-    }
+  // public void autoColor() {
+  //   toSend[0] = 7;
+  //   if (LEDArduino.writeBulk(toSend)) {
+  //     //System.out.println("Didn't send");
+  //   } else {
+  //     //System.out.println("Sent");
+  //   }
+  //   }
+  //   public void blue() {  
+  //   toSend[0] = 8;
+  //   if (LEDArduino.writeBulk(toSend)) {
+  //     //System.out.println("Didn't send");
+  //   } else {
+  //     //System.out.println("Sent");
+  //   }
+  //   }
+  // public void orange() { //orange
+  //   toSend[0] = 9;
+  //   if (LEDArduino.writeBulk(toSend)) {
+  //     //System.out.println("Didn't send");
+  //   } else {
+  //     //System.out.println("Sent");
+  //   }
+  //   }
+  // public void light_blue() {
+  //   toSend[0] = 11;
+  //   if (LEDArduino.writeBulk(toSend)) {
+  //    //System.out.println("Didn't   send");
+  //   } else {
+  //     //System.out.println("Sent");
+  //   }
+  //   }
   }
-}
+

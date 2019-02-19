@@ -25,8 +25,8 @@ public class Drivetrain extends Subsystem {
 
   private static Encoder encL, encR;
 
-  private static double arcadeSpeedMod = 1;
-  private static double arcadeTurnMod = 1;
+  public static double arcadeSpeedMod = 1;
+  private static double arcadeTurnMod = .7;
 
   private static final double PULSES_PER_METER = 4277.55018;
 
@@ -54,20 +54,26 @@ public class Drivetrain extends Subsystem {
   
   public void arcadeDrive(double turn, double throttle) {
     //simulates car-like driving
-		if (throttle <= -.02) {
-			turn = -turn;
-    }
-    double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn));
+		// if (throttle <= -.02) {
+		// 	turn = -turn;
+    // }
+    double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn)); //changed to .92 for practice
     double rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
     
-    driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed*.92);
+    driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed);
     driveBackLeft.follow(driveFrontLeft);
     driveFrontRight.set(ControlMode.PercentOutput, rightSpeed);
     driveBackRight.follow(driveFrontRight);
+/*
+    System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + 
+    "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));
+    */
   }
 
-  public float grabValues() {
-		return (float) navX.getAngle();
+  public double grabAngleRadians() {
+    double unrounded = -Math.toRadians(navX.getAngle());
+    double rounded = Math.round(unrounded*1000);
+		return rounded/1000;
   }
   
   public double getLeftEnc(){
@@ -79,11 +85,15 @@ public class Drivetrain extends Subsystem {
   }
 
   public double getLeftEncMeters(){
-    return encL.get()/PULSES_PER_METER;
+    double unrounded = encL.get()/PULSES_PER_METER;
+    double rounded = Math.round(unrounded*1000);
+    return rounded/1000;
   }
 
   public double getRightEncMeters(){
-    return encR.get()/PULSES_PER_METER;
+    double unrounded = encR.get()/PULSES_PER_METER;
+    double rounded = Math.round(unrounded*1000);
+    return rounded/1000;
   }
 
   public void resetEncoders() {
@@ -91,7 +101,7 @@ public class Drivetrain extends Subsystem {
 		encL.reset();
 	}
 
-  public void reset() {
+  public void resetNAVX() {
 		navX.reset();
   }
 	
