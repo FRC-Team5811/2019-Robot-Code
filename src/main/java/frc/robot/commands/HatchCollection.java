@@ -10,42 +10,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class HatchShoot extends Command {
-
-  double EncValueCurrent = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
-  double EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
-  private static final int EXTRA_DISTANCE = 1; //CHANGE THIS WITH ACTUAL ROBOT
-  int counter = 0;
-
-  public HatchShoot() {
+public class HatchCollection extends Command {
+  public HatchCollection() {
     // Use requires() here to declare subsystem dependencies
-      // eg. requires(chassis);
-      requires(Robot.getHatchSubsystem());
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getHatchSubsystem().openBeak();
-    Robot.getHatchSubsystem().outakeHatch();
-    Robot.getLEDSubsystem().shooting();
-    counter = 0;
-    EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
+    Robot.getHatchSubsystem().closeBeak();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    EncValueCurrent = (Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters());
-    if(EncValueStored + EXTRA_DISTANCE <= EncValueCurrent ){
-      end();
-    }
-    counter ++;
-    if (counter > 50){
-      counter = 0;
-      Robot.getHatchSubsystem().intakeHatchArms();
-      end();
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -57,6 +36,7 @@ public class HatchShoot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+
   }
 
   // Called when another command which requires one or more of the same

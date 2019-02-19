@@ -19,7 +19,7 @@ public class Hatch extends Subsystem {
 
   DoubleSolenoid hatchPunch = RobotMap.hatchPunch;
   DoubleSolenoid hatchExtension = RobotMap.extendHatchMechanism;
-
+  DoubleSolenoid beakMovement = RobotMap.beakMovement;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -48,5 +48,17 @@ public class Hatch extends Subsystem {
    */
   public void moveHatchToIn(){
     hatchExtension.set(DoubleSolenoid.Value.kForward);
+  }
+  /**
+   * Opening the center beak to hold the hatch in place
+   */
+  public void openBeak(){
+    beakMovement.set(DoubleSolenoid.Value.kReverse);
+  }
+  /**
+   * Closing the center beak to release the hatch for shooting
+   */
+  public void closeBeak(){
+    beakMovement.set(DoubleSolenoid.Value.kForward);
   }
 }

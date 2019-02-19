@@ -8,6 +8,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeSpeedMod;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
+import frc.robot.commands.HatchCollection;
 import frc.robot.commands.HatchExtend;
 import frc.robot.commands.HatchShoot;
 import frc.robot.commands.MoveCargo;
@@ -54,6 +55,7 @@ public class OI {
   private static final DPadButton MANIP_DOWN = new DPadButton(JOY_2, 180);
   private static final DPadButton MANIP_LEFT = new DPadButton(JOY_2, 270);
   private static final JoystickButton MANIP_L_BUMP = new JoystickButton(JOY_2, 5);
+  private static final JoystickButton MANIP_R_BUMP = new JoystickButton(JOY_2, 6);
 
   public OI(){
      //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
@@ -66,16 +68,17 @@ public class OI {
 
      // }
      // if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
-        Y_MANIP.toggleWhenPressed(new HatchShoot());
       //Y_MANIP.whenPressed(new ResetRobot());
+        Y_MANIP.toggleWhenPressed(new HatchShoot());
         X_MANIP.toggleWhenPressed(new MoveIntakeArm());
         A_MANIP.whenPressed(new HatchExtend("OutOfPerimeter"));
         B_MANIP.whenPressed(new HatchExtend("InsidePerimeter"));
+        MANIP_R_BUMP.toggleWhenPressed(new HatchCollection());
+
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
         MANIP_Y_RIGHT.whileHeld(new MoveCargo());
-        
         MANIP_DOWN.whileHeld(new CargoIntake("GroundIntaketo2"));
         MANIP_L_BUMP.whileHeld(new CargoIntake("LoadingStation"));
         

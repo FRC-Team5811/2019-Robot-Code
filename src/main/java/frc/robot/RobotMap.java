@@ -35,6 +35,7 @@ public class RobotMap {
 	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);
   public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);
   public static DoubleSolenoid extendHatchMechanism = new DoubleSolenoid(4, 5);
+  public static DoubleSolenoid beakMovement = new DoubleSolenoid(6, 7);
   //public static DoubleSolenoid frontClimber = new DoubleSolenoid(6, 7);
   //public static DoubleSolenoid backClimber = new DoubleSolenoid(8, 9);
 
