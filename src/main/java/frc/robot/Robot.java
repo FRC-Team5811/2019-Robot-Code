@@ -16,6 +16,7 @@ import frc.robot.commands.CargoShoot;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
+import frc.robot.commands.Vision;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.LED;
@@ -79,7 +80,7 @@ public class Robot extends TimedRobot {
   */
   @Override
   public void robotPeriodic() {
-    
+    System.out.println(dt.navx);
   }
 
   @Override
@@ -89,6 +90,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    System.out.println(SmartDashboard.getNumber("offest", 0));
     SmartDashboard.putNumber("Angle", Robot.dt.grabAngleRadians());
     SmartDashboard.putNumber("L enc", Robot.dt.getLeftEncMeters());
     SmartDashboard.putNumber("R enc", Robot.dt.getRightEncMeters());
@@ -98,14 +100,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    autonomousCommand = new OneHatchAuto();
+    autonomousCommand = new Vision();
     autonomousCommand.start();
     Robot.getRollersSubsystem().holdBallInPlace();
     // ProfileDrive.kPAng = SmartDashboard.getNumber("KPAng", 0.0);
     // ProfileDrive.kPAngVel = SmartDashboard.getNumber("KPAngVel", 0.0);
     // ProfileDrive.kPPos = SmartDashboard.getNumber("KPPos", 0.0);
     // ProfileDrive.kPVel = SmartDashboard.getNumber("KPVel", 0.0);
-    //ProfileDrive.fileName = SmartDashboard.getString("File Name", "");
+    // ProfileDrive.fileName = SmartDashboard.getString("File Name", "");
     // SmartDashboard.putNumber("Ang Error", ProfileDrive.angError);
     // SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
     // SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
@@ -169,5 +171,9 @@ public class Robot extends TimedRobot {
 
   public static LED getLEDSubsystem(){
     return LED;
+  }
+
+  public static double getOffset() {
+    return SmartDashboard.getNumber("offest", 0.0);
   }
 }
