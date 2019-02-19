@@ -29,7 +29,7 @@ public class ProfileDrive extends Command {
 
 	public double kPPos = 0.0;
 	public double kPVel = 0.0;
-	public double kPAng = 2.0;
+	public double kPAng = 0.0;
 	public double kPAngVel = 0.0;
 
 	public String fileName;
