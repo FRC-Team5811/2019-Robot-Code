@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
     Robot.rollers.raiseRollerArm();
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
+    Robot.hatch.closeBeak();
     // autoChooser = new SendableChooser();
     // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
     // autoChooser.addObject("TOm Auto", new ResetRobot());
@@ -113,6 +114,7 @@ public class Robot extends TimedRobot {
     Robot.dt.motorReset();
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
+    Robot.hatch.closeBeak();
   }
 
   /**

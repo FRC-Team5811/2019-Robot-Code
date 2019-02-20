@@ -20,9 +20,9 @@ public class OneHatchAuto extends CommandGroup {
    */
   public OneHatchAuto() {
    // requires(Robot.getDtSubsystem());
-  //  ProfileDrive path = new ProfileDrive("cargo1r");
+    //ProfileDrive path = new ProfileDrive("curvyboi");
     ProfileDrive straight = new ProfileDrive("str");
-    ProfileDrive backCurve = new ProfileDrive("curveback");
+    ProfileDrive backCurve = new ProfileDrive("back");
 
     // Add Commands here:
     // e.g. addSequential(new Command1());
