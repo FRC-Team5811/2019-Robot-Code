@@ -36,12 +36,13 @@ public class HatchShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
     EncValueCurrent = (Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters());
     if(EncValueStored + EXTRA_DISTANCE <= EncValueCurrent ){
       end();
     }
     counter ++;
-    if (counter > 50){
+    if (counter > 20){
       counter = 0;
       Robot.getHatchSubsystem().intakeHatchArms();
       end();
