@@ -69,12 +69,14 @@ public class OI {
      // }
      // if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
       //Y_MANIP.whenPressed(new ResetRobot());
+
+      //hatch
         Y_MANIP.toggleWhenPressed(new HatchShoot());
         X_MANIP.toggleWhenPressed(new MoveIntakeArm());
         A_MANIP.whenPressed(new HatchExtend("OutOfPerimeter"));
         B_MANIP.whenPressed(new HatchExtend("InsidePerimeter"));
         MANIP_R_BUMP.toggleWhenPressed(new HatchCollection());
-
+      //cargo
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));

@@ -38,48 +38,33 @@ public class CargoIntake extends Command {
     trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
     trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     trippedWire3 = Robot.getRollersSubsystem().getLaserTripWire3();
-    if(targetZone.equals("LoadingStation")) {
-     // Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
-    
-     if(trippedWire3 == false ) {
-        Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
-      } else if(trippedWire3 == true) {
-        Robot.getRollersSubsystem().holdBallInPlace();
-        Robot.getLEDSubsystem().we_got_it();
-      }
 
-      // if(trippedWire3 == false && trippedWire2 == false && trippedWire == false) {
+    if(targetZone.equals("LoadingStation")) {
+     Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
+      // if(trippedWire3 == false && trippedWire2 == false) {
       //   Robot.getRollersSubsystem().startIntakeBallFromLoadingStation();
-      // } else if(trippedWire3 == true  && trippedWire2 == false && trippedWire == false) {
+      // } else if(trippedWire3 == true  && trippedWire2 == false) {
       //   Robot.getRollersSubsystem().holdBallInPlace();
       //   Robot.getLEDSubsystem().we_got_it();
       // }
     }
-    if(targetZone.equals("GroundIntakeTo3")){
-      // Robot.getRollersSubsystem().lowerRollerArm();
-      // if( trippedWire3 == false && trippedWire2 == false && trippedWire == false) { 
-      //   Robot.getRollersSubsystem().startIntakeBallFromGround();
-      // } else if(trippedWire3 == false && trippedWire2 == true  || trippedWire == true){
-      //   Robot.getRollersSubsystem().moveBallFromZone1to3();
-      //   Robot.getRollersSubsystem().raiseRollerArm();
-      // } else if(trippedWire2 == false && trippedWire3 == true  && trippedWire == false){
-      //   Robot.getRollersSubsystem().holdBallInPlace();
-      //   Robot.getLEDSubsystem().we_got_it();
-      // }
-    }
+   
    if(targetZone.equals("GroundIntaketo2")){
       Robot.getRollersSubsystem().startIntakeBallFromGround();
-      // if(trippedWire2 == false && trippedWire3 == false  && trippedWire == false){
-      //   Robot.getRollersSubsystem().startIntakeBallFromGround();
-      // } else if(trippedWire == true && trippedWire2 == false && trippedWire3 == false){
-      //   Robot.getRollersSubsystem().moveBallFromZone1to2();
-      //   Robot.getRollersSubsystem().raiseRollerArm(); 
-      // } else if (trippedWire2 == true && trippedWire3 == false  && trippedWire == false){
-      //   Robot.getRollersSubsystem().holdBallInPlace();
-      //   Robot.getLEDSubsystem().we_got_it();
-      // }
+      /*
+      if(trippedWire2 == false && trippedWire3 == false){
+        Robot.getRollersSubsystem().startIntakeBallFromGround();
+        Robot.getRollersSubsystem().moveBallFromZone1to2();
+        }
+      } else if (trippedWire2 == true && trippedWire3 == false){
+        Robot.getRollersSubsystem().holdBallInPlace();
+        Robot.getRollersSubsystem().raiseRollerArm(); 
+        Robot.getLEDSubsystem().we_got_it();
+      }
+      */
     }
   }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -90,7 +75,7 @@ public class CargoIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.getRollersSubsystem().holdBallInPlace();
+   // Robot.getRollersSubsystem().holdBallInPlace();
     Robot.getRollersSubsystem().raiseRollerArm();
   }
 

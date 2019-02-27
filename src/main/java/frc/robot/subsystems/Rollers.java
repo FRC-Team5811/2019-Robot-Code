@@ -80,7 +80,7 @@ public class Rollers extends Subsystem {
   }
 
   public boolean getLaserTripWire1() {
-    if(laserTripWire1.getVoltage() < 1){
+    if(laserTripWire1.getVoltage() < 1.3){
       return false;
     } else {
       return true;
@@ -88,7 +88,7 @@ public class Rollers extends Subsystem {
   }
 
   public boolean getLaserTripWire2() {
-    if(laserTripWire2.getVoltage() < 1){
+    if(laserTripWire2.getVoltage() < 1.3){
       return false;
     } else {
       return true;
@@ -96,7 +96,7 @@ public class Rollers extends Subsystem {
   }
 
   public boolean getLaserTripWire3() {
-    if(laserTripWire3.getVoltage() < 1){
+    if(laserTripWire3.getVoltage() < 1.3){
       return false;
     } else {
       return true;

@@ -7,6 +7,7 @@ import edu.wpi.cscore.VideoSink;
 import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -148,9 +149,8 @@ public class Robot extends TimedRobot {
 
   @Override 
   public void teleopPeriodic() {
+   //System.out.println(Robot.getRollersSubsystem().getLaserTripWire1() + "\t" + Robot.getRollersSubsystem().getLaserTripWire2() + "\t" + Robot.getRollersSubsystem().getLaserTripWire3());
    Scheduler.getInstance().run();
-  // System.out.println(Robot.getRollersSubsystem().getLaserTripWire1());
-  
   }
 
   @Override

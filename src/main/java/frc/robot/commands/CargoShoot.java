@@ -39,31 +39,27 @@ public class CargoShoot extends Command {
     trippedWire3 = Robot.getRollersSubsystem().getLaserTripWire3();
     if (targetZone.equals("Zone3")) {
       Robot.getRollersSubsystem().outakeBallFromZone3();
-     // Robot.getRollersSubsystem().outakeBallFromZone3();
-      // if (trippedWire2 == true){
-      //   Robot.getRollersSubsystem().moveBallFromZone1to3();
-      // } else if (trippedWire2 == false) {
-      //   Robot.getRollersSubsystem().holdBallInPlace();
-      // }
-      // if(trippedWire == true || trippedWire2 == true && trippedWire3 == false){
-      //   Robot.getRollersSubsystem().moveBallFromZone1to3();
-      // } else if (trippedWire3 == true && trippedWire2 == false && trippedWire == false){ 
-      //   Robot.getRollersSubsystem().outakeBallFromZone3();
-      // } else if (trippedWire3 == false && trippedWire2 == false && trippedWire == false){
-      //   Robot.getRollersSubsystem().holdBallInPlace();
-      // }
+      /*
+      if(trippedWire2 == true && trippedWire3 == false){
+        Robot.getRollersSubsystem().moveBallFromZone1to3();
+      } else if (trippedWire3 == true && trippedWire2 == false){ 
+        Robot.getRollersSubsystem().outakeBallFromZone3();
+      } else if (trippedWire3 == false && trippedWire2 == false){
+        Robot.getRollersSubsystem().holdBallInPlace();
+      }
+      */
     }
     if (targetZone.equals("Zone2")){
       Robot.getRollersSubsystem().outakeBallFromZone2();
-      // if (trippedWire3 == false && trippedWire2 == false && trippedWire == true){
-      //   Robot.getRollersSubsystem().moveBallFromZone1to2();
-      // } else if (trippedWire3 == true && trippedWire2 == false && trippedWire == false){
-      //   Robot.getRollersSubsystem().moveBallFromZone3to2();
-      // } else if (trippedWire3 == false && trippedWire2 == true && trippedWire == false){
-      //   Robot.getRollersSubsystem().outakeBallFromZone2();
-      // } else if (trippedWire3 == false && trippedWire2 == false && trippedWire == false){
-      //   Robot.getRollersSubsystem().holdBallInPlace(); 
-     // }
+      /*
+      if (trippedWire3 == false && trippedWire2 == false){
+        Robot.getRollersSubsystem().holdBallInPlace(); 
+      } else if (trippedWire3 == true && trippedWire2 == false){
+        Robot.getRollersSubsystem().moveBallFromZone3to2();
+      } else if (trippedWire3 == false && trippedWire2 == true){
+        Robot.getRollersSubsystem().outakeBallFromZone2();
+      }
+      */
     } 
   }
 
