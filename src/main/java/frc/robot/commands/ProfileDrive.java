@@ -27,10 +27,10 @@ public class ProfileDrive extends Command {
 
 	 double dt = 0.02;
 
-	public double kPPos = 2.0;
-	public double kPVel = 2.0;
-	public double kPAng = 2.0;
-	public double kPAngVel = 2.0;
+	public double kPPos = 2.0;//2.0;
+	public double kPVel = 2.0;//2.0;
+	public double kPAng = 4.5;//4.5;
+	public double kPAngVel = 2.0;//2.0;
 
 	public String fileName;
 	
@@ -56,6 +56,7 @@ public class ProfileDrive extends Command {
 	double disp, vel, ang, angVel;
     // Called just before this Command runs the first time
     protected void initialize() {
+		Robot.getDtSubsystem().resetEncoders();
 		System.out.println("in init");
     	DD = new DifferentialDrivePeter(mass, wheelRadiusMeters, wheelBaseWidth, moi,
     			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors), 
@@ -90,7 +91,7 @@ public class ProfileDrive extends Command {
 	double prevL = 0;
 	double prevR = 0; //0.4787787m circum
 	double prevAng = 0;
-	public  double posError, velError, angError, angVelError;
+	public static double posError, velError, angError, angVelError;
 	double drivenDistanceSensor = 0;
 	double outputLeftVoltage, outputRightVoltage;
     protected void execute() {
@@ -100,7 +101,7 @@ public class ProfileDrive extends Command {
 			deltaR = Robot.getDtSubsystem().getRightEncMeters() - prevR;
 			deltaAng = Robot.getDtSubsystem().grabAngleRadians() - prevAng;
 			//System.out.println(DD.composeTransformFromArcs(deltaL, deltaR).toText());
-			drivenDistanceSensor += Math.abs(deltaL + deltaR)/2;
+			drivenDistanceSensor += (deltaL + deltaR)/2;
 			posError = poses.get(i) - (drivenDistanceSensor);
 			velError = vels.get(i) - ((deltaL+deltaR)/2/dt);
 			angError = angs.get(i) - Robot.getDtSubsystem().grabAngleRadians();

@@ -1,3 +1,4 @@
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,6 +57,7 @@ public class OI {
   private static final DPadButton MANIP_LEFT = new DPadButton(JOY_2, 270);
   private static final JoystickButton MANIP_L_BUMP = new JoystickButton(JOY_2, 5);
   private static final JoystickButton MANIP_R_BUMP = new JoystickButton(JOY_2, 6);
+  private static final JoystickButton MANIP_L_STICK_BTN = new JoystickButton(JOY_2, 11);
 
   public OI(){
      //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
@@ -75,7 +77,8 @@ public class OI {
         X_MANIP.toggleWhenPressed(new MoveIntakeArm());
         A_MANIP.whenPressed(new HatchExtend("OutOfPerimeter"));
         B_MANIP.whenPressed(new HatchExtend("InsidePerimeter"));
-        MANIP_R_BUMP.toggleWhenPressed(new HatchCollection());
+        MANIP_R_BUMP.whenPressed(new HatchCollection("close"));
+        MANIP_L_STICK_BTN.whenPressed(new HatchCollection("open"));
       //cargo
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));

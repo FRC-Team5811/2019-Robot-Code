@@ -17,6 +17,7 @@ import frc.robot.commands.CargoShoot;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
+import frc.robot.commands.TwoCargoHatch;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.LED;
@@ -100,7 +101,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    autonomousCommand = new OneHatchAuto();
+    autonomousCommand = new TwoCargoHatch();
     autonomousCommand.start();
     Robot.getRollersSubsystem().holdBallInPlace();
     // ProfileDrive.kPAng = SmartDashboard.getNumber("KPAng", 0.0);
@@ -126,10 +127,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Angle", Robot.dt.grabAngleRadians());
     SmartDashboard.putNumber("L enc", Robot.dt.getLeftEncMeters());
     SmartDashboard.putNumber("R enc", Robot.dt.getRightEncMeters());
-    // SmartDashboard.putNumber("Ang Error", ProfileDrive.angError);
-    // SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
-    // SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
-    // SmartDashboard.putNumber("Pos Error", ProfileDrive.posError);
+    SmartDashboard.putNumber("Ang Error", ProfileDrive.angError);
+    SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
+    SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
+    SmartDashboard.putNumber("Pos Error", ProfileDrive.posError);
    
     Scheduler.getInstance().run();
   }
@@ -171,5 +172,9 @@ public class Robot extends TimedRobot {
 
   public static LED getLEDSubsystem(){
     return LED;
+  }
+
+  public static double getOffset() {
+    return SmartDashboard.getNumber("offest", 0.0);
   }
 }

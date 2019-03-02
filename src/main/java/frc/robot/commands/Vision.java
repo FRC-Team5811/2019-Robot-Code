@@ -4,15 +4,17 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+package frc.robot.commands;
 import frc.robot.Robot;
 
-public class MoveCargo extends Command {
-  double axisValue;
+import edu.wpi.first.wpilibj.command.Command;
 
-  public MoveCargo() {
+public class Vision extends Command {
+  double offset;
+  double sigmoid;
+
+  public Vision() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -25,19 +27,16 @@ public class MoveCargo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    axisValue = Robot.oi.getManipRightY();
-    if (axisValue > .05){
-      //Robot.getRollersSubsystem().setRollers124(axisValue);
-      //Robot.getRollersSubsystem().setRoller3(axisValue);
-      Robot.getRollersSubsystem().moveBallFromZone3to2();
-      //Robot.getRollersSubsystem().startIntakeBallFromGround();
-    } else if (axisValue < -.05){
-      //Robot.getRollersSubsystem().setRollers124(axisValue);
-      //Robot.getRollersSubsystem().setRoller3(axisValue);
-      Robot.getRollersSubsystem().moveBallFromZone1to3();
-    } else {
-      Robot.getRollersSubsystem().holdBallInPlace();
-    }
+    offset = Robot.getOffset();
+
+    sigmoid = (2 / (1 + (Math.pow(2.71828, -offset / 100)))) - 1;
+
+    System.out.print(offset);
+    System.out.print(" ");
+    System.out.println(sigmoid);
+
+    Robot.getDtSubsystem().arcadeDrive(-sigmoid * 0.5, 0.2);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -49,13 +48,11 @@ public class MoveCargo extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.getRollersSubsystem().holdBallInPlace();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

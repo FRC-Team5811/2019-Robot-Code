@@ -30,34 +30,38 @@ public class HatchShoot extends Command {
     Robot.getHatchSubsystem().outakeHatch();
     Robot.getLEDSubsystem().shooting();
     counter = 0;
-    EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
+    
+    while (counter < 10){
+      counter ++;
+    }
+    Robot.getHatchSubsystem().intakeHatchArms();
+   // EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    /*
     EncValueCurrent = (Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters());
     if(EncValueStored + EXTRA_DISTANCE <= EncValueCurrent ){
       end();
     }
-    counter ++;
-    if (counter > 20){
-      counter = 0;
-      Robot.getHatchSubsystem().intakeHatchArms();
-      end();
-    }
+    */
+    /*
+    
+    */
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    
   }
 
   // Called when another command which requires one or more of the same

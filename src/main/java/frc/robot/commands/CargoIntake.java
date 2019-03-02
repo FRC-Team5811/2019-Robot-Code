@@ -75,7 +75,7 @@ public class CargoIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-   // Robot.getRollersSubsystem().holdBallInPlace();
+    Robot.getRollersSubsystem().holdBallInPlace();
     Robot.getRollersSubsystem().raiseRollerArm();
   }
 

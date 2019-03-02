@@ -10,8 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
+
+
 public class HatchCollection extends Command {
-  public HatchCollection() {
+  private String position;
+  public HatchCollection(String pos) {
+    this.position = pos;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -19,7 +23,13 @@ public class HatchCollection extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getHatchSubsystem().closeBeak();
+    System.out.println(this.position);
+    if(this.position.equals("close")){
+      Robot.getHatchSubsystem().closeBeak();
+    } else if (this.position.equals("open")){
+      Robot.getHatchSubsystem().openBeak();
+    }
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,13 +41,13 @@ public class HatchCollection extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.getHatchSubsystem().openBeak();
+    
   }
 
   // Called when another command which requires one or more of the same
