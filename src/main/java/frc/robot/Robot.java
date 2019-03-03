@@ -32,6 +32,9 @@ public class Robot extends TimedRobot {
   public static UsbCamera cam1, cam2;
   public static VideoSink server;
   public static MjpegServer mjpegServer1;
+
+  public static double kpang;
+  public static double base_speed;
   
   Command autonomousCommand;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
@@ -39,6 +42,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    SmartDashboard.putNumber("kpang", 0.0);
+    SmartDashboard.putNumber("base_speed", 0.0);
     rollers = new Rollers();
     hatch = new Hatch();
     dt = new Drivetrain();
@@ -81,12 +86,13 @@ public class Robot extends TimedRobot {
   */
   @Override
   public void robotPeriodic() {
-    System.out.println(dt.navx);
+    // System.out.println(dt.navx);
   }
 
   @Override
   public void disabledInit() {
     Robot.getLEDSubsystem().disabled();
+    
   }
 
   @Override
@@ -101,8 +107,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    autonomousCommand = new Vision();
-    autonomousCommand.start();
+    // autonomousCommand = new Vision();
+    // autonomousCommand.start();
     Robot.getRollersSubsystem().holdBallInPlace();
     // ProfileDrive.kPAng = SmartDashboard.getNumber("KPAng", 0.0);
     // ProfileDrive.kPAngVel = SmartDashboard.getNumber("KPAngVel", 0.0);
@@ -146,6 +152,8 @@ public class Robot extends TimedRobot {
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
     Robot.rollers.raiseRollerArm();
+
+
   }
 
   @Override 
@@ -176,6 +184,6 @@ public class Robot extends TimedRobot {
   }
 
   public static double getOffset() {
-    return SmartDashboard.getNumber("offest", 0.0);
+    return SmartDashboard.getNumber("angle", 0.0);
   }
 }

@@ -12,11 +12,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Vision extends Command {
   double offset;
-  double sigmoid;
+  double base_speed;
+  double leftVoltage;
+  double rightVoltage;
+  double kpang;
 
   public Vision() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    kpang = 0.09;
+    base_speed = 0;
+
   }
 
   // Called just before this Command runs the first time
@@ -29,14 +35,21 @@ public class Vision extends Command {
   protected void execute() {
     offset = Robot.getOffset();
 
-    sigmoid = (2 / (1 + (Math.pow(2.71828, -offset / 100)))) - 1;
+    leftVoltage = base_speed - offset * kpang;
+    rightVoltage = base_speed + offset * kpang;
 
+    System.out.print("angle: ");
     System.out.print(offset);
-    System.out.print(" ");
-    System.out.println(sigmoid);
+    System.out.print(" kpang: ");
+    System.out.print(kpang);
+    System.out.print(" base: ");
+    System.out.print(base_speed);
+    System.out.print(" Left: ");
+    System.out.print(leftVoltage);
+    System.out.print(" Right: ");
+    System.out.println(rightVoltage);
 
-    Robot.getDtSubsystem().arcadeDrive(-sigmoid * 0.5, 0.2);
-
+    Robot.getDtSubsystem().voltageDrive(leftVoltage, rightVoltage);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -48,11 +61,13 @@ public class Vision extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.getDtSubsystem().motorReset();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

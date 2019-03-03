@@ -15,6 +15,9 @@ import frc.robot.commands.MoveCargo;
 import frc.robot.commands.MoveIntakeArm;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.Switch;
+import frc.robot.commands.Vision;
+import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
   private static final int LEFT_Y_AXIS = 1;
@@ -57,6 +60,9 @@ public class OI {
   private static final JoystickButton MANIP_L_BUMP = new JoystickButton(JOY_2, 5);
   private static final JoystickButton MANIP_R_BUMP = new JoystickButton(JOY_2, 6);
 
+  private static double kpang;
+  private static double base_speed;
+
   public OI(){
      //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
@@ -64,6 +70,9 @@ public class OI {
        
         Y_DRIVE.toggleWhenPressed(new Switch());
         DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
+
+        X_DRIVE.whileHeld(new Vision());
+
         
 
      // }
