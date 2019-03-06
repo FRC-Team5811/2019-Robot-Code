@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArcadeSpeedMod;
+import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.HatchCollection;
@@ -16,6 +17,8 @@ import frc.robot.commands.MoveCargo;
 import frc.robot.commands.MoveIntakeArm;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.Switch;
+import frc.robot.commands.TeleVision;
+import frc.robot.commands.Vision;
 
 public class OI {
   private static final int LEFT_Y_AXIS = 1;
@@ -41,6 +44,7 @@ public class OI {
   private static final DPadButton DRIVE_DOWN = new DPadButton(JOY_1, 180);
   private static final DPadButton DRIVE_LEFT = new DPadButton(JOY_1, 270);
   private static final JoystickButton DRIVE_R_BUMP = new JoystickButton(JOY_1, 5);
+  private static final JoystickButton DRIVE_L_BUMP = new JoystickButton(JOY_1, 6);
 
   private static final Joystick JOY_2 = new Joystick(1);
   private static final JoystickButton A_MANIP = new JoystickButton(JOY_2, BUTTON_A);
@@ -58,7 +62,7 @@ public class OI {
   private static final JoystickButton MANIP_L_BUMP = new JoystickButton(JOY_2, 5);
   private static final JoystickButton MANIP_R_BUMP = new JoystickButton(JOY_2, 6);
   private static final JoystickButton MANIP_L_STICK_BTN = new JoystickButton(JOY_2, 11);
-
+  private static final JoystickButton MANIP_START_BTN = new JoystickButton(JOY_2, 9);
   public OI(){
      //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
@@ -66,6 +70,7 @@ public class OI {
        
         Y_DRIVE.toggleWhenPressed(new Switch());
         DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
+        DRIVE_L_BUMP.whileHeld(new TeleVision());
         
 
      // }
@@ -79,6 +84,7 @@ public class OI {
         B_MANIP.whenPressed(new HatchExtend("InsidePerimeter"));
         MANIP_R_BUMP.whenPressed(new HatchCollection("close"));
         MANIP_L_STICK_BTN.whenPressed(new HatchCollection("open"));
+        MANIP_START_BTN.whileHeld(new AutoHatchCollection(false));
       //cargo
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));

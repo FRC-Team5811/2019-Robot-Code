@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
@@ -20,6 +21,7 @@ public class Hatch extends Subsystem {
   DoubleSolenoid hatchPunch = RobotMap.hatchPunch;
   DoubleSolenoid hatchExtension = RobotMap.extendHatchMechanism;
   DoubleSolenoid beakMovement = RobotMap.beakMovement;
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

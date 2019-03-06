@@ -29,16 +29,17 @@ public class ProfileDrive extends Command {
 
 	public double kPPos = 2.0;//2.0;
 	public double kPVel = 2.0;//2.0;
-	public double kPAng = 4.5;//4.5;
+	public double kPAng;//4.5;
 	public double kPAngVel = 2.0;//2.0;
 
 	public String fileName;
 	
-    public ProfileDrive(String file) {
+    public ProfileDrive(String file, double kpAng) {
         // Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		this.fileName = file;
-		System.out.println(fileName);
+		this.kPAng = kpAng;
+		
     	requires(Robot.getDtSubsystem());
     }
     ArrayList<Double> voltagesLeft = new ArrayList();
@@ -57,7 +58,7 @@ public class ProfileDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
 		Robot.getDtSubsystem().resetEncoders();
-		System.out.println("in init");
+		//System.out.println("in init");
     	DD = new DifferentialDrivePeter(mass, wheelRadiusMeters, wheelBaseWidth, moi,
     			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors), 
     			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors));    	
@@ -107,8 +108,8 @@ public class ProfileDrive extends Command {
 			angError = angs.get(i) - Robot.getDtSubsystem().grabAngleRadians();
 			angVelError = angVels.get(i) - (deltaAng/dt);
 			
-			outputLeftVoltage = voltagesLeft.get(i) + kPPos*posError + kPVel*velError - kPAng*angError - kPAngVel*angVelError;
-			outputRightVoltage = voltagesRight.get(i)+ kPPos*posError + kPVel*velError + kPAng*angError + kPAngVel*angVelError;
+			outputLeftVoltage = voltagesLeft.get(i) + kPPos*posError + kPVel*velError - this.kPAng*angError - kPAngVel*angVelError;
+			outputRightVoltage = voltagesRight.get(i)+ kPPos*posError + kPVel*velError + this.kPAng*angError + kPAngVel*angVelError;
 			//System.out.println(Robot.getDtSubsystem().grabAngleRadians());
 			Robot.getDtSubsystem().voltageDrive(outputLeftVoltage , outputRightVoltage);
 			//System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));

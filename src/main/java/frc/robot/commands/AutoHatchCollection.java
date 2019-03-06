@@ -7,56 +7,43 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class HatchShoot extends Command {
-
-  double EncValueCurrent = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
-  double EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
-  private static final int EXTRA_DISTANCE = 1; //CHANGE THIS WITH ACTUAL ROBOT
-  int counter = 0;
+public class AutoHatchCollection extends Command {
+  DigitalInput hatchCollect = RobotMap.hatchSensor;
   boolean done = false;
-
-  public HatchShoot() {
+  private boolean auto;
+  private double baseVoltage;
+  public AutoHatchCollection(boolean auto) {
+    this.auto = auto;
     // Use requires() here to declare subsystem dependencies
-      // eg. requires(chassis);
-      counter = 0;
-      requires(Robot.getHatchSubsystem());
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getHatchSubsystem().openBeak();
-    Robot.getHatchSubsystem().outakeHatch();
-    Robot.getLEDSubsystem().shooting();
-    counter = 0;
     done = false;
-
-   // EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
+    if(this.auto){
+      baseVoltage = 4;
+    }else{
+      baseVoltage = 0;
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    counter++;
-    if(counter < 20){
-
-    }else{
-      Robot.getHatchSubsystem().intakeHatchArms();
+    if(!hatchCollect.get()){
+      Robot.getHatchSubsystem().closeBeak();
+      Robot.getLEDSubsystem().we_got_it();
       done = true;
+    }else{
+      Robot.getDtSubsystem().voltageDrive(baseVoltage, baseVoltage);
     }
-
-    /*
-    EncValueCurrent = (Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters());
-    if(EncValueStored + EXTRA_DISTANCE <= EncValueCurrent ){
-      end();
-    }
-    */
-    /*
-    
-    */
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -68,13 +55,11 @@ public class HatchShoot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Im ended");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

@@ -9,54 +9,61 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import java.util.ArrayList;
 
-public class HatchShoot extends Command {
+public class EmpiricalPointTurn extends Command {
 
-  double EncValueCurrent = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
-  double EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
-  private static final int EXTRA_DISTANCE = 1; //CHANGE THIS WITH ACTUAL ROBOT
-  int counter = 0;
-  boolean done = false;
+  double desiredAngle;
+  boolean done; 
+  double outputVolts;
+  double angDiff;
+  double baseVoltage = 6.0;
+  double kPAng = 0.5;
+  double currentAng;
 
-  public HatchShoot() {
+  public EmpiricalPointTurn(double d) {
+    this.desiredAngle = d;
     // Use requires() here to declare subsystem dependencies
-      // eg. requires(chassis);
-      counter = 0;
-      requires(Robot.getHatchSubsystem());
+    requires(Robot.getDtSubsystem());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getHatchSubsystem().openBeak();
-    Robot.getHatchSubsystem().outakeHatch();
-    Robot.getLEDSubsystem().shooting();
-    counter = 0;
+    Robot.getDtSubsystem().resetNAVX();
     done = false;
-
-   // EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    counter++;
-    if(counter < 20){
-
-    }else{
-      Robot.getHatchSubsystem().intakeHatchArms();
-      done = true;
-    }
-
-    /*
-    EncValueCurrent = (Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters());
-    if(EncValueStored + EXTRA_DISTANCE <= EncValueCurrent ){
-      end();
-    }
-    */
-    /*
+    currentAng = Robot.getDtSubsystem().grabAngleRadians();
     
-    */
+    angDiff = Math.abs(this.desiredAngle - currentAng);
+    System.out.println(angDiff);
+    if(this.desiredAngle >= 0){
+      if(currentAng < this.desiredAngle){
+        //Move more positive
+        
+        outputVolts = (baseVoltage + kPAng*angDiff);
+        Robot.getDtSubsystem().voltageDrive(-outputVolts, outputVolts);
+      }else{
+        Robot.getDtSubsystem().motorReset();
+        done = true;
+      }
+    } else {
+      if(currentAng > this.desiredAngle){
+        //Move more negative
+        outputVolts = (baseVoltage + kPAng*angDiff);
+        Robot.getDtSubsystem().voltageDrive(outputVolts, -outputVolts);
+      }else{
+        Robot.getDtSubsystem().motorReset();
+        done = true;
+      }
+    }
+    
+    // Robot.getDtSubsystem().voltageDrive( , );
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -68,13 +75,11 @@ public class HatchShoot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Im ended");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

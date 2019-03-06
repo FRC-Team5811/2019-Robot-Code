@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class PointTurn extends Command {
 
-  double angAccMax = 4.0; //rad/s/s
-  double angVelMax = 4.0; //rad/s
+  double angAccMax = 3.0; //rad/s/s
+  double angVelMax = 10.0; //rad/s
   double moi = 20.0; // kg * m^2
 
-  double kPAng = 0.0;
+  double kPAng = 3.0;
   double kPAngVel = 0.0;
   
   ArrayList<Double> voltages = new ArrayList<>();
@@ -33,12 +33,12 @@ public class PointTurn extends Command {
 
   static double wheelRadiusMeters = 0.0762; // m 
 	static double wheelBaseWidth = 0.6096; // m   //this is the effective wheel base width empirically 4/3 that of the physical wheel base width (24in --> 32in)
-	static double vIntercept = 0.67; //0.67 // V
+	static double vIntercept = 0.0; //0.67 // V
 	static double R = 0.09160305; // ohms
 	static double kv = 46.51333;   // rad/s per V 
 	static double kt = 0.0183969466;   // N*m per A
 	static double g = 10.71; // gear reduction (g:1)
-  static int nMotors = 4; //total number of motors
+  static int nMotors = 2; //total number of motors
   static double dt = 0.02;
   static int index, i;
 
@@ -63,34 +63,38 @@ public class PointTurn extends Command {
     voltages.clear();
     angles.clear();
     angVels.clear();
+    Robot.getDtSubsystem().resetNAVX();
+    ang = 0;
+
     accelDistance = (Math.pow(angVelMax, 2))/(2*angAccMax);
     time = index = i = 0;
     done = false;
-    if(this.desiredAngle < accelDistance * 2){ //Triangle
-      accelTime = Math.sqrt(this.desiredAngle/angAccMax);
+    if(Math.abs(this.desiredAngle) < accelDistance * 2){ //Triangle
+      accelTime = Math.sqrt(Math.abs(this.desiredAngle)/angAccMax);
       while(time < accelTime){
-        angAcc = angAccMax;
+        angAcc = angAccMax * Math.signum(this.desiredAngle);
         angVel = angVel + (angAcc*dt);
         ang = ang + (angVel * dt);
         angles.add(ang);
         angVels.add(angVel);
-        volts = voltsForMotion(angVel*(wheelBaseWidth/2), (moi*angAcc)/wheelBaseWidth);
+        volts = voltsForMotion(angVel*(wheelBaseWidth/2), 0);
         voltages.add(volts);
-        System.out.println(ang);
         index++;
         time+=dt;
+        System.out.println("ang " + ang + " angVel " + angVel + " volts "+volts);
       }
-      while(time < 2*accelTime){
-        angAcc = angAccMax;
-        angVel = angVel - (angAcc*dt);
+      //(moi*angAcc)/(wheelBaseWidth)
+      while(time < accelTime + accelTime){
+        angAcc = -angAccMax * Math.signum(this.desiredAngle);
+        angVel = angVel + (angAcc*dt);
         ang = ang + (angVel * dt);
         angles.add(ang);
         angVels.add(angVel);
-        volts = voltsForMotion(angVel*(wheelBaseWidth/2), (moi*angAcc)/wheelBaseWidth);
+        volts = voltsForMotion(angVel*(wheelBaseWidth/2), 0)-0.5;
         voltages.add(volts);
-        System.out.println(ang);
         index++;
         time+=dt;
+        System.out.println("ang " + ang + " angVel " + angVel + " volts "+volts);
       }
     }else{
       System.out.println("Run triangle please");
@@ -105,15 +109,14 @@ public class PointTurn extends Command {
   @Override
   protected void execute() {
     if(i < index){
-      deltaAng = Robot.getDtSubsystem().grabAngleRadians() - prevAng;
+      deltaAng = -Robot.getDtSubsystem().grabAngleRadians() - prevAng;
 
-      angError = angles.get(i) - Robot.getDtSubsystem().grabAngleRadians();
+      angError = angles.get(i) - (-Robot.getDtSubsystem().grabAngleRadians());
 			angVelError = angVels.get(i) - (deltaAng/dt);
-			
-			outputLeftVoltage = voltages.get(i) + kPAng*angError + kPAngVel*angVelError;
-			outputRightVoltage = -voltages.get(i) - kPAng*angError - kPAngVel*angVelError;
+			outputLeftVoltage = voltages.get(i) - kPAng*angError - kPAngVel*angVelError;
+			outputRightVoltage = -voltages.get(i) + kPAng*angError + kPAngVel*angVelError;
       Robot.getDtSubsystem().voltageDrive(outputLeftVoltage, outputRightVoltage);
-      prevAng = Robot.getDtSubsystem().grabAngleRadians();
+      prevAng = -Robot.getDtSubsystem().grabAngleRadians();
       i++;
     }else {
       Robot.getDtSubsystem().motorReset();

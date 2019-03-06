@@ -45,9 +45,7 @@ public class Robot extends TimedRobot {
     dt = new Drivetrain();
     oi = new OI();
     LED = new LED();
-    RobotMap.u1.setAutomaticMode(true);  //DON"T DELETE
-
-    
+ 
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
     cam1.setResolution(2400, 144);
@@ -174,7 +172,11 @@ public class Robot extends TimedRobot {
     return LED;
   }
 
-  public static double getOffset() {
-    return SmartDashboard.getNumber("offest", 0.0);
+  public static double getAngle() {
+    return SmartDashboard.getNumber("angle", 0.0);
+  }
+
+  public static double getGap(){
+    return SmartDashboard.getNumber("gap_distance", 0);
   }
 }
