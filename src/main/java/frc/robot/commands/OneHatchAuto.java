@@ -20,21 +20,14 @@ public class OneHatchAuto extends CommandGroup {
    */
   public OneHatchAuto() {
    // requires(Robot.getDtSubsystem());
-    //ProfileDrive path = new ProfileDrive("curvyboi");
-    ProfileDrive straight = new ProfileDrive("str", 4.5);
-    ProfileDrive backCurve = new ProfileDrive("back", 4.5);
 
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
 
-   // addSequential(path);
-
-    addSequential(new HatchExtend("OutOfPerimeter"));   //works best with just kp ang at 2 or 4.5
-    addSequential(straight);
-    addParallel(new HatchShoot());
-    addSequential(backCurve);
+    addSequential(new ProfileDrive("hatch1", 6.0));
+    addSequential(new HatchCollection("open"));
 
     // To run multiple commands at the same time,
     // use addParallel()

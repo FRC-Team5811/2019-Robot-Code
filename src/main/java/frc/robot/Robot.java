@@ -59,10 +59,11 @@ public class Robot extends TimedRobot {
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
-    // autoChooser = new SendableChooser();
-    // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
-    // autoChooser.addObject("TOm Auto", new ResetRobot());
-    // SmartDashboard.putData("Auto Mode", autoChooser);
+    autoChooser = new SendableChooser();
+    autoChooser.addDefault ("2 hatch Right", new TwoCargoHatch());
+    autoChooser.addObject ("2 hatch Left", new TwoCargoHatch());
+    autoChooser.addObject("1 Hatch", new OneHatchAuto());
+    SmartDashboard.putData("Auto Mode", autoChooser);
 
     SmartDashboard.putNumber("KPAng", 0.0);
     SmartDashboard.putNumber("KPAngVel", 0.0);
@@ -81,7 +82,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     
-  }
+  } 
 
   @Override
   public void disabledInit() {
