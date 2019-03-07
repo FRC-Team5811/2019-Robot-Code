@@ -9,12 +9,14 @@ public class Vision extends Command {
   double base_speed;
   double leftVoltage;
   double rightVoltage;
-  double kpang, kpZip, kiang;
+  double kpang, kpZip, kiang, kdang;
+  double errorDerivative, previousError, dt; 
   boolean loading;
   boolean done;
   double counter;
   double accumulatedError, maxAccumulatedError; 
   DigitalInput switchH = RobotMap.hatchSensor;
+  DigitalInput switchH2 = RobotMap.hatchSensor2;
   /**
    * HEY when loading is true it means its loading, false = shooting
    */
@@ -22,10 +24,13 @@ public class Vision extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.loading = loading;
-    kpang = 0.020;
+    kpang = 0.10;
     kiang = 0.0000;
+    kdang = 0.0;
     kpZip = 1;
-    base_speed = 4;
+    dt = 0.020;
+    errorDerivative = previousError = 0;
+    base_speed = 0;
     counter = 0;
     maxAccumulatedError = 100;
   }
@@ -40,17 +45,18 @@ public class Vision extends Command {
   @Override
   protected void execute() {
     offset = Robot.getAngle();
-    accumulatedError += offset; 
+    accumulatedError += offset;
+    errorDerivative =  (offset - previousError) /  dt;
 
-    if(Math.abs(offset) < 3){
+    if(Math.abs(offset) < 2){
       leftVoltage = base_speed;
       rightVoltage = base_speed;
-      done = true;
-      Robot.getDtSubsystem().resetNAVX();
-      Robot.getDtSubsystem().motorReset();
+      // done = true;
+      // Robot.getDtSubsystem().resetNAVX();
+      // Robot.getDtSubsystem().motorReset();
     } else {
-      leftVoltage = base_speed - offset * kpang * 1.05 - accumulatedError*kiang;
-      rightVoltage = base_speed + offset * kpang + accumulatedError*kiang;
+      leftVoltage = base_speed - offset * kpang - accumulatedError*kiang - kdang * errorDerivative ;
+      rightVoltage = base_speed + offset * kpang + accumulatedError*kiang + kdang * errorDerivative ;
     }
     /*
     System.out.print("angle: ");
@@ -79,16 +85,19 @@ public class Vision extends Command {
       }
     } else if (this.loading){
       if(Robot.getGap() > 105){
-        done = true;
-        Robot.getDtSubsystem().resetNAVX();
-        Robot.getDtSubsystem().motorReset();
+        // done = true;
+        // Robot.getDtSubsystem().resetNAVX();
+        // Robot.getDtSubsystem().motorReset();
       }
-      if(!switchH.get()){
+      if(!switchH.get() || !switchH2.get()){
         done = true;
         Robot.getDtSubsystem().resetNAVX();
         Robot.getDtSubsystem().motorReset();
       }
     }
+
+
+    previousError = offset;
   }
 
   // Make this return true when this Command no longer needs to run execute()

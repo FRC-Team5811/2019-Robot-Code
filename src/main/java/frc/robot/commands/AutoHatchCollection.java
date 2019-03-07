@@ -14,6 +14,7 @@ import frc.robot.RobotMap;
 
 public class AutoHatchCollection extends Command {
   DigitalInput hatchCollect = RobotMap.hatchSensor;
+  DigitalInput hatchCollect2 = RobotMap.hatchSensor2;
   boolean done = false;
   private boolean auto;
   private double baseVoltage;
@@ -37,7 +38,7 @@ public class AutoHatchCollection extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!hatchCollect.get()){
+    if(!hatchCollect.get() || !hatchCollect2.get()){
       Robot.getHatchSubsystem().closeBeak();
       Robot.getLEDSubsystem().we_got_it();
       done = true;
