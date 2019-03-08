@@ -16,22 +16,23 @@ public class TwoCargoHatch extends CommandGroup {
    */
   public TwoCargoHatch() {
      //12.8 volts
-    
-    // addSequential(new ProfileDrive("hatch1", 4.5));
+    addSequential(new ProfileDrive("dummy", 6.0));
+    addSequential(new HatchExtend("OutOfPerimeter"));
+    addSequential(new ProfileDrive("hatch1", 4.5));
     addSequential(new HatchCollection("open"));
-    // addSequential(new ProfileDrive("hatch1ToLoadR", 6.0));
-    // addSequential(new EmpiricalPointTurn(1.6));  //1.7 for 180
+    addSequential(new ProfileDrive("hatch1ToLoadRAlt", 6.0));
+    addSequential(new EmpiricalPointTurn(1.5));  //1.7 for 180
     addSequential(new Pause(10));
     addSequential(new Vision(true));
     addSequential(new AutoHatchCollection(true));
-    /*
-    addSequential(new ProfileDrive("LoadRToShip1", 6));
+    
+    addSequential(new ProfileDrive("LoadRToShip1Alt", 4.5));
 
     addSequential(new EmpiricalPointTurn(-0.85));
-    addSequential(new Pause(10));
+    addSequential(new Pause(20));
     addSequential(new Vision(false));
     addSequential(new HatchShoot());
-    */
+    
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

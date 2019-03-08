@@ -33,7 +33,6 @@ public class CargoShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    distance = Robot.getRollersSubsystem().getDistance();
     trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
     trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     trippedWire3 = Robot.getRollersSubsystem().getLaserTripWire3();

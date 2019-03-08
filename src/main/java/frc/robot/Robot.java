@@ -48,8 +48,10 @@ public class Robot extends TimedRobot {
  
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
-    cam1.setResolution(2400, 144);
-    cam1.setBrightness(20);
+    cam1.setFPS(20);
+    cam2.setFPS(20);
+    // cam1.setResolution(2400, 144);
+    // cam1.setBrightness(20);
     server = CameraServer.getInstance().getServer();
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
@@ -59,16 +61,18 @@ public class Robot extends TimedRobot {
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
-    // autoChooser = new SendableChooser();
-    // autoChooser.addDefault ("default ToM auto", new ArcadeDrive());
-    // autoChooser.addObject("TOm Auto", new ResetRobot());
-    // SmartDashboard.putData("Auto Mode", autoChooser);
-
+    autoChooser = new SendableChooser();
+    autoChooser.addDefault ("2 Hatch Right", new TwoCargoHatch());
+    //autoChooser.addObject("2 Hatch Left", new TwoCargoHatchL());
+    autoChooser.addObject("One Hatch Auto", new OneHatchAuto());
+    SmartDashboard.putData("Auto Mode", autoChooser);
+    /*
     SmartDashboard.putNumber("KPAng", 0.0);
     SmartDashboard.putNumber("KPAngVel", 0.0);
     SmartDashboard.putNumber("KPPos", 0.0);
     SmartDashboard.putNumber("KPVel", 0.0);
     SmartDashboard.putString("File Name", "");
+    */
     // SmartDashboard.putNumber("Ang Error", ProfileDrive.angError);
     // SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
     // SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
@@ -176,7 +180,11 @@ public class Robot extends TimedRobot {
     return SmartDashboard.getNumber("angle", 0.0);
   }
 
-  public static double getGap(){
+  public static double getTotalArea(){
+    return SmartDashboard.getNumber("total_area", 0);
+  }
+
+  public static double getDist(){
     return SmartDashboard.getNumber("gap_distance", 0);
   }
 }

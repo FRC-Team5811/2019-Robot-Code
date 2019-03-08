@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Vision extends Command {
   double offset;
   double base_speed;
+  double lessening;
   double leftVoltage;
   double rightVoltage;
   double kpang, kpZip, kiang, kdang;
@@ -24,13 +25,13 @@ public class Vision extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.loading = loading;
-    kpang = 0.10;
+    kpang = 0.05;
     kiang = 0.0000;
-    kdang = 0.0;
+    kdang = 0.05;
     kpZip = 1;
-    dt = 0.020;
+    dt = 0.0666;
     errorDerivative = previousError = 0;
-    base_speed = 0;
+    base_speed = 4;
     counter = 0;
     maxAccumulatedError = 100;
   }
@@ -69,26 +70,25 @@ public class Vision extends Command {
     System.out.print(leftVoltage);
     System.out.print(" Right: ");
     System.out.println(rightVoltage);
-    /*
-    if(Robot.getGap() > 100){
-      kpZip = 0.8;
+    */
+    if(Robot.getTotalArea() > 1400){
+      kpZip = 0.6;
     } else {
       kpZip = 1;
     }
-    */
-    System.out.println(Robot.getGap());
+    
     Robot.getDtSubsystem().voltageDrive(leftVoltage * kpZip, rightVoltage* kpZip);
     if(!this.loading){
-      if(Robot.getGap() > 150){
+      if(Robot.getDist() > 190){
         done = true;
-        Robot.getDtSubsystem().motorReset();
+         Robot.getDtSubsystem().motorReset();
       }
     } else if (this.loading){
-      if(Robot.getGap() > 105){
-        // done = true;
-        // Robot.getDtSubsystem().resetNAVX();
-        // Robot.getDtSubsystem().motorReset();
-      }
+      // if(Robot.getGap() > 105){
+      //   // done = true;
+      //   // Robot.getDtSubsystem().resetNAVX();
+      //   // Robot.getDtSubsystem().motorReset();
+      // }
       if(!switchH.get() || !switchH2.get()){
         done = true;
         Robot.getDtSubsystem().resetNAVX();
