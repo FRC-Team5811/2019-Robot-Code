@@ -7,28 +7,19 @@
 
 package frc.robot.commands;
 
-import java.awt.dnd.DragSourceEvent;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
-import frc.robot.subsystems.Drivetrain;
-//import sun.java2d.cmm.ProfileActivator;
 
-public class OneHatchAuto extends CommandGroup {
+public class HybridAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public OneHatchAuto() {
-   // requires(Robot.getDtSubsystem());
-
+  public HybridAuto() {
+    addSequential(new GetToShip1(4.5));
+    addSequential(new EmpiricalPointTurn(-0.85));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addSequential(new HatchExtend("OutOfPerimeter"));
-    addSequential(new ProfileDrive("hatch1", 6.0));
-    addSequential(new HatchShoot());
-   // addSequential(path);
 
     // To run multiple commands at the same time,
     // use addParallel()
