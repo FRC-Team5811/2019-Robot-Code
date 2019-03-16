@@ -32,8 +32,8 @@ public class RobotMap {
   public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
   public static VictorSPX cargo3 = new VictorSPX(6); //cargo 3
 
-	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(3, 2);  // should be 0,1 solenoid not behaving
-  public static DoubleSolenoid hatchPunch = new DoubleSolenoid(1, 0);  // should be 2, 3
+	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);  // should be 0,1 solenoid not behaving
+  public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);  // should be 2, 3
   public static DoubleSolenoid extendHatchMechanism = new DoubleSolenoid(6, 7);
   public static DoubleSolenoid beakMovement = new DoubleSolenoid(4, 5);
   //public static DoubleSolenoid frontClimber = new DoubleSolenoid(6, 7);

@@ -41,6 +41,7 @@ public class AutoHatchCollection extends Command {
     if(!hatchCollect.get() || !hatchCollect2.get()){
       Robot.getHatchSubsystem().closeBeak();
       Robot.getLEDSubsystem().we_got_it();
+      Robot.getDtSubsystem().resetNAVX();
       done = true;
     }else{
       Robot.getDtSubsystem().voltageDrive(baseVoltage, baseVoltage);
