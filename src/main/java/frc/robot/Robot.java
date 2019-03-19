@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
@@ -119,6 +120,7 @@ public class Robot extends TimedRobot {
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
+    dt.storedAngProfile = 0;
   }
 
   /**
@@ -133,7 +135,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
     SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
     SmartDashboard.putNumber("Pos Error", ProfileDrive.posError);
-   
     Scheduler.getInstance().run();
   }
 
@@ -186,5 +187,8 @@ public class Robot extends TimedRobot {
 
   public static double getDist(){
     return SmartDashboard.getNumber("gap_distance", 0);
+  }
+  public static double setLeftSelectMode(double state) {
+    return SmartDashboard.getNumber("left_select_mode", state);
   }
 }

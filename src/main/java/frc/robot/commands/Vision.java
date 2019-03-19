@@ -21,13 +21,13 @@ public class Vision extends Command {
   /**
    * HEY when loading is true it means its loading, false = shooting
    */
-  public Vision(boolean loading) {
+  public Vision(boolean loading, double kpAng) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.loading = loading;
-    kpang = 0.05;
+    this.kpang = kpAng;
     kiang = 0.0000;
-    kdang = 0.05;
+    kdang = 0.07;
     kpZip = 1;
     dt = 0.0666;
     errorDerivative = previousError = 0;
@@ -45,6 +45,7 @@ public class Vision extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.setLeftSelectMode(1.0);
     offset = Robot.getAngle();
     accumulatedError += offset;
     errorDerivative =  (offset - previousError) /  dt;
@@ -56,8 +57,8 @@ public class Vision extends Command {
       // Robot.getDtSubsystem().resetNAVX();
       // Robot.getDtSubsystem().motorReset();
     } else {
-      leftVoltage = base_speed - offset * kpang - accumulatedError*kiang - kdang * errorDerivative ;
-      rightVoltage = base_speed + offset * kpang + accumulatedError*kiang + kdang * errorDerivative ;
+      leftVoltage = base_speed - offset * this.kpang - accumulatedError*kiang - kdang * errorDerivative ;
+      rightVoltage = base_speed + offset * this.kpang + accumulatedError*kiang + kdang * errorDerivative ;
     }
     /*
     System.out.print("angle: ");
@@ -71,7 +72,7 @@ public class Vision extends Command {
     System.out.print(" Right: ");
     System.out.println(rightVoltage);
     */
-    if(Robot.getTotalArea() > 1400){
+    if(Robot.getTotalArea() > 400){
       kpZip = 0.6;
     } else {
       kpZip = 1;
@@ -79,9 +80,9 @@ public class Vision extends Command {
     
     Robot.getDtSubsystem().voltageDrive(leftVoltage * kpZip, rightVoltage* kpZip);
     if(!this.loading){
-      if(Robot.getDist() > 190){
+      if(Robot.getTotalArea() > 1600){
         done = true;
-         Robot.getDtSubsystem().motorReset();
+        Robot.getDtSubsystem().motorReset();
       }
     } else if (this.loading){
       // if(Robot.getGap() > 105){
@@ -91,7 +92,6 @@ public class Vision extends Command {
       // }
       if(!switchH.get() || !switchH2.get()){
         done = true;
-        Robot.getDtSubsystem().resetNAVX();
         Robot.getDtSubsystem().motorReset();
       }
     }
@@ -109,6 +109,7 @@ public class Vision extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.setLeftSelectMode(0.0);
     Robot.getDtSubsystem().motorReset();
   }
 
