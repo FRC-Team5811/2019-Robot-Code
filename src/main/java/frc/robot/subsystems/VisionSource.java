@@ -10,7 +10,7 @@ public class VisionSource extends Subsystem {
     private double something2;
 
     public VisionSource(){
-        serial = new SerialPort(115280, SerialPort.Port.kOnboard);
+        serial = new SerialPort(115200, SerialPort.Port.kOnboard);
         serial.setReadBufferSize(1);
     }
 
