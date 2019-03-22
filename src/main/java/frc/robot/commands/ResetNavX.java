@@ -6,24 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class TeleVision extends Command {
-  double offset;
-  double base_speed;
-  // double leftVoltage;
-  // double rightVoltage;
-  double kpang;
-  double turn_correction;
-
-  public TeleVision() {
+public class ResetNavX extends Command {
+  public ResetNavX() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    kpang = 0.09;
-    base_speed = 0;
-
   }
 
   // Called just before this Command runs the first time
@@ -34,45 +24,23 @@ public class TeleVision extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    offset = Robot.getAngle();
-
-    // leftVoltage = (base_speed - offset * kpang)/12;
-    // rightVoltage = (base_speed + offset * kpang)/12;
-
-    /*System.out.print("angle: ");
-    System.out.print(offset);
-    System.out.print(" kpang: ");
-    System.out.print(kpang);
-    System.out.print(" base: ");
-    System.out.print(base_speed);
-    System.out.print(" Left: ");
-    System.out.print(leftVoltage);
-    System.out.print(" Right: ");
-    System.out.println(rightVoltage);*/
-    //Robot.getDtSubsystem().voltageDrive(leftVoltage, rightVoltage);
-
-    turn_correction = offset * kpang;
-    Robot.getDtSubsystem().setVisionCorrection(turn_correction);
-
+    Robot.getDtSubsystem().resetNAVX();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //Robot.getDtSubsystem().motorReset();
-    Robot.getDtSubsystem().setVisionCorrection(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

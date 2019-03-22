@@ -19,6 +19,7 @@ import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.TwoCargoHatch;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.LED;
@@ -34,6 +35,10 @@ public class Robot extends TimedRobot {
   public static UsbCamera cam1, cam2;
   public static VideoSink server;
   public static MjpegServer mjpegServer1;
+  public static Climber climber;
+  private double vision_kpang;
+
+  
   
   Command autonomousCommand;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
@@ -46,6 +51,7 @@ public class Robot extends TimedRobot {
     dt = new Drivetrain();
     oi = new OI();
     LED = new LED();
+    climber = new Climber();
  
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
@@ -62,6 +68,7 @@ public class Robot extends TimedRobot {
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
+    Robot.climber.lowerClimbers();
     autoChooser = new SendableChooser();
     autoChooser.addDefault ("2 Hatch Right", new TwoCargoHatch());
     //autoChooser.addObject("2 Hatch Left", new TwoCargoHatchL());
@@ -177,6 +184,10 @@ public class Robot extends TimedRobot {
     return LED;
   }
 
+  public static Climber getClimberSubsystem() {
+    return climber;
+  }
+
   public static double getAngle() {
     return SmartDashboard.getNumber("angle", 0.0);
   }
@@ -188,7 +199,10 @@ public class Robot extends TimedRobot {
   public static double getDist(){
     return SmartDashboard.getNumber("gap_distance", 0);
   }
-  public static double setLeftSelectMode(double state) {
-    return SmartDashboard.getNumber("left_select_mode", state);
+  public static void setLeftSelectMode(double state) {
+    SmartDashboard.putNumber("left_select_mode", state);
+  }
+  public static double getVisionKpang(double kpang) {
+    return SmartDashboard.getNumber("vision_kpang", 0.0);
   }
 }

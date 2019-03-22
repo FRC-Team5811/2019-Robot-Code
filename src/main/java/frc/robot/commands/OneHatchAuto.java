@@ -26,7 +26,7 @@ public class OneHatchAuto extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
     addSequential(new HatchExtend("OutOfPerimeter"));
-    addSequential(new ProfileDrive("hatch1", 6.0));
+    addSequential(new ProfileDrive("hatch1", 6.0, 2.0));
     addSequential(new HatchShoot());
    // addSequential(path);
 

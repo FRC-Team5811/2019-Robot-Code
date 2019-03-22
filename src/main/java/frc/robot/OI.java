@@ -10,6 +10,7 @@ import frc.robot.commands.ArcadeSpeedMod;
 import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
+import frc.robot.commands.ClimbMovement;
 import frc.robot.commands.GetToShip1;
 import frc.robot.commands.HatchCollection;
 import frc.robot.commands.HatchExtend;
@@ -69,13 +70,12 @@ public class OI {
   private static final JoystickButton MANIP_START_BTN = new JoystickButton(JOY_2, 10);
   public OI(){
      //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+        DRIVE_L_BUMP.whileHeld(new TeleVision());
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
         DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
-        A_DRIVE.whenPressed(new HybridAuto());
+        Y_DRIVE.toggleWhenPressed(new ClimbMovement());
        
-        Y_DRIVE.toggleWhenPressed(new Switch());
         DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
-        DRIVE_L_BUMP.whileHeld(new TeleVision());
         
 
      // }

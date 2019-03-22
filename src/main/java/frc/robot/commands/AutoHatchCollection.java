@@ -18,6 +18,7 @@ public class AutoHatchCollection extends Command {
   boolean done = false;
   private boolean auto;
   private double baseVoltage;
+  
   public AutoHatchCollection(boolean auto) {
     this.auto = auto;
     // Use requires() here to declare subsystem dependencies
@@ -41,7 +42,7 @@ public class AutoHatchCollection extends Command {
     if(!hatchCollect.get() || !hatchCollect2.get()){
       Robot.getHatchSubsystem().closeBeak();
       Robot.getLEDSubsystem().we_got_it();
-      Robot.getDtSubsystem().resetNAVX();
+      Robot.getDtSubsystem().storedAngProfile = Robot.getDtSubsystem().grabAngleRadians();
       done = true;
     }else{
       Robot.getDtSubsystem().voltageDrive(baseVoltage, baseVoltage);

@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 /**
@@ -16,34 +16,20 @@ import frc.robot.RobotMap;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
- // DoubleSolenoid frontClimber = RobotMap.frontClimber;
-  //DoubleSolenoid backClimber = RobotMap.backClimber;
+  Relay Climbers = RobotMap.Climbers;
+  
   /**
-  * Raises front pistons
+  * Raises pistons
   */
-  public void raiseFrontClimber(){
-    //frontClimber.set(DoubleSolenoid.Value.kForward);
+  public void liftClimbers(){
+    Climbers.set(Relay.Value.kOn);
   }
-  /**
-  * Raises back pistons
+   /**
+  * lower pistonsn
   */
-  public void raiseBackClimber(){
-    //backClimber.set(DoubleSolenoid.Value.kForward);
+  public void lowerClimbers(){
+    Climbers.set(Relay.Value.kOff);
   }
-  /**
-   * Retracts front pistons
-   */
-  public void lowerFrontClimber(){
-    //frontClimber.set(DoubleSolenoid.Value.kReverse);
-  }
-  /**
-   * Retracts back pistons
-   */
-  public void lowerBackClimber(){
-   // backClimber.set(DoubleSolenoid.Value.kReverse);
-  } 
-
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
