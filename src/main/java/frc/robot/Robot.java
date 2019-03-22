@@ -24,6 +24,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Rollers;
+import frc.robot.subsystems.VisionSource;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
   public static MjpegServer mjpegServer1;
   public static Climber climber;
   private double vision_kpang;
+  private static VisionSource vision;
 
   
   
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     LED = new LED();
     climber = new Climber();
+    vision = new VisionSource();
  
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
@@ -189,11 +192,13 @@ public class Robot extends TimedRobot {
   }
 
   public static double getAngle() {
-    return SmartDashboard.getNumber("angle", 0.0);
+    return vision.getVal1();
+    //return SmartDashboard.getNumber("angle", 0.0);
   }
 
   public static double getTotalArea(){
-    return SmartDashboard.getNumber("total_area", 0);
+    return vision.getVal2();
+    //return SmartDashboard.getNumber("total_area", 0);
   }
 
   public static double getDist(){
