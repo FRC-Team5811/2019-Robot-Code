@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
   */
   @Override
   public void robotPeriodic() {
-    
+      vision.readAndUpdate();
   }
 
   @Override
@@ -158,6 +158,7 @@ public class Robot extends TimedRobot {
     RobotMap.PDP.clearStickyFaults();
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
+
     Robot.rollers.raiseRollerArm();
   }
 
