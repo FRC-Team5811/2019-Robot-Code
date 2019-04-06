@@ -8,33 +8,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.subsystems.Hatch;
 
-public class TwoCargoHatch extends CommandGroup {
+public class DoubleFrontAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public TwoCargoHatch() {
-     //12.8 volts
-    
-    
+  public DoubleFrontAuto() {
     addSequential(new HatchExtend("OutOfPerimeter"));
-    addSequential(new Vision(false, 0.1, 7, 2));
-    //addSequential(new HatchCollection("open"));
+    addSequential(new Vision(false, 0.1, 7, 1));
+
     addSequential(new HatchShoot());
-    addSequential(new ProfileDrive("hatch1ToLoadRAlt", 6.0, 0.0));
-    
+    addSequential(new ProfileDrive("hatchLtoLoadR", 6.0, 0.0));
+
     addSequential(new EmpiricalPointTurn(1.5));  //1.7 for 180
     addSequential(new Pause(20));
     addSequential(new Vision(true, 0.05, 5, 0));
     addSequential(new AutoHatchCollection(true));
-    addSequential(new ProfileDrive("LoadRToShip1Alt3", 30.0, 8.0));
 
-    addSequential(new EmpiricalPointTurn(-0.7));
-    addSequential(new Pause(20));
+    addSequential(new ProfileDrive("LoadRToHatchR", 6.0, 0.0));
+    addSequential(new EmpiricalPointTurn(1.15));
+
     addSequential(new Vision(false, 0.1, 6, 2));
     addSequential(new HatchShoot());
-    
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

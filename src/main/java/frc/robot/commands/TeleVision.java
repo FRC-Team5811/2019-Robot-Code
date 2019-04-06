@@ -34,7 +34,7 @@ public class TeleVision extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    offset = Robot.getAngle();
+    offset = Robot.getHorizAngle();
 
     // leftVoltage = (base_speed - offset * kpang)/12;
     // rightVoltage = (base_speed + offset * kpang)/12;

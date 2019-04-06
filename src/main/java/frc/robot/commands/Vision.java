@@ -16,50 +16,62 @@ public class Vision extends Command {
   boolean done;
   double counter;
   double accumulatedError, maxAccumulatedError; 
+  double minVoltage, minPercentVoltage, voltageProportion;
+  double minShort, maxShort;
+  double pipeline;
   DigitalInput switchH = RobotMap.hatchSensor;
   DigitalInput switchH2 = RobotMap.hatchSensor2;
   /**
    * HEY when loading is true it means its loading, false = shooting
    */
-  public Vision(boolean loading, double kpAng) {
+  public static double map(double x, double in_min, double in_max, double out_min, double out_max){
+		return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+	}
+
+  public Vision(boolean loading, double kpAng, double baseSpeed, double pipeline) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     this.loading = loading;
     this.kpang = kpAng;
+    base_speed = baseSpeed;
+    this.pipeline = pipeline;
+    
+
     kiang = 0.0000;
-    kdang = 0.07;
+    kdang = 0.00;
     kpZip = 1;
     dt = 0.0666;
     errorDerivative = previousError = 0;
-    base_speed = 4;
     counter = 0;
     maxAccumulatedError = 100;
+
+    minVoltage = 2.5;
+    minPercentVoltage = minVoltage / base_speed;
+
+    minShort = 17.8;
+    maxShort = 45;
+    //voltageProportion = (maxShort - minShort) / (1 - minPercentVoltage); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.setPipeline(this.pipeline);
     done = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.setLeftSelectMode(1.0);
-    offset = Robot.getAngle();
+   // Robot.setLeftSelectMode(1.0);
+    offset = Robot.getHorizAngle();
+    //System.out.println(offset);
     accumulatedError += offset;
     errorDerivative =  (offset - previousError) /  dt;
 
-    if(Math.abs(offset) < 2){
-      leftVoltage = base_speed;
-      rightVoltage = base_speed;
-      // done = true;
-      // Robot.getDtSubsystem().resetNAVX();
-      // Robot.getDtSubsystem().motorReset();
-    } else {
-      leftVoltage = base_speed - offset * this.kpang - accumulatedError*kiang - kdang * errorDerivative ;
-      rightVoltage = base_speed + offset * this.kpang + accumulatedError*kiang + kdang * errorDerivative ;
-    }
+    leftVoltage = base_speed - offset * this.kpang - accumulatedError*kiang - kdang * errorDerivative ;
+    rightVoltage = base_speed + offset * this.kpang + accumulatedError*kiang + kdang * errorDerivative ;
+    
     /*
     System.out.print("angle: ");
     System.out.print(offset);
@@ -72,24 +84,20 @@ public class Vision extends Command {
     System.out.print(" Right: ");
     System.out.println(rightVoltage);
     */
-    if(Robot.getTotalArea() > 400){
-      kpZip = 0.6;
+    if(Robot.getShortSide() > minShort){
+      kpZip = map(Robot.getShortSide(), minShort, maxShort, minPercentVoltage, 1);
+      
     } else {
       kpZip = 1;
     }
     
     Robot.getDtSubsystem().voltageDrive(leftVoltage * kpZip, rightVoltage* kpZip);
     if(!this.loading){
-      if(Robot.getTotalArea() > 1600){
+      if(Robot.getShortSide() > maxShort){
         done = true;
         Robot.getDtSubsystem().motorReset();
       }
     } else if (this.loading){
-      // if(Robot.getGap() > 105){
-      //   // done = true;
-      //   // Robot.getDtSubsystem().resetNAVX();
-      //   // Robot.getDtSubsystem().motorReset();
-      // }
       if(!switchH.get() || !switchH2.get()){
         done = true;
         Robot.getDtSubsystem().motorReset();
@@ -109,7 +117,7 @@ public class Vision extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.setLeftSelectMode(0.0);
+   // Robot.setLeftSelectMode(0.0);
     Robot.getDtSubsystem().motorReset();
   }
 
