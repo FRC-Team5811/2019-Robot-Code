@@ -73,30 +73,30 @@ public class ProfileDrive extends Command {
 		angVels.clear();
 		Robot.getDtSubsystem().resetEncoders();
 		//System.out.println("in init");
-		String file = Filesystem.getDeployDirectory().getPath() + "/"+this.fileName + ".BOND";
-    	DD = new DifferentialDrivePeter(mass, wheelRadiusMeters, wheelBaseWidth, moi,
-    			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors), 
-    			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors));    	
-    	try {
-    		profileReader = new Scanner(new FileInputStream(file));
-    		while(profileReader.hasNextLine()) {
-				String [] line = profileReader.nextLine().split(" ");
-    			double voltRight = Double.parseDouble(line[0]);
-				double voltLeft = Double.parseDouble(line[1]);
-				disp = Double.parseDouble(line[2]);
-				vel = Double.parseDouble(line[3]);
-				ang = Double.parseDouble(line[4]);
-				angVel = Double.parseDouble(line[5]);
-    			voltagesRight.add(voltRight);
-				voltagesLeft.add(voltLeft);
-				poses.add(disp);
-				vels.add(vel);
-				angs.add(ang);
-    			angVels.add(angVel);
-    		}
-    	} catch(FileNotFoundException e) {
-    		e.printStackTrace();
-		}
+		// String file = Filesystem.getDeployDirectory().getPath() + "/"+this.fileName + ".BOND";
+    	// DD = new DifferentialDrivePeter(mass, wheelRadiusMeters, wheelBaseWidth, moi,
+    	// 		new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors), 
+    	// 		new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors));    	
+    	// try {
+    	// 	profileReader = new Scanner(new FileInputStream(file));
+    	// 	while(profileReader.hasNextLine()) {
+		// 		String [] line = profileReader.nextLine().split(" ");
+    	// 		double voltRight = Double.parseDouble(line[0]);
+		// 		double voltLeft = Double.parseDouble(line[1]);
+		// 		disp = Double.parseDouble(line[2]);
+		// 		vel = Double.parseDouble(line[3]);
+		// 		ang = Double.parseDouble(line[4]);
+		// 		angVel = Double.parseDouble(line[5]);
+    	// 		voltagesRight.add(voltRight);
+		// 		voltagesLeft.add(voltLeft);
+		// 		poses.add(disp);
+		// 		vels.add(vel);
+		// 		angs.add(ang);
+    	// 		angVels.add(angVel);
+    	// 	}
+    	// } catch(FileNotFoundException e) {
+    	// 	e.printStackTrace();
+		// }
 		
 		//use this one
 		
