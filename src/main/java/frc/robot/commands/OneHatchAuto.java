@@ -18,7 +18,7 @@ public class OneHatchAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public OneHatchAuto() {
+  public OneHatchAuto(double seek) {
    // requires(Robot.getDtSubsystem());
 
     // Add Commands here:
@@ -26,7 +26,7 @@ public class OneHatchAuto extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
     addSequential(new HatchExtend("OutOfPerimeter"));
-    addSequential(new ProfileDrive("hatch1", 6.0, 2.0));
+    addSequential(new Vision(false, 0.1, 7, seek));
     addSequential(new HatchShoot());
    // addSequential(path);
 

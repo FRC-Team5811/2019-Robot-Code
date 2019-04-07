@@ -77,8 +77,9 @@ public class Robot extends TimedRobot {
     autoChooser = new SendableChooser();
     autoChooser.addDefault ("2 Hatch Right", new TwoCargoHatch());
     //autoChooser.addObject("2 Hatch Left", new TwoCargoHatchL());
-    autoChooser.addObject("One Hatch Auto", new OneHatchAuto());
-    autoChooser.addObject("Two Front Auto", new DoubleFrontAuto());
+    autoChooser.addObject("One Hatch Auto Right", new OneHatchAuto(2));
+    autoChooser.addObject("One Hatch Auto Left", new OneHatchAuto(1));
+    autoChooser.addObject("Two Front Auto (Might work idk lol)", new DoubleFrontAuto());
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     //table = NetworkTableInstance.getDefault().getTable("limelight");

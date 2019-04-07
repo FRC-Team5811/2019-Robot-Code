@@ -15,7 +15,6 @@ import frc.robot.commands.GetToShip1;
 import frc.robot.commands.HatchCollection;
 import frc.robot.commands.HatchExtend;
 import frc.robot.commands.HatchShoot;
-import frc.robot.commands.HybridAuto;
 import frc.robot.commands.MoveCargo;
 import frc.robot.commands.MoveIntakeArm;
 import frc.robot.commands.ResetRobot;
