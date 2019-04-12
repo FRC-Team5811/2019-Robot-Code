@@ -75,8 +75,14 @@ public class Drivetrain extends Subsystem {
       //leftSpeed = ((arcadeSpeedMod*throttle) + (visionCorrectionLeft)); //changed to .92 for practice
       //rightSpeed = ((arcadeSpeedMod*-throttle) + (visionCorrectionRight));
     } else {  // substitute vision correction for turn 
-      leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * visionCorrectionTurn)); //changed to .92 for practice
-      rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * visionCorrectionTurn));
+      if (throttle >= 0) {
+        leftSpeed = ((arcadeSpeedMod*throttle) + (throttle * arcadeTurnMod * visionCorrectionTurn)); //changed to .92 for practice
+        rightSpeed = ((arcadeSpeedMod*-throttle) + (throttle * arcadeTurnMod * visionCorrectionTurn));
+      } else {
+        leftSpeed = ((arcadeSpeedMod*throttle) - (throttle * arcadeTurnMod * visionCorrectionTurn)); //changed to .92 for practice
+        rightSpeed = ((arcadeSpeedMod*-throttle) - (throttle * arcadeTurnMod * visionCorrectionTurn));
+      }
+      
     }
     
     driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed);

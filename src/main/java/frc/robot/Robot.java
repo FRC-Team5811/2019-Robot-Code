@@ -17,6 +17,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.DoubleFrontAuto;
+import frc.robot.commands.DoubleRocketAuto;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
@@ -80,6 +81,8 @@ public class Robot extends TimedRobot {
     autoChooser.addObject("One Hatch Auto Right", new OneHatchAuto(2));
     autoChooser.addObject("One Hatch Auto Left", new OneHatchAuto(1));
     autoChooser.addObject("Two Front Auto (Might work idk lol)", new DoubleFrontAuto());
+    autoChooser.addObject("Double Rocket Right", new DoubleRocketAuto());
+
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     //table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -107,6 +110,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
     Robot.getLEDSubsystem().disabled();
   }
 

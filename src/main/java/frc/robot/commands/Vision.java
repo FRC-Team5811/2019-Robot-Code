@@ -45,7 +45,7 @@ public class Vision extends Command {
     counter = 0;
     maxAccumulatedError = 100;
 
-    minVoltage = 2.5;
+    minVoltage = 2;
     minPercentVoltage = minVoltage / base_speed;
 
     minShort = 17.8;

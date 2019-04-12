@@ -8,31 +8,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.subsystems.Hatch;
 
-public class TwoCargoHatch extends CommandGroup {
+public class DoubleRocketAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public TwoCargoHatch() {
-     //12.8 volts
+  public DoubleRocketAuto() {
     addSequential(new HatchExtend("OutOfPerimeter"));
-    addSequential(new Vision(false, 0.2, 7, 2));
-    //addSequential(new HatchCollection("open"));
+    addSequential(new ProfileDrive("backRocket", 6.0, 8.0));
+    addSequential(new Pause(10));
+    addSequential(new EmpiricalPointTurn(0.4));
+    addSequential(new Pause(10));
+    addSequential(new Vision(false, 0.1, 7, 2));
     addSequential(new HatchShoot());
-    addSequential(new ProfileDrive("hatch1ToLoadRAlt", 6.0, 0.0));
-    
-    addSequential(new EmpiricalPointTurn(1.5));  //1.7 for 180
-    addSequential(new Pause(20));
-    addSequential(new Vision(true, 0.05, 7, 0));
-    addSequential(new AutoHatchCollection(true));
-    addSequential(new ProfileDrive("LoadRToShip1Alt3", 30.0, 8.0));
 
-    addSequential(new EmpiricalPointTurn(-0.7));
+    addSequential(new ProfileDrive("backUp", 6.0, 8.0));
+    addSequential(new EmpiricalPointTurn(-0.4));
+    addSequential(new ProfileDrive("RockToLoad", 6.0, 8.0));
     addSequential(new Pause(20));
-    addSequential(new Vision(false, 0.1, 6, 1));
+    addSequential(new Vision(true, 0.05, 5, 0));
+    addSequential(new AutoHatchCollection(true));
+    addSequential(new ProfileDrive("backToRock",6.0, 8.0));
+    addSequential(new EmpiricalPointTurn(1.5));
+    addSequential(new Pause(20));
+    addSequential(new Vision(false, 0.1, 6, 2));
     addSequential(new HatchShoot());
-    
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

@@ -21,7 +21,7 @@ public class TeleVision extends Command {
   public TeleVision() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    kpang = 0.09;
+    kpang = -0.03;
     base_speed = 0;
 
   }
@@ -38,7 +38,7 @@ public class TeleVision extends Command {
 
     // leftVoltage = (base_speed - offset * kpang)/12;
     // rightVoltage = (base_speed + offset * kpang)/12;
-
+    System.out.println(turn_correction);
     /*System.out.print("angle: ");
     System.out.print(offset);
     System.out.print(" kpang: ");
