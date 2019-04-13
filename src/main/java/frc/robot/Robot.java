@@ -16,12 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoShoot;
-import frc.robot.commands.DoubleFrontAuto;
 import frc.robot.commands.DoubleRocketAuto;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.TwoCargoHatch;
+import frc.robot.commands.TwoCargoHatchLeft;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
@@ -77,10 +77,9 @@ public class Robot extends TimedRobot {
     Robot.climber.lowerClimbers();
     autoChooser = new SendableChooser();
     autoChooser.addDefault ("2 Hatch Right", new TwoCargoHatch());
-    //autoChooser.addObject("2 Hatch Left", new TwoCargoHatchL());
+    autoChooser.addObject("2 Hatch Left", new TwoCargoHatchLeft());
     autoChooser.addObject("One Hatch Auto Right", new OneHatchAuto(2));
     autoChooser.addObject("One Hatch Auto Left", new OneHatchAuto(1));
-    autoChooser.addObject("Two Front Auto (Might work idk lol)", new DoubleFrontAuto());
     autoChooser.addObject("Double Rocket Right", new DoubleRocketAuto());
 
     SmartDashboard.putData("Auto Mode", autoChooser);
