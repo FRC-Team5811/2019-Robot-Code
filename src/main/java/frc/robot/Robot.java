@@ -75,13 +75,13 @@ public class Robot extends TimedRobot {
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
     Robot.climber.lowerClimbers();
+    
     autoChooser = new SendableChooser();
     autoChooser.addDefault ("2 Hatch Right", new TwoCargoHatch());
     autoChooser.addObject("2 Hatch Left", new TwoCargoHatchLeft());
     autoChooser.addObject("One Hatch Auto Right", new OneHatchAuto(2));
     autoChooser.addObject("One Hatch Auto Left", new OneHatchAuto(1));
     autoChooser.addObject("Double Rocket Right", new DoubleRocketAuto());
-
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     //table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     
-  }
+  } 
 
   @Override
   public void disabledInit() {
