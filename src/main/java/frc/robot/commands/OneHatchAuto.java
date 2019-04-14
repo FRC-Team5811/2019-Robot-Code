@@ -28,7 +28,6 @@ public class OneHatchAuto extends CommandGroup {
     addSequential(new HatchExtend("OutOfPerimeter"));
     addSequential(new Vision(false, 0.1, 7, seek));
     addSequential(new HatchShoot());
-   // addSequential(path);
 
     // To run multiple commands at the same time,
     // use addParallel()
