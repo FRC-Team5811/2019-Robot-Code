@@ -20,8 +20,10 @@ public class EmpiricalPointTurn extends Command {
   double baseVoltage = 6.0;
   double kPAng = 0.5;
   double currentAng;
+  double storedAng = 0;
 
   public EmpiricalPointTurn(double d) {
+    
     this.desiredAngle = d;
     // Use requires() here to declare subsystem dependencies
     requires(Robot.getDtSubsystem());
@@ -30,9 +32,10 @@ public class EmpiricalPointTurn extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getDtSubsystem().resetNAVX();
+    storedAng = Robot.getDtSubsystem().grabAngleRadians();
+    //this.desiredAngle += storedAng;
+    System.out.println("\n" + this.desiredAngle + "\n");
     done = false;
-    
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,10 +43,9 @@ public class EmpiricalPointTurn extends Command {
   protected void execute() {
     currentAng = Robot.getDtSubsystem().grabAngleRadians();
     
-    angDiff = Math.abs(this.desiredAngle - currentAng);
-    System.out.println(angDiff);
-    if(this.desiredAngle >= 0){
-      if(currentAng < this.desiredAngle){
+    angDiff = Math.abs(storedAng + this.desiredAngle - currentAng);
+    if(this.desiredAngle >= 0){ //right
+      if(currentAng < this.desiredAngle + storedAng){
         //Move more positive
         
         outputVolts = (baseVoltage + kPAng*angDiff);
@@ -52,8 +54,8 @@ public class EmpiricalPointTurn extends Command {
         Robot.getDtSubsystem().motorReset();
         done = true;
       }
-    } else {
-      if(currentAng > this.desiredAngle){
+    } else { //left
+      if(currentAng > this.desiredAngle + storedAng){
         //Move more negative
         outputVolts = (baseVoltage + kPAng*angDiff);
         Robot.getDtSubsystem().voltageDrive(outputVolts, -outputVolts);

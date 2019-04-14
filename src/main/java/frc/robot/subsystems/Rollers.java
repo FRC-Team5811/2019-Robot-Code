@@ -33,8 +33,6 @@ public class Rollers extends Subsystem {
   private VictorSPX rollerIntake;
   private VictorSPX rollers124;
   private VictorSPX roller3;
-
-  Ultrasonic distanceSensor;
   AnalogInput laserTripWire1;
   AnalogInput laserTripWire2;
   AnalogInput laserTripWire3;
@@ -72,10 +70,6 @@ public class Rollers extends Subsystem {
 
   public double getZone3HT(){
     return Zone3HeightTop;
-  }
-
-  public double getDistance(){
-    return distanceSensor.getRangeInches();
   }
 
   public boolean getLaserTripWire1() {
@@ -150,7 +144,7 @@ public class Rollers extends Subsystem {
    *  Sets roller motors in configuration to intake ball from ground
    */
   public  void startIntakeBallFromGround(){
-    setRollerIntake(0.75*speedMod);
+    setRollerIntake(0.50*speedMod);
     setRollers124(-1*speedMod);
   }
   /**

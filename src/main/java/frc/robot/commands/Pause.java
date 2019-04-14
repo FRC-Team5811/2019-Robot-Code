@@ -34,7 +34,6 @@ public class Pause extends Command {
     if(counter < countTo){
       counter++;
     }else{
-      Robot.getDtSubsystem().resetNAVX();
       done = true;
     }
   }

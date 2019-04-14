@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
@@ -32,12 +33,11 @@ public class RobotMap {
   public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
   public static VictorSPX cargo3 = new VictorSPX(6); //cargo 3
 
-	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);
-  public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);
+	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);  // should be 0,1 solenoid not behaving
+  public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);  // should be 2, 3
   public static DoubleSolenoid extendHatchMechanism = new DoubleSolenoid(6, 7);
-  public static DoubleSolenoid beakMovement = new DoubleSolenoid(4, 5);
-  //public static DoubleSolenoid frontClimber = new DoubleSolenoid(6, 7);
-  //public static DoubleSolenoid backClimber = new DoubleSolenoid(8, 9);
+  public static DoubleSolenoid beakMovement = new DoubleSolenoid(5, 4);
+  public static Relay Climbers = new Relay(0);
 
   //scp beter1.BOND lvuser@roborio-5811-frc.local:
   public static AnalogInput laser1 = new AnalogInput(1);
@@ -45,6 +45,7 @@ public class RobotMap {
   public static AnalogInput laser3 = new AnalogInput(3); 
 
   public static DigitalInput hatchSensor = new DigitalInput(9);
+  public static DigitalInput hatchSensor2 = new DigitalInput(8);
   
   public static Encoder driveEncL = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   public static Encoder driveEncR = new Encoder(2, 3, true, Encoder.EncodingType.k4X);

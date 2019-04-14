@@ -11,13 +11,18 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoShoot;
+import frc.robot.commands.DoubleRocketAuto;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.TwoCargoHatch;
+import frc.robot.commands.TwoCargoHatchLeft;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.LED;
@@ -33,10 +38,16 @@ public class Robot extends TimedRobot {
   public static UsbCamera cam1, cam2;
   public static VideoSink server;
   public static MjpegServer mjpegServer1;
+  public static Climber climber;
+  private double vision_kpang;
+
+  
   
   Command autonomousCommand;
   SendableChooser<Command> prototype_chooser = new SendableChooser<>();
   SendableChooser autoChooser;
+
+ // private static NetworkTableInstance table;
 
   @Override
   public void robotInit() {
@@ -45,12 +56,16 @@ public class Robot extends TimedRobot {
     dt = new Drivetrain();
     oi = new OI();
     LED = new LED();
- 
+    climber = new Climber();
+ /*
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
-    cam1.setResolution(2400, 144);
-    cam1.setBrightness(20);
-    server = CameraServer.getInstance().getServer();
+    cam1.setFPS(20);
+    cam2.setFPS(20);
+    */
+    // cam1.setResolution(2400, 144);
+    // cam1.setBrightness(20);
+    //server = CameraServer.getInstance().getServer();
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
     Robot.hatch.moveHatchToIn();
@@ -59,17 +74,25 @@ public class Robot extends TimedRobot {
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
+    Robot.climber.lowerClimbers();
+    
     autoChooser = new SendableChooser();
-    autoChooser.addDefault ("2 hatch Right", new TwoCargoHatch());
-    autoChooser.addObject ("2 hatch Left", new TwoCargoHatch());
-    autoChooser.addObject("1 Hatch", new OneHatchAuto());
+    autoChooser.addDefault ("2 Hatch Right", new TwoCargoHatch());
+    autoChooser.addObject("2 Hatch Left", new TwoCargoHatchLeft());
+    autoChooser.addObject("One Hatch Auto Right", new OneHatchAuto(2));
+    autoChooser.addObject("One Hatch Auto Left", new OneHatchAuto(1));
+    autoChooser.addObject("Double Rocket Right", new DoubleRocketAuto());
     SmartDashboard.putData("Auto Mode", autoChooser);
 
+    //table = NetworkTableInstance.getDefault().getTable("limelight");
+
+    /*
     SmartDashboard.putNumber("KPAng", 0.0);
     SmartDashboard.putNumber("KPAngVel", 0.0);
     SmartDashboard.putNumber("KPPos", 0.0);
     SmartDashboard.putNumber("KPVel", 0.0);
     SmartDashboard.putString("File Name", "");
+    */
     // SmartDashboard.putNumber("Ang Error", ProfileDrive.angError);
     // SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
     // SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
@@ -86,6 +109,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
     Robot.getLEDSubsystem().disabled();
   }
 
@@ -100,7 +126,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    autonomousCommand = new TwoCargoHatch();
+    autonomousCommand = (Command) autoChooser.getSelected();
     autonomousCommand.start();
     Robot.getRollersSubsystem().holdBallInPlace();
     // ProfileDrive.kPAng = SmartDashboard.getNumber("KPAng", 0.0);
@@ -116,6 +142,7 @@ public class Robot extends TimedRobot {
     Robot.dt.resetNAVX();
     Robot.dt.resetEncoders();
     Robot.hatch.closeBeak();
+    dt.storedAngProfile = 0;
   }
 
   /**
@@ -130,7 +157,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("AngVel Error", ProfileDrive.angVelError);
     SmartDashboard.putNumber("Vel Error", ProfileDrive.velError);
     SmartDashboard.putNumber("Pos Error", ProfileDrive.posError);
-   
     Scheduler.getInstance().run();
   }
 
@@ -173,11 +199,44 @@ public class Robot extends TimedRobot {
     return LED;
   }
 
+  public static Climber getClimberSubsystem() {
+    return climber;
+  }
+/*
   public static double getAngle() {
     return SmartDashboard.getNumber("angle", 0.0);
   }
-
-  public static double getGap(){
-    return SmartDashboard.getNumber("gap_distance", 0);
+*/
+  public static double getTotalArea(){
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
   }
+
+  public static double getHorizAngle() {
+    return -NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+  }
+
+  public static double getShortSide(){
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tshort").getDouble(0);
+  }
+
+  public static void setPipeline(double pipeline){
+    //0 = center
+    //1 = left
+    //2 = right
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(pipeline);
+  }
+  
+  // public static double getTotalArea(){
+  //   return SmartDashboard.getNumber("total_area", 0);
+  // }
+
+  // public static double getDist(){
+  //   return SmartDashboard.getNumber("gap_distance", 0);
+  // }
+  // public static void setLeftSelectMode(double state) {
+  //   SmartDashboard.putNumber("left_select_mode", state);
+  // }
+  // public static double getVisionKpang(double kpang) {
+  //   return SmartDashboard.getNumber("vision_kpang", 0.0);
+  // }
 }

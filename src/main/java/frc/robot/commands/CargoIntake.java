@@ -16,7 +16,7 @@ public class CargoIntake extends Command {
   private boolean trippedWire;  //in zone 1
   private boolean trippedWire2; //in zone 2
   private boolean trippedWire3; //in zone 3
-
+  private int counter;
   public CargoIntake(String passedZone) {
     targetZone = passedZone;
     // Use requires() here to declare subsystem dependencies
@@ -29,12 +29,12 @@ public class CargoIntake extends Command {
     if(targetZone.equals("GroundIntaketo2")){
       Robot.getRollersSubsystem().lowerRollerArm();
     }
+    counter=0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    distance = Robot.getRollersSubsystem().getDistance();
     trippedWire = Robot.getRollersSubsystem().getLaserTripWire1();
     trippedWire2 = Robot.getRollersSubsystem().getLaserTripWire2();
     trippedWire3 = Robot.getRollersSubsystem().getLaserTripWire3();
@@ -75,8 +75,9 @@ public class CargoIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.getRollersSubsystem().holdBallInPlace();
     Robot.getRollersSubsystem().raiseRollerArm();
+    Robot.getRollersSubsystem().holdBallInPlace();
+    
   }
 
   // Called when another command which requires one or more of the same

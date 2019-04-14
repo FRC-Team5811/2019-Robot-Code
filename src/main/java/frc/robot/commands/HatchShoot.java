@@ -23,15 +23,16 @@ public class HatchShoot extends Command {
       // eg. requires(chassis);
       counter = 0;
       requires(Robot.getHatchSubsystem());
+      setInterruptible(false);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getHatchSubsystem().intakeHatchArms();
     Robot.getHatchSubsystem().openBeak();
     Robot.getHatchSubsystem().outakeHatch();
     Robot.getLEDSubsystem().shooting();
-    counter = 0;
     done = false;
 
    // EncValueStored = Robot.getDtSubsystem().getLeftEncMeters() + Robot.getDtSubsystem().getRightEncMeters();
@@ -68,6 +69,8 @@ public class HatchShoot extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    counter = 0;
+    Robot.getHatchSubsystem().intakeHatchArms();
     System.out.println("Im ended");
   }
 

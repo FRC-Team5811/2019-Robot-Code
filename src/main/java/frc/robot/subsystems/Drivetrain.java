@@ -29,8 +29,14 @@ public class Drivetrain extends Subsystem {
   private static double arcadeTurnMod = .7;
 
   private static final double PULSES_PER_METER = 4277.55018;
-
+  static public double storedAngProfile = 0;
   public static double batteryVoltage;
+  // private double visionCorrectionLeft = 0;
+  // private double visionCorrectionRight = 0;
+  private double visionCorrectionTurn = 0;
+
+  private double leftSpeed = 0;
+  private double rightSpeed = 0;
 
   public Drivetrain(){
 
@@ -51,20 +57,40 @@ public class Drivetrain extends Subsystem {
   public void initDefaultCommand() {
     
   }
+
+  public void setVisionCorrection(double visionCorrectionTurn) {
+    this.visionCorrectionTurn = visionCorrectionTurn;
+  }
   
   public void arcadeDrive(double turn, double throttle) {
     //simulates car-like driving
 		// if (throttle <= -.02) {
 		// 	turn = -turn;
     // }
-    double leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn)); //changed to .92 for practice
-    double rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
+    
+    if (visionCorrectionTurn == 0) {  // drive normally if vision correction is turned off
+      leftSpeed = ((arcadeSpeedMod*throttle) + (arcadeTurnMod * turn)); //changed to .92 for practice
+      rightSpeed = ((arcadeSpeedMod*-throttle) + (arcadeTurnMod * turn));
+      //TODO modify left/right speed based on vision correction
+      //leftSpeed = ((arcadeSpeedMod*throttle) + (visionCorrectionLeft)); //changed to .92 for practice
+      //rightSpeed = ((arcadeSpeedMod*-throttle) + (visionCorrectionRight));
+    } else {  // substitute vision correction for turn 
+      if (throttle >= 0) {
+        leftSpeed = ((arcadeSpeedMod*throttle) + (throttle * arcadeTurnMod * visionCorrectionTurn)); //changed to .92 for practice
+        rightSpeed = ((arcadeSpeedMod*-throttle) + (throttle * arcadeTurnMod * visionCorrectionTurn));
+      } else {
+        leftSpeed = ((arcadeSpeedMod*throttle) - (throttle * arcadeTurnMod * visionCorrectionTurn)); //changed to .92 for practice
+        rightSpeed = ((arcadeSpeedMod*-throttle) - (throttle * arcadeTurnMod * visionCorrectionTurn));
+      }
+      
+    }
     
     driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed);
     driveBackLeft.follow(driveFrontLeft);
     driveFrontRight.set(ControlMode.PercentOutput, rightSpeed);
     driveBackRight.follow(driveFrontRight);
-/*
+    storedAngProfile = 0;
+/*  
     System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + 
     "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));
     */
@@ -102,7 +128,8 @@ public class Drivetrain extends Subsystem {
 	}
 
   public void resetNAVX() {
-		navX.reset();
+    navX.reset();
+    navX.resetDisplacement();
   }
 	
 	public double reportTimeStamp() {

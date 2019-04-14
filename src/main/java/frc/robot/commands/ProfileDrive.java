@@ -3,9 +3,12 @@ package frc.robot.commands;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.AutoDataStorage;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.MotionProfiling.DCMotorTransmission;
@@ -27,27 +30,28 @@ public class ProfileDrive extends Command {
 
 	 double dt = 0.02;
 
-	public double kPPos = 2.0;//2.0;
+	public double kPPos;//2.0;
 	public double kPVel = 2.0;//2.0;
 	public double kPAng;//4.5;
 	public double kPAngVel = 2.0;//2.0;
 
 	public String fileName;
 	
-    public ProfileDrive(String file, double kpAng) {
+    public ProfileDrive(String file, double kpAng, double kpPos) {
         // Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		this.fileName = file;
 		this.kPAng = kpAng;
-		
+		this.kPPos = kpPos;
     	requires(Robot.getDtSubsystem());
-    }
-    ArrayList<Double> voltagesLeft = new ArrayList();
-	ArrayList<Double> voltagesRight = new ArrayList();
-	ArrayList<Double> poses = new ArrayList();
-	ArrayList<Double> vels = new ArrayList();
-	ArrayList<Double> angs = new ArrayList();
-	ArrayList<Double> angVels = new ArrayList();
+	}
+	
+    public static ArrayList<Double> voltagesLeft;
+	public static ArrayList<Double> voltagesRight;
+	public static ArrayList<Double> poses;
+	public static ArrayList<Double> vels;
+	public static ArrayList<Double> angs;
+	public static ArrayList<Double> angVels;
 	
 	DifferentialDrivePeter DD;
 	
@@ -55,49 +59,61 @@ public class ProfileDrive extends Command {
 	int index = 0;
 
 	double disp, vel, ang, angVel;
-    // Called just before this Command runs the first time
-    protected void initialize() {
-		Robot.getDtSubsystem().resetEncoders();
-		//System.out.println("in init");
-    	DD = new DifferentialDrivePeter(mass, wheelRadiusMeters, wheelBaseWidth, moi,
-    			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors), 
-    			new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors));    	
-    	try {
-    		profileReader = new Scanner(new FileInputStream("home/lvuser/"+this.fileName+".BOND"));
-    		while(profileReader.hasNextLine()) {
-    			String [] line = profileReader.nextLine().split(" ");
-    			double voltRight = Double.parseDouble(line[0]);
-				double voltLeft = Double.parseDouble(line[1]);
-				disp = Double.parseDouble(line[2]);
-				vel = Double.parseDouble(line[3]);
-				ang = Double.parseDouble(line[4]);
-				angVel = Double.parseDouble(line[5]);
-    			voltagesRight.add(voltRight);
-				voltagesLeft.add(voltLeft);
-				poses.add(disp);
-				vels.add(vel);
-				angs.add(ang);
-    			angVels.add(angVel);
-    			index++;
-    		}
-    	} catch(FileNotFoundException e) {
-    		e.printStackTrace();
-    	}
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    int i = 0;
-	boolean done = false;
+	int i;
+	boolean done;
 	double deltaL, deltaR, deltaAng;
 	double prevL = 0;
 	double prevR = 0; //0.4787787m circum
 	double prevAng = 0;
+    // Called just before this Command runs the first time
+    protected void initialize() {
+		i = 0;
+		done = false;
+		//prevL = 0;
+		//prevR = 0;
+		//prevAng = 0;
+		Robot.getDtSubsystem().resetEncoders();
+
+		AutoDataStorage.loadArrays(this.fileName);
+		AutoDataStorage.loadArrays2(this.fileName);
+
+
+		//System.out.println("in init");
+		// String file = Filesystem.getDeployDirectory().getPath() + "/"+this.fileName + ".BOND";
+    	// DD = new DifferentialDrivePeter(mass, wheelRadiusMeters, wheelBaseWidth, moi,
+    	// 		new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors), 
+    	// 		new DCMotorTransmission(kv, kt, vIntercept,  R, g, nMotors));    	
+    	// try {
+    	// 	profileReader = new Scanner(new FileInputStream(file));
+    	// 	while(profileReader.hasNextLine()) {
+		// 		String [] line = profileReader.nextLine().split(" ");
+    	// 		double voltRight = Double.parseDouble(line[0]);
+		// 		double voltLeft = Double.parseDouble(line[1]);
+		// 		disp = Double.parseDouble(line[2]);
+		// 		vel = Double.parseDouble(line[3]);
+		// 		ang = Double.parseDouble(line[4]);
+		// 		angVel = Double.parseDouble(line[5]);
+    	// 		voltagesRight.add(voltRight);
+		// 		voltagesLeft.add(voltLeft);
+		// 		poses.add(disp);
+		// 		vels.add(vel);
+		// 		angs.add(ang);
+    	// 		angVels.add(angVel);
+    	// 	}
+    	// } catch(FileNotFoundException e) {
+    	// 	e.printStackTrace();
+		// }
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+   
 	public static double posError, velError, angError, angVelError;
 	double drivenDistanceSensor = 0;
 	double outputLeftVoltage, outputRightVoltage;
-    protected void execute() {
+
+	protected void execute() {
 		
-    	if(i<index) {
+    	if(i<voltagesRight.size()) {
 			deltaL = Robot.getDtSubsystem().getLeftEncMeters() - prevL;
 			deltaR = Robot.getDtSubsystem().getRightEncMeters() - prevR;
 			deltaAng = Robot.getDtSubsystem().grabAngleRadians() - prevAng;
@@ -105,12 +121,12 @@ public class ProfileDrive extends Command {
 			drivenDistanceSensor += (deltaL + deltaR)/2;
 			posError = poses.get(i) - (drivenDistanceSensor);
 			velError = vels.get(i) - ((deltaL+deltaR)/2/dt);
-			angError = angs.get(i) - Robot.getDtSubsystem().grabAngleRadians();
+			angError = angs.get(i) + Robot.getDtSubsystem().storedAngProfile - Robot.getDtSubsystem().grabAngleRadians();
 			angVelError = angVels.get(i) - (deltaAng/dt);
 			
-			outputLeftVoltage = voltagesLeft.get(i) + kPPos*posError + kPVel*velError - this.kPAng*angError - kPAngVel*angVelError;
-			outputRightVoltage = voltagesRight.get(i)+ kPPos*posError + kPVel*velError + this.kPAng*angError + kPAngVel*angVelError;
-			//System.out.println(Robot.getDtSubsystem().grabAngleRadians());
+			outputLeftVoltage = voltagesLeft.get(i) + this.kPPos*posError + kPVel*velError - this.kPAng*angError - kPAngVel*angVelError;
+			outputRightVoltage = voltagesRight.get(i)+ this.kPPos*posError + kPVel*velError + this.kPAng*angError + kPAngVel*angVelError;
+			//System.out.println(outputRightVoltage + "\t" + outputLeftVoltage);
 			Robot.getDtSubsystem().voltageDrive(outputLeftVoltage , outputRightVoltage);
 			//System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));
 			prevL = Robot.getDtSubsystem().getLeftEncMeters();

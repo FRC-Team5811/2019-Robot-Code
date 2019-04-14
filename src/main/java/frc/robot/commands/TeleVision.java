@@ -13,14 +13,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TeleVision extends Command {
   double offset;
   double base_speed;
-  double leftVoltage;
-  double rightVoltage;
+  // double leftVoltage;
+  // double rightVoltage;
   double kpang;
+  double turn_correction;
 
   public TeleVision() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    kpang = 0.09;
+    kpang = -0.03;
     base_speed = 0;
 
   }
@@ -33,12 +34,12 @@ public class TeleVision extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    offset = Robot.getAngle();
+    offset = Robot.getHorizAngle();
 
-    leftVoltage = base_speed - offset * kpang;
-    rightVoltage = base_speed + offset * kpang;
-
-    System.out.print("angle: ");
+    // leftVoltage = (base_speed - offset * kpang)/12;
+    // rightVoltage = (base_speed + offset * kpang)/12;
+    System.out.println(turn_correction);
+    /*System.out.print("angle: ");
     System.out.print(offset);
     System.out.print(" kpang: ");
     System.out.print(kpang);
@@ -47,9 +48,12 @@ public class TeleVision extends Command {
     System.out.print(" Left: ");
     System.out.print(leftVoltage);
     System.out.print(" Right: ");
-    System.out.println(rightVoltage);
+    System.out.println(rightVoltage);*/
+    //Robot.getDtSubsystem().voltageDrive(leftVoltage, rightVoltage);
 
-    Robot.getDtSubsystem().voltageDrive(leftVoltage, rightVoltage);
+    turn_correction = offset * kpang;
+    Robot.getDtSubsystem().setVisionCorrection(turn_correction);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -61,7 +65,8 @@ public class TeleVision extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.getDtSubsystem().motorReset();
+    //Robot.getDtSubsystem().motorReset();
+    Robot.getDtSubsystem().setVisionCorrection(0);
   }
 
   // Called when another command which requires one or more of the same

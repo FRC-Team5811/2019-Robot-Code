@@ -10,6 +10,8 @@ import frc.robot.commands.ArcadeSpeedMod;
 import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
+import frc.robot.commands.ClimbMovement;
+import frc.robot.commands.GetToShip1;
 import frc.robot.commands.HatchCollection;
 import frc.robot.commands.HatchExtend;
 import frc.robot.commands.HatchShoot;
@@ -18,6 +20,7 @@ import frc.robot.commands.MoveIntakeArm;
 import frc.robot.commands.ResetRobot;
 import frc.robot.commands.Switch;
 import frc.robot.commands.TeleVision;
+import frc.robot.commands.ToggleMotors;
 import frc.robot.commands.Vision;
 
 public class OI {
@@ -62,15 +65,17 @@ public class OI {
   private static final JoystickButton MANIP_L_BUMP = new JoystickButton(JOY_2, 5);
   private static final JoystickButton MANIP_R_BUMP = new JoystickButton(JOY_2, 6);
   private static final JoystickButton MANIP_L_STICK_BTN = new JoystickButton(JOY_2, 11);
-  private static final JoystickButton MANIP_START_BTN = new JoystickButton(JOY_2, 9);
+  private static final JoystickButton MANIP_BACK_BTN = new JoystickButton(JOY_2, 9);
+  private static final JoystickButton MANIP_START_BTN = new JoystickButton(JOY_2, 10);
   public OI(){
      //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+        // DRIVE_L_BUMP.whileHeld(new TeleVision());
+        DRIVE_L_BUMP.whileHeld(new TeleVision());
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
         DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
+        Y_DRIVE.toggleWhenPressed(new ClimbMovement());
        
-        Y_DRIVE.toggleWhenPressed(new Switch());
         DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
-        DRIVE_L_BUMP.whileHeld(new TeleVision());
         
 
      // }
@@ -84,17 +89,18 @@ public class OI {
         B_MANIP.whenPressed(new HatchExtend("InsidePerimeter"));
         MANIP_R_BUMP.whenPressed(new HatchCollection("close"));
         MANIP_L_STICK_BTN.whenPressed(new HatchCollection("open"));
-        MANIP_START_BTN.whileHeld(new AutoHatchCollection(false));
+        MANIP_BACK_BTN.whileHeld(new AutoHatchCollection(false));
       //cargo
+
         MANIP_UP.whileHeld(new CargoShoot("Zone3"));
         MANIP_LEFT.whileHeld(new CargoShoot("Zone2"));
         MANIP_RIGHT.whileHeld(new CargoShoot("Zone2"));
         MANIP_Y_RIGHT.whileHeld(new MoveCargo());
         MANIP_DOWN.whileHeld(new CargoIntake("GroundIntaketo2"));
         MANIP_L_BUMP.whileHeld(new CargoIntake("LoadingStation"));
-        
+       // MANIP_START_BTN.toggleWhenPressed(new ToggleMotors());
      // }
-
+//
   }
 
   public double getDriveLeftY() {
