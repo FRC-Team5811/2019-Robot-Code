@@ -151,8 +151,8 @@ public class Rollers extends Subsystem {
    *  Sets roller motors in configuration to intake ball from loading station
    */
   public  void startIntakeBallFromLoadingStation(){
-    setRoller3(1*speedMod);
-    setRollers124(-1*speedMod);
+    setRoller3(.75*speedMod); //Changed from 1 and -1 to compensate for underinflated 3324 cargo and different reduction
+    setRollers124(-.75*speedMod);
   }
   /**
    *  Sets roller motors in configuration to move ball from zone 1 to 2
