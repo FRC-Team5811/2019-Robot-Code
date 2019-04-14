@@ -30,7 +30,7 @@ public class AutoHatchCollection extends Command {
   protected void initialize() {
     done = false;
     if(this.auto){
-      baseVoltage = 0;
+      baseVoltage = 3;
     }else{
       baseVoltage = 0;
     }

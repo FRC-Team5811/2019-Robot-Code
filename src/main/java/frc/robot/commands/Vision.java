@@ -86,9 +86,12 @@ public class Vision extends Command {
     */
     if(Robot.getShortSide() > minShort){
       kpZip = map(Robot.getShortSide(), minShort, maxShort, minPercentVoltage, 1);
-      
     } else {
       kpZip = 1;
+    }
+
+    if (Robot.getShortSide() > 40 && this.loading == true) {
+      done = true;
     }
     
     Robot.getDtSubsystem().voltageDrive(leftVoltage * kpZip, rightVoltage* kpZip);
