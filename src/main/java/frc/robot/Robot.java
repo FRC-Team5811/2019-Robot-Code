@@ -17,6 +17,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.DoubleRocketAuto;
+import frc.robot.commands.FeedBackTest;
 import frc.robot.commands.OneHatchAuto;
 import frc.robot.commands.ProfileDrive;
 import frc.robot.commands.ResetRobot;
@@ -82,6 +83,7 @@ public class Robot extends TimedRobot {
     autoChooser.addObject("One Hatch Auto Right", new OneHatchAuto(2));
     autoChooser.addObject("One Hatch Auto Left", new OneHatchAuto(1));
     autoChooser.addObject("Double Rocket Right", new DoubleRocketAuto());
+    autoChooser.addObject("Test Auto", new FeedBackTest());
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     //table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -171,6 +173,8 @@ public class Robot extends TimedRobot {
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
     Robot.rollers.raiseRollerArm();
+    climber.lifter1.getEncoder().setPosition(0);
+    climber.lifter2.getEncoder().setPosition(0);
   }
 
   @Override 

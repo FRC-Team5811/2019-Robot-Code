@@ -5,6 +5,9 @@ import javax.xml.transform.stream.StreamSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
@@ -32,12 +35,15 @@ public class RobotMap {
   public static VictorSPX cargo1 = new VictorSPX(9); //cargo 1
   public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
   public static VictorSPX cargo3 = new VictorSPX(6); //cargo 3
+  
+  public static CANSparkMax vacuum = new CANSparkMax(10, MotorType.kBrushless);
+  public static CANSparkMax lifter1 = new CANSparkMax(11, MotorType.kBrushless);
+  public static CANSparkMax lifter2 = new CANSparkMax(12, MotorType.kBrushless);
 
 	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);  // should be 0,1 solenoid not behaving
   public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);  // should be 2, 3
   public static DoubleSolenoid extendHatchMechanism = new DoubleSolenoid(6, 7);
   public static DoubleSolenoid beakMovement = new DoubleSolenoid(5, 4);
-  public static Relay Climbers = new Relay(0);
 
   //scp beter1.BOND lvuser@roborio-5811-frc.local:
   public static AnalogInput laser1 = new AnalogInput(1);

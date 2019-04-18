@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -16,19 +18,31 @@ import frc.robot.RobotMap;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  Relay Climbers = RobotMap.Climbers;
+  public CANSparkMax vacuum = RobotMap.vacuum;
+  public CANSparkMax lifter1 = RobotMap.lifter1;
+  public CANSparkMax lifter2 = RobotMap.lifter2;
+
+  private final static double maxHeight = 1000;
   
   /**
   * Raises pistons
   */
   public void liftClimbers(){
-    Climbers.set(Relay.Value.kOn);
+    while(lifter1.getEncoder().getPosition() < maxHeight){
+      lifter1.set(1);
+      lifter2.set(1);
+    }
+    //put the arm down (hopefull with pneumatics)
+    while(1==1){
+      vacuum.set(1);
+    }
   }
    /**
   * lower pistonsn
   */
   public void lowerClimbers(){
-    Climbers.set(Relay.Value.kOff);
+    vacuum.getEncoder().setPosition(0);
+    vacuum.set(0);
   }
   @Override
   public void initDefaultCommand() {
