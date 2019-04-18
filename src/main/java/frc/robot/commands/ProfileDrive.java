@@ -31,9 +31,9 @@ public class ProfileDrive extends Command {
 	 double dt = 0.02;
 
 	public double kPPos;//2.0;
-	public double kPVel = 2.0;//2.0;
+	public double kPVel = 0.0;//2.0;
 	public double kPAng;//4.5;
-	public double kPAngVel = 2.0;//2.0;
+	public double kPAngVel = 0.0;//2.0;
 
 	public String fileName;
 	
@@ -128,6 +128,7 @@ public class ProfileDrive extends Command {
 			outputRightVoltage = voltagesRight.get(i)+ this.kPPos*posError + kPVel*velError + this.kPAng*angError + kPAngVel*angVelError;
 			//System.out.println(outputRightVoltage + "\t" + outputLeftVoltage);
 			Robot.getDtSubsystem().voltageDrive(outputLeftVoltage , outputRightVoltage);
+			System.out.println("Left Volts: " + outputLeftVoltage + " Right Volts: " + outputRightVoltage);
 			//System.out.println("LF: "+RobotMap.PDP.getCurrent(0) + "\t" + "LB: "+RobotMap.PDP.getCurrent(1) + "\t" + "RF: "+RobotMap.PDP.getCurrent(15) + "\t" + "RB: "+ RobotMap.PDP.getCurrent(14));
 			prevL = Robot.getDtSubsystem().getLeftEncMeters();
 			prevR = Robot.getDtSubsystem().getRightEncMeters();
