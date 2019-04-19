@@ -38,6 +38,8 @@ public class Drivetrain extends Subsystem {
   private double leftSpeed = 0;
   private double rightSpeed = 0;
 
+  private boolean defenseMode = false;
+
   public Drivetrain(){
 
     driveFrontRight = RobotMap.rightF;
@@ -167,6 +169,47 @@ public class Drivetrain extends Subsystem {
 
 	public double monitorBatteryVoltage() {
 		return pdp.getVoltage();
-	}
+  }
+  
+  public void enableDefenseMode(){
+    if(!defenseMode){
+      defenseMode = true;
+      int peak = 40;
+      int cont = 10;
+      int dur = 100;
+      double openLoopSec = 1;
+
+      driveFrontRight.configPeakCurrentDuration(dur);
+      driveFrontRight.configPeakCurrentLimit(peak);
+      driveFrontRight.configContinuousCurrentLimit(cont);
+      driveFrontRight.enableCurrentLimit(true);
+      
+      driveFrontRight.configOpenloopRamp(openLoopSec);
+      driveFrontLeft.configOpenloopRamp(openLoopSec);
+
+      driveFrontLeft.configPeakCurrentDuration(dur);
+      driveFrontLeft.configPeakCurrentLimit(peak);
+      driveFrontLeft.configContinuousCurrentLimit(cont);
+      driveFrontLeft.enableCurrentLimit(true);
+
+      //talon.ConfigPeakCurrentLimit(35, 10); /* 35 A /
+      //talon.ConfigPeakCurrentDuration(200, 10); / 200ms /
+      //talon.ConfigContinuousCurrentLimit(30, 10); / 30A /
+      //talon.EnableCurrentLimit(true); / turn it on */
+
+      System.out.println("defense on");
+    }
+
+  }
+
+  public void disableDefenseMode() {
+        //talon.EnableCurrentLimit(false); / turn it off */
+        driveFrontLeft.enableCurrentLimit(false);
+        driveFrontRight.enableCurrentLimit(false);
+        driveFrontRight.configOpenloopRamp(0);
+        driveFrontLeft.configOpenloopRamp(0);
+        defenseMode = false;
+        System.out.println("defense off");
+  }
 
 }

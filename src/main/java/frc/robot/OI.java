@@ -11,6 +11,7 @@ import frc.robot.commands.AutoHatchCollection;
 import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.ClimbMovement;
+import frc.robot.commands.DefenseMode;
 import frc.robot.commands.GetToShip1;
 import frc.robot.commands.HatchCollection;
 import frc.robot.commands.HatchExtend;
@@ -32,6 +33,8 @@ public class OI {
   private static final int BUTTON_B = 3;
   private static final int BUTTON_X = 1;
   private static final int BUTTON_Y = 4;
+  private static final int RIGHT_TRIG = 8;
+  private static final int LEFT_TRIG = 7;
 
   private static final Joystick JOY_1 = new Joystick(0);
   private static final JoystickButton A_DRIVE = new JoystickButton(JOY_1, BUTTON_A);
@@ -48,6 +51,7 @@ public class OI {
   private static final DPadButton DRIVE_LEFT = new DPadButton(JOY_1, 270);
   private static final JoystickButton DRIVE_R_BUMP = new JoystickButton(JOY_1, 5);
   private static final JoystickButton DRIVE_L_BUMP = new JoystickButton(JOY_1, 6);
+  private static final JoystickButton DRIVE_R_TRIG = new JoystickButton(JOY_1, RIGHT_TRIG);
 
   private static final Joystick JOY_2 = new Joystick(1);
   private static final JoystickButton A_MANIP = new JoystickButton(JOY_2, BUTTON_A);
@@ -77,6 +81,8 @@ public class OI {
        
         DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
         
+        B_DRIVE.toggleWhenPressed(new DefenseMode());
+
 
      // }
      // if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
