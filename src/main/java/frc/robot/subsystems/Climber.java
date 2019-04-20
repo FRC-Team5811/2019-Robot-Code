@@ -21,21 +21,21 @@ public class Climber extends Subsystem {
   public CANSparkMax vacuum = RobotMap.vacuum;
   public CANSparkMax lifter1 = RobotMap.lifter1;
   public CANSparkMax lifter2 = RobotMap.lifter2;
+  public CANSparkMax pressureMotor = RobotMap.pressureMotor;
 
-  private final static double maxHeight = 1000;
+  public final static double maxHeight = 42;
   
   /**
   * Raises pistons
   */
   public void liftClimbers(){
-    while(lifter1.getEncoder().getPosition() < maxHeight){
       lifter1.set(1);
       lifter2.set(1);
-    }
     //put the arm down (hopefull with pneumatics)
-    while(1==1){
-      vacuum.set(1);
-    }
+  }
+
+  public void vacOn(){
+    vacuum.set(1);
   }
    /**
   * lower pistonsn

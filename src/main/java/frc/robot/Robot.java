@@ -175,6 +175,7 @@ public class Robot extends TimedRobot {
     Robot.rollers.raiseRollerArm();
     climber.lifter1.getEncoder().setPosition(0);
     climber.lifter2.getEncoder().setPosition(0);
+    climber.vacuum.getEncoder().setPosition(0);
   }
 
   @Override 
