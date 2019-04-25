@@ -29,6 +29,7 @@ public class TeleVision extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.setLimelightLeds(0.0);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -65,6 +66,7 @@ public class TeleVision extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.setLimelightLeds(1.0);
     //Robot.getDtSubsystem().motorReset();
     Robot.getDtSubsystem().setVisionCorrection(0);
   }

@@ -18,10 +18,16 @@ import frc.robot.RobotMap;
  */
 public class Hatch extends Subsystem {
 
-  DoubleSolenoid hatchPunch = RobotMap.hatchPunch;
-  DoubleSolenoid hatchExtension = RobotMap.extendHatchMechanism;
-  DoubleSolenoid beakMovement = RobotMap.beakMovement;
+  DoubleSolenoid hatchPunch;
+  DoubleSolenoid hatchExtension;
+  DoubleSolenoid beakMovement;
   
+  public Hatch(){
+    hatchPunch = RobotMap.hatchPunch;
+    hatchExtension = RobotMap.extendHatchMechanism;
+    beakMovement = RobotMap.beakMovement;
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

@@ -133,6 +133,10 @@ public class Drivetrain extends Subsystem {
     navX.reset();
     navX.resetDisplacement();
   }
+
+  public double getNavXRoll(){
+    return navX.getRoll();
+  }
 	
 	public double reportTimeStamp() {
 		return Timer.getFPGATimestamp();
@@ -174,10 +178,10 @@ public class Drivetrain extends Subsystem {
   public void enableDefenseMode(){
     if(!defenseMode){
       defenseMode = true;
-      int peak = 40;
+      int peak = 10;
       int cont = 10;
       int dur = 100;
-      double openLoopSec = 1;
+      double openLoopSec = .15;
 
       driveFrontRight.configPeakCurrentDuration(dur);
       driveFrontRight.configPeakCurrentLimit(peak);

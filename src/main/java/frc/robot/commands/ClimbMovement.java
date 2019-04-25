@@ -26,30 +26,35 @@ public class ClimbMovement extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println(Robot.getClimberSubsystem().vacuum.getEncoder().getPosition());
+   // System.out.println(Robot.getClimberSubsystem().lifter1.getEncoder().getPosition());
 //vacuum is in place of lifter 1 for testing
-    if(Robot.getClimberSubsystem().vacuum.getEncoder().getPosition() < Robot.getClimberSubsystem().maxHeight){
-      Robot.getClimberSubsystem().vacuum.set(0.2+((Robot.getClimberSubsystem().maxHeight - Robot.getClimberSubsystem().vacuum.getEncoder().getPosition())/ Robot.getClimberSubsystem().maxHeight));
-    } else {
-      Robot.getClimberSubsystem().vacuum.set(0.05);
-    }
+    // if(Robot.getClimberSubsystem().vacuum.getEncoder().getPosition() < Robot.getClimberSubsystem().maxHeight){
+    //   Robot.getClimberSubsystem().vacuum.set(0.2+((Robot.getClimberSubsystem().maxHeight - Robot.getClimberSubsystem().vacuum.getEncoder().getPosition())/ Robot.getClimberSubsystem().maxHeight));
+    // } else {
+    //   Robot.getClimberSubsystem().vacuum.set(0.05);
+    // }
     /*
     if(Robot.getClimberSubsystem().lifter1.getEncoder().getPosition() < Robot.getClimberSubsystem().maxHeight){
       Robot.getClimberSubsystem().lifter1.set(0.2+((Robot.getClimberSubsystem().maxHeight - Robot.getClimberSubsystem().lifter1.getEncoder().getPosition())/ Robot.getClimberSubsystem().maxHeight));
-      Robot.getClimberSubsystem().lifter2.set((0.2+((Robot.getClimberSubsystem().maxHeight - Robot.getClimberSubsystem().lifter1.getEncoder().getPosition())/ Robot.getClimberSubsystem().maxHeight));
+      Robot.getClimberSubsystem().lifter2.set(-0.2-((Robot.getClimberSubsystem().maxHeight - Robot.getClimberSubsystem().lifter1.getEncoder().getPosition())/ Robot.getClimberSubsystem().maxHeight));
     } else {
       pressureCounter++;
       Robot.getClimberSubsystem().lifter1.set(0.05);
-      Robot.getClimberSubsystem().lifter2.set(0.05);
+      Robot.getClimberSubsystem().lifter2.set(-0.05);
       if(pressureCounter < 100){
-        Robot.getClimberSubsystem().pressureMotor.set(1);
+        Robot.getClimberSubsystem().pressureMotor.set(-1);
       } else {
         Robot.getClimberSubsystem().pressureMotor.set(0);
       }
       Robot.getClimberSubsystem().vacuum.set(1);
     }
-    */
     
+    */
+    // if(pressureCounter < 100){
+    //   Robot.getClimberSubsystem().pressureMotor.set(-1);
+    // }
+    // pressureCounter++;
+   // Robot.getClimberSubsystem().vacuum.set(1);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -31,7 +31,7 @@ public class DefenseMode extends Command {
     @Override
     protected void execute() {
         dt.enableDefenseMode();
-    }
+        }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override

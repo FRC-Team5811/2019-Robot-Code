@@ -12,7 +12,6 @@ import frc.robot.commands.CargoIntake;
 import frc.robot.commands.CargoShoot;
 import frc.robot.commands.ClimbMovement;
 import frc.robot.commands.DefenseMode;
-import frc.robot.commands.GetToShip1;
 import frc.robot.commands.HatchCollection;
 import frc.robot.commands.HatchExtend;
 import frc.robot.commands.HatchShoot;
@@ -45,13 +44,14 @@ public class OI {
   private static final AxisButton DRIVE_X_LEFT = new AxisButton(JOY_1, LEFT_X_AXIS);
   private static final AxisButton DRIVE_Y_RIGHT = new AxisButton(JOY_1, RIGHT_Y_AXIS);
   private static final AxisButton DRIVE_X_RIGHT = new AxisButton(JOY_1, RIGHT_X_AXIS);
+  private static final JoystickButton DRIVE_R_TRIGGER = new JoystickButton(JOY_1, RIGHT_TRIG);
   private static final DPadButton DRIVE_UP = new DPadButton(JOY_1, 0);
   private static final DPadButton DRIVE_RIGHT = new DPadButton(JOY_1, 90);
   private static final DPadButton DRIVE_DOWN = new DPadButton(JOY_1, 180);
   private static final DPadButton DRIVE_LEFT = new DPadButton(JOY_1, 270);
   private static final JoystickButton DRIVE_R_BUMP = new JoystickButton(JOY_1, 5);
   private static final JoystickButton DRIVE_L_BUMP = new JoystickButton(JOY_1, 6);
-  private static final ComboButton TRIGS = new ComboButton(JOY_1, 7, 8);
+  //private static final ComboButton TRIGS = new ComboButton(JOY_1, 7, 8);
 
   private static final Joystick JOY_2 = new Joystick(1);
   private static final JoystickButton A_MANIP = new JoystickButton(JOY_2, BUTTON_A);
@@ -73,20 +73,19 @@ public class OI {
   private static final JoystickButton MANIP_START_BTN = new JoystickButton(JOY_2, 10);
 
   public OI(){
-     //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+     if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         // DRIVE_L_BUMP.whileHeld(new TeleVision());
         DRIVE_L_BUMP.whileHeld(new TeleVision());
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
         DRIVE_X_RIGHT.whileHeld(new ArcadeDrive());
-        TRIGS.toggleWhenPressed(new ClimbMovement());
        
         DRIVE_R_BUMP.toggleWhenPressed(new ArcadeSpeedMod());
         
-        B_DRIVE.toggleWhenPressed(new DefenseMode());
+        DRIVE_R_TRIGGER.whileHeld(new DefenseMode());
 
 
-     // }
-     // if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+      }
+      if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
       //Y_MANIP.whenPressed(new ResetRobot());
 
       //hatch
@@ -106,7 +105,7 @@ public class OI {
         MANIP_DOWN.whileHeld(new CargoIntake("GroundIntaketo2"));
         MANIP_L_BUMP.whileHeld(new CargoIntake("LoadingStation"));
        // MANIP_START_BTN.toggleWhenPressed(new ToggleMotors());
-     // }
+     }
 //
   }
 

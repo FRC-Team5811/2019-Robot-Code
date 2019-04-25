@@ -18,10 +18,10 @@ import frc.robot.RobotMap;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public CANSparkMax vacuum = RobotMap.vacuum;
-  public CANSparkMax lifter1 = RobotMap.lifter1;
-  public CANSparkMax lifter2 = RobotMap.lifter2;
-  public CANSparkMax pressureMotor = RobotMap.pressureMotor;
+ // public CANSparkMax vacuum = RobotMap.vacuum;
+ // public CANSparkMax lifter1 = RobotMap.lifter1;
+ // public CANSparkMax lifter2 = RobotMap.lifter2;
+  //public CANSparkMax pressureMotor = RobotMap.pressureMotor;
 
   public final static double maxHeight = 42;
   
@@ -29,20 +29,19 @@ public class Climber extends Subsystem {
   * Raises pistons
   */
   public void liftClimbers(){
-      lifter1.set(1);
-      lifter2.set(1);
+      
     //put the arm down (hopefull with pneumatics)
   }
 
   public void vacOn(){
-    vacuum.set(1);
+    //vacuum.set(1);
   }
    /**
   * lower pistonsn
   */
   public void lowerClimbers(){
-    vacuum.getEncoder().setPosition(0);
-    vacuum.set(0);
+  //  vacuum.getEncoder().setPosition(0);
+   // vacuum.set(0);
   }
   @Override
   public void initDefaultCommand() {

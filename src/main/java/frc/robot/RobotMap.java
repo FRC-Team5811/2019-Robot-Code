@@ -36,15 +36,15 @@ public class RobotMap {
   public static VictorSPX cargo2 = new VictorSPX(8); //cargo 2
   public static VictorSPX cargo3 = new VictorSPX(6); //cargo 3
 
-  public static CANSparkMax vacuum = new CANSparkMax(10, MotorType.kBrushless);
-  public static CANSparkMax lifter1 = new CANSparkMax(11, MotorType.kBrushless);
-  public static CANSparkMax lifter2 = new CANSparkMax(12, MotorType.kBrushless);
-  public static CANSparkMax pressureMotor = new CANSparkMax(13, MotorType.kBrushed);
+  //public static CANSparkMax vacuum = new CANSparkMax(10, MotorType.kBrushless);
+  //public static CANSparkMax lifter1 = new CANSparkMax(11, MotorType.kBrushless);
+  //public static CANSparkMax lifter2 = new CANSparkMax(12, MotorType.kBrushless);
+  //public static CANSparkMax pressureMotor = new CANSparkMax(13, MotorType.kBrushed);
 
-	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(0, 1);  // should be 0,1 solenoid not behaving
-  public static DoubleSolenoid hatchPunch = new DoubleSolenoid(2, 3);  // should be 2, 3
-  public static DoubleSolenoid extendHatchMechanism = new DoubleSolenoid(6, 7);
-  public static DoubleSolenoid beakMovement = new DoubleSolenoid(5, 4);
+	public static DoubleSolenoid intakeRoller = new DoubleSolenoid(6, 7);  // should be 0,1 solenoid not behaving
+  public static DoubleSolenoid hatchPunch = new DoubleSolenoid(4, 5);  // should be 2, 3
+  public static DoubleSolenoid extendHatchMechanism = new DoubleSolenoid(1, 0);
+  public static DoubleSolenoid beakMovement = new DoubleSolenoid(2, 3);
 
   //scp beter1.BOND lvuser@roborio-5811-frc.local:
   public static AnalogInput laser1 = new AnalogInput(1);

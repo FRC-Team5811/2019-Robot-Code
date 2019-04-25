@@ -58,14 +58,15 @@ public class Robot extends TimedRobot {
     oi = new OI();
     LED = new LED();
     climber = new Climber();
- /*
+ 
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
     cam1.setFPS(20);
     cam2.setFPS(20);
-    */
     // cam1.setResolution(2400, 144);
-    // cam1.setBrightness(20);
+    cam1.setBrightness(50);
+    cam1.setResolution(144, 81);
+    cam2.setResolution(144, 81);
     //server = CameraServer.getInstance().getServer();
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
@@ -115,6 +116,7 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     Robot.getLEDSubsystem().disabled();
+    //setLimelightLeds(1.0);
   }
 
   @Override
@@ -173,15 +175,18 @@ public class Robot extends TimedRobot {
     Robot.getRollersSubsystem().holdBallInPlace();
     Robot.dt.motorReset();
     Robot.rollers.raiseRollerArm();
-    climber.lifter1.getEncoder().setPosition(0);
-    climber.lifter2.getEncoder().setPosition(0);
-    climber.vacuum.getEncoder().setPosition(0);
+    setLimelightLeds(1.0);
+    // climber.lifter1.getEncoder().setPosition(0);
+    // climber.lifter2.getEncoder().setPosition(0);
+    // climber.vacuum.getEncoder().setPosition(0);
   }
 
   @Override 
   public void teleopPeriodic() {
    //System.out.println(Robot.getRollersSubsystem().getLaserTripWire1() + "\t" + Robot.getRollersSubsystem().getLaserTripWire2() + "\t" + Robot.getRollersSubsystem().getLaserTripWire3());
    Scheduler.getInstance().run();
+
+
   }
 
   @Override
@@ -224,11 +229,23 @@ public class Robot extends TimedRobot {
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tshort").getDouble(0);
   }
 
+  public static void setLimelightLeds(double state){
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(state);
+  }
+
   public static void setPipeline(double pipeline){
     //0 = center
     //1 = left
     //2 = right
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(pipeline);
+  }
+
+  public static void compressorOn() {
+    RobotMap.COMPRESSOR.setClosedLoopControl(true);
+  }
+
+  public static void compressorOff() {
+    RobotMap.COMPRESSOR.setClosedLoopControl(false);
   }
   
   // public static double getTotalArea(){

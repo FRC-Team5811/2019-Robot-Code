@@ -18,7 +18,7 @@ public class TwoCargoHatch extends CommandGroup {
      //12.8 volts
     addSequential(new HatchExtend("OutOfPerimeter"));
     addSequential(new Vision(false, 0.2, 7, 2)); //change to false
-    //addSequential(new HatchCollection("open"));
+    
     addSequential(new HatchShoot());
     addSequential(new ProfileDrive("hatch1ToLoadRAlt", 6.0, 0.0));
     

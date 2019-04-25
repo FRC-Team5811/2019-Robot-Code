@@ -26,8 +26,12 @@ public class HatchExtend extends Command {
   protected void initialize() {
     if (desiredLocation.equals("OutOfPerimeter")) {
       Robot.getHatchSubsystem().moveHatchToOut();
+      Robot.compressorOn();
+
+      
      } else if (desiredLocation.equals("InsidePerimeter")) {
       Robot.getHatchSubsystem().moveHatchToIn();
+      Robot.compressorOff();
      }
   }
 

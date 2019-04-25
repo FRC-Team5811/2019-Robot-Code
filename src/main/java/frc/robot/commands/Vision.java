@@ -56,6 +56,7 @@ public class Vision extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.setLimelightLeds(0.0);
     Robot.setPipeline(this.pipeline);
     done = false;
   }
@@ -121,6 +122,7 @@ public class Vision extends Command {
   @Override
   protected void end() {
    // Robot.setLeftSelectMode(0.0);
+    Robot.setLimelightLeds(1.0);
     Robot.getDtSubsystem().motorReset();
   }
 
