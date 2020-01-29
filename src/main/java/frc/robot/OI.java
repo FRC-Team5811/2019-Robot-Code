@@ -73,7 +73,7 @@ public class OI {
   private static final JoystickButton MANIP_START_BTN = new JoystickButton(JOY_2, 10);
 
   public OI(){
-     if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+     //if(!JOY_1.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
         // DRIVE_L_BUMP.whileHeld(new TeleVision());
         DRIVE_L_BUMP.whileHeld(new TeleVision());
         DRIVE_Y_LEFT.whileHeld(new ArcadeDrive());
@@ -84,8 +84,8 @@ public class OI {
         DRIVE_R_TRIGGER.whileHeld(new DefenseMode());
 
 
-      }
-      if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
+      //}
+      //if(!JOY_2.getName().equals("")|| DriverStation.getInstance().getMatchType() != MatchType.None){
       //Y_MANIP.whenPressed(new ResetRobot());
 
       //hatch
@@ -105,7 +105,7 @@ public class OI {
         MANIP_DOWN.whileHeld(new CargoIntake("GroundIntaketo2"));
         MANIP_L_BUMP.whileHeld(new CargoIntake("LoadingStation"));
        // MANIP_START_BTN.toggleWhenPressed(new ToggleMotors());
-     }
+     //}
 //
   }
 
